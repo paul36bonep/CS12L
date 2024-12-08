@@ -1,11 +1,8 @@
 <?php
     include "reusables.php";
 
-    if(!checkExistingSession()){
-
-        header("location:index.php");
-
-    }
+    noSession();
+    sessionTimer();
 ?>
 
 <!DOCTYPE html>

@@ -5,6 +5,7 @@
     if(checkExistingSession()){
 
         header("location: testhomepage.php");
+
     }
 ?>
 
@@ -23,7 +24,7 @@
         <input type="text" name="username">
         <br>
         <label> Enter Password</label><br>
-        <input type="text" name="password">
+        <input type="password" name="password">
         <br>
         <input type="submit" name="login" value="LogIn">
         

@@ -16,12 +16,46 @@ function isExisting($username,$table){ //checks if the username already exists i
     }
 }
 
-function checkExistingSession(){
+function sessionTimer(){
+
+    $sessiontimer = 1800;
+
+    if(isset($_SESSION['activity'])){
+
+        $duration = time() - $_SESSION['activity'];
+  
+        if($duration > $sessiontimer){
+
+            session_unset();
+            session_destroy();
+
+            echo "<script>alert('Session Timed Out! Please log in again.')</script>";
+            echo "<script> window.location.href='index.php'</script>";
+            exit;
+
+        }
+    }
+    
+    $_SESSION['activity'] = time();
+
+}
+
+function checkExistingSession(){ //checks if there is an existing session.
 
     if(isset($_SESSION['username'])){
+        
         return true;
     }
 
+}
+
+function noSession(){
+
+    if(!isset($_SESSION['username'])){
+        
+        echo "<script>alert('Please Log in.')</script>";
+        echo "<script> window.location.href='index.php'</script>";
+    }
 }
 
 function calculateCommission(){
