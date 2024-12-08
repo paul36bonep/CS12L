@@ -1,3 +1,14 @@
+<?php
+
+    include "reusables.php";
+
+    if(checkExistingSession()){
+
+        header("location: testhomepage.php");
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

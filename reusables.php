@@ -1,4 +1,5 @@
 <?php
+   session_start();
 
 function isExisting($username,$table){ //checks if the username already exists in the database.
 
@@ -14,5 +15,19 @@ function isExisting($username,$table){ //checks if the username already exists i
 
     }
 }
+
+function checkExistingSession(){
+
+    if(isset($_SESSION['username'])){
+        return true;
+    }
+
+}
+
+function calculateCommission(){
+
+
+}
+
 
 ?>

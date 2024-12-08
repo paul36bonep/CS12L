@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     if (empty($username) || empty($password)) {
 
         echo "<script>alert('Please fill the required fields!')</script>";
-        echo "<script> window.location.href='index.html'</script>";
+        echo "<script> window.location.href='index.php'</script>";
 
     } else {
 
@@ -22,7 +22,13 @@ if (isset($_POST['login'])) {
        
         if($result -> num_rows > 0){
 
+            session_start();
+
+            $_SESSION['username'] = $username;
+            $_SESSION['password'] = $password;
+
             echo "hello {$username}";
+            header("Location: testhomepage.php");
 
         }else{
 
@@ -32,7 +38,6 @@ if (isset($_POST['login'])) {
 
         $connection->close();
     }
-
 }
 
 ?>
