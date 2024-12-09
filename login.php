@@ -1,5 +1,6 @@
 <?php
 
+include "reusables.php";
 include "dbconnection.php";
 
 
@@ -7,7 +8,7 @@ include "dbconnection.php";
 if (isset($_POST['login'])) {
 
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = trim($_POST['password']);
 
     if (empty($username) || empty($password)) {
 
@@ -16,24 +17,31 @@ if (isset($_POST['login'])) {
 
     } else {
 
-        $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-       
+        $query = "SELECT * FROM users WHERE username = '$username'";
         $result = mysqli_query($connection,$query);
-       
-        if($result -> num_rows > 0){
 
-            session_start();
+        if($result->num_rows > 0){
 
-            $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
+            $row = mysqli_fetch_array($result);
+            
 
-            echo "hello {$username}";
-            header("Location: testhomepage.php");
+            if(password_verify($password,$row["Password"])){
 
+                $_SESSION['username'] = $username;
+                echo $_SESSION['username'];
+                header("Location: testhomepage.php");
+           
+            }else{
+
+                echo "Invalid Password";
+                echo "<br><a href= 'index.php'> Go back to Log in Page </a>";
+
+            }
+          
         }else{
 
-            echo "Invalid Username or Password";
-            echo "<br><a href= 'index.html'> Go back to Log in Page </a>";
+            echo "Invalid Username";
+            echo "<br><a href= 'index.php'> Go back to Log in Page </a>";
         }
 
         $connection->close();

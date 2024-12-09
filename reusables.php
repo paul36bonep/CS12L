@@ -16,7 +16,7 @@ function isExisting($username,$table){ //checks if the username already exists i
     }
 }
 
-function sessionTimer(){
+function sessionTimer(){ //checks for inactivity and timeout.
 
     $sessiontimer = 1800;
 
@@ -45,6 +45,7 @@ function checkExistingSession(){ //checks if there is an existing session.
     if(isset($_SESSION['username'])){
         
         return true;
+
     }
 
 }
@@ -58,10 +59,15 @@ function noSession(){
     }
 }
 
+function passwordHashing($password){ //encrpt the passowrds to be stored in database.
+
+    $hash = password_hash($password,PASSWORD_DEFAULT);
+    return $hash;
+}
+
 function calculateCommission(){
 
 
 }
-
 
 ?>

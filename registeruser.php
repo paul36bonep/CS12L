@@ -8,7 +8,7 @@ if(isset($_POST['register'])){
     $table = "users";
     $username = $_POST['username'];
 
-    if( isExisting($username,$table)){
+    if(isExisting($username,$table)){
 
         echo "<script>alert('Username is already taken.')</script>";
         echo "<script> window.location.href='registration.html'</script>";
@@ -17,7 +17,8 @@ if(isset($_POST['register'])){
 
         $name = $_POST['name'];
         $position = $_POST['position'];
-        $password = $_POST['password'];
+        $password = trim($_POST['password']);
+        $hash = passwordHashing($password);
 
         switch($position){ //Assign PositionID for database
 
@@ -31,18 +32,17 @@ if(isset($_POST['register'])){
 
             default:
         }
-
-        $query = "INSERT INTO users(`userID`, `positionID`, `username`, `password`, `name`, `status`) 
-                  VALUES ('',$posID,'$username','$password','$name','0')";
+        
+        $query = "INSERT INTO users(`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) 
+                            VALUES ('','$posID','$username','$hash','$name','1')";
         
         mysqli_query($connection,$query);
         $connection -> close();
 
         echo "<script>alert('Username: {$username} is now registered.')</script>";
-        echo "<script> window.location.href='index.html'</script>";
+        echo "<script> window.location.href='index.php'</script>";
 
     }
-
 }
 
 ?>
