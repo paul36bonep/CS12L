@@ -1,11 +1,11 @@
 <?php
    session_start();
 
-function isExisting($username,$table){ //checks if the username already exists in the database.
+function isExistingInUsers($username){ //checks if the username already exists in the database.
 
     include "dbconnection.php";
 
-    $query = "SELECT * FROM $table WHERE username = '$username'";
+    $query = "SELECT * FROM users WHERE Username = '$username'";
     $result = mysqli_query($connection,$query);
 
     if($result -> num_rows > 0){
@@ -15,6 +15,21 @@ function isExisting($username,$table){ //checks if the username already exists i
 
     }
 }
+
+// function isExistingInAgents($username){ //checks if the username already exists in the database.
+
+//     include "dbconnection.php";
+
+//     $query = "SELECT * FROM agents WHERE username = '$username'";
+//     $result = mysqli_query($connection,$query);
+
+//     if($result -> num_rows > 0){
+
+//         $connection->close();
+//         return true;
+
+//     }
+// }
 
 function sessionTimer(){ //checks for inactivity and timeout.
 
@@ -50,7 +65,7 @@ function checkExistingSession(){ //checks if there is an existing session.
 
 }
 
-function noSession(){
+function noSession(){ //checks if there are no sessions.
 
     if(!isset($_SESSION['username'])){
         
@@ -64,6 +79,7 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
     $hash = password_hash($password,PASSWORD_DEFAULT);
     return $hash;
 }
+
 
 function calculateCommission(){
 

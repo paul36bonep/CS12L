@@ -1,0 +1,8 @@
+Problem: if you encounter Log in error with registered users:
+
+    Cause: 
+        Hashing needed 60 characters
+
+    Solution:
+        Change users table's password to VARCHAR 60 in the database so hashing works.
+

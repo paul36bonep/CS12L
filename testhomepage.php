@@ -18,6 +18,8 @@
     <?php
         echo $_SESSION["username"];
     ?>
+    <br>
+    <button onclick="window.location.href='#'">Register New Agent</button>
     <button onclick="window.location.href='logout.php'">Logout</button>
     
 </body>
