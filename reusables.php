@@ -16,20 +16,20 @@ function isExistingInUsers($username){ //checks if the username already exists i
     }
 }
 
-// function isExistingInAgents($username){ //checks if the username already exists in the database.
+/* function isExistingInAgents($username){ //checks if the username already exists in the database.
 
-//     include "dbconnection.php";
+     include "dbconnection.php";
 
-//     $query = "SELECT * FROM agents WHERE username = '$username'";
-//     $result = mysqli_query($connection,$query);
+     $query = "SELECT * FROM agents WHERE username = '$username'";
+     $result = mysqli_query($connection,$query);
 
-//     if($result -> num_rows > 0){
+     if($result -> num_rows > 0){
 
-//         $connection->close();
-//         return true;
+         $connection->close();
+         return true;
 
-//     }
-// }
+     }
+ } */
 
 function sessionTimer(){ //checks for inactivity and timeout.
 
