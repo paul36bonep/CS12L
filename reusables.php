@@ -16,7 +16,7 @@ function isExistingInUsers($username){ //checks if the username already exists i
     }
 }
 
-/* function isExistingInAgents($username){ //checks if the username already exists in the database.
+function isExistingInAgents($username){ //checks if the username already exists in the database.
 
      include "dbconnection.php";
 
@@ -29,7 +29,7 @@ function isExistingInUsers($username){ //checks if the username already exists i
          return true;
 
      }
- } */
+ }
 
 function sessionTimer(){ //checks for inactivity and timeout.
 
@@ -83,7 +83,12 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 
 function calculateCommission(){
 
-
+ //formula: 
 }
+
+function createCommission(){} // for creating a commission
+
+function approveCommission(){} // for approving commission (Owner Only)
+function editCommission(){} // function for editing a commision details (Owner Only)
 
 ?>
