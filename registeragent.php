@@ -5,27 +5,26 @@ include "reusables.php";
 
 if(isset($_POST['register'])){
 
-    $username = trim($_POST['username']);
+    $name = $_POST['name'];
 
-    if(isExistingInUsers($username) ){ //|| isExistingInAgents($username)
+    if(isExistingInAgents($name) ){ 
 
         echo "<script>alert('Username is already taken.')</script>";
         echo "<script> window.location.href='registration.html'</script>";
 
-    }else{ //edit this for agent table
+    }else{ 
 
-        $name = $_POST['name'];
-        $position = $_POST['position'];
-        $password = trim($_POST['password']);
-        $hash = passwordHashing($password);
+        $age = $_POST['age'];
+        $commissionpercent = $_POST['commissionpercent'];
+        $area = $_POST['area'];
         
-        $query = "INSERT INTO users(`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) 
-                            VALUES ('','$posID','$username','$hash','$name','1')";
+        $query = "INSERT INTO agents(`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) 
+                            VALUES ('','$name','$age','$commissionpercent','$area','1')";
         
         mysqli_query($connection,$query);
         $connection -> close();
 
-        echo "<script>alert('Username: {$username} is now registered.')</script>";
+        echo "<script>alert('Agent: {$username} is now registered.')</script>";
         echo "<script> window.location.href='index.php'</script>";
 
     }

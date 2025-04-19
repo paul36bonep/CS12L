@@ -81,14 +81,64 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 }
 
 
-function calculateCommission(){
+//Cards
+function addCardtype($typeid,$cardtype){
 
- //formula: 
+    include "dbconnection.php";
+    $query = "INSERT INTO cardtype(`TypeID`, `CardType') 
+                            VALUES ('$typeid','$cardtype')";
+        
+        mysqli_query($connection,$query);
+        $connection -> close();
+    
 }
 
-function createCommission(){} // for creating a commission
+function addBank($bankname){
 
-function approveCommission(){} // for approving commission (Owner Only)
-function editCommission(){} // function for editing a commision details (Owner Only)
+    include "dbconnection.php";
+    $query = "INSERT INTO bank(`BankID`, `BankName') 
+                            VALUES ('','$bankname')";
+        
+        mysqli_query($connection,$query);
+        $connection -> close();
+
+}
+
+function addCard($cardid, $cardtypeid,$bankname,$amount){
+
+    include "dbconnection.php";
+    $query = "INSERT INTO card(`CardID`, `TypeID','BankID','Amount','Status') 
+                            VALUES ('$cardid','$cardtypeid','$bankname','$amount','1')";
+        
+        mysqli_query($connection,$query);
+        $connection -> close();
+
+}
+
+//Commissions
+function createCommissionrequest(){ // creating a commission request: for approval to owner
+
+} 
+
+function createCommission(){ //for owner only :no posting for approval
+
+
+}
+
+function approveCommission(){ // for approving commission (Owner Only)
+
+} 
+
+
+function editCommission(){ // function for editing a commision details (Owner Only)
+
+} 
+
+
+function calculateCommission(){
+    /*
+    formula:
+    */
+}
 
 ?>
