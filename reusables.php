@@ -33,9 +33,9 @@ function isExistingInAgents($username){ //checks if the username already exists 
 
 function sessionTimer(){ //checks for inactivity and timeout.
 
-    $sessiontimer = 1800;
+    $sessiontimer = 1800; // time in seconds
 
-    if(isset($_SESSION['activity'])){
+    if(isset($_SESSION['activity'])){ // 'activity' is set by computer time/real-time 
 
         $duration = time() - $_SESSION['activity'];
   
@@ -137,7 +137,7 @@ function editCommission(){ // function for editing a commision details (Owner On
 
 function calculateCommission(){
     /*
-    formula:
+    formula: 
     */
 }
 
