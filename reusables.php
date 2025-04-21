@@ -82,7 +82,7 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 
 
 //Cards
-function addCardtype($typeid,$cardtype){
+function addCardtype($cardtype){
 
     include "dbconnection.php";
     $query = "INSERT INTO cardtype(`TypeID`, `CardType') 
@@ -104,7 +104,7 @@ function addBank($bankname){
 
 }
 
-function addCard($cardid, $cardtypeid,$bankname,$amount){
+function addCard($cardid, $cardtypeid, $bankname, $amount){
 
     include "dbconnection.php";
     $query = "INSERT INTO card(`CardID`, `TypeID','BankID','Amount','Status') 
@@ -116,29 +116,76 @@ function addCard($cardid, $cardtypeid,$bankname,$amount){
 }
 
 //Commissions
-function createCommissionrequest(){ // creating a commission request: for approval to owner
+function createCommissionrequest($agentid, $cardid, $quantity){ // creating a commission request: for approval to owner
+    include "dbconnection.php";
+
+    $totalcommission = calculateCommission($quantity,$agentid, $cardid);
+    $query = "INSERT INTO commissions(`CommissionID`, `UserID','AgentID','TotalCommission','ApprovalStatus') 
+                            VALUES ('',$userid','$agentid','$totalcommission','2')";
+    
+    mysqli_query($connection,$query);
+    $connection -> close();
 
 } 
 
-function createCommission(){ //for owner only :no posting for approval
+function createCommission($agentid, $cardid, $quantity){ //for owner only :no posting for approval
 
+    include "dbconnection.php";
+    $totalcommission = calculateCommission($quantity,$agentid, $cardid);
+    $query = "INSERT INTO commissions(`CommissionID`, `UserID','AgentID','TotalCommission','ApprovalStatus') 
+                            VALUES ('',$userid','$agentid','$totalcommission','1')";
+    
+    mysqli_query($connection,$query);
+    $connection -> close();
+
+}
+
+function editCommission($commissionid){ // function for editing a commision details (Owner Only)
+
+    include "dbconnection.php";
+
+    $query = "SELECT * FROM commissions WHERE CommissionID = '$commissionid'";
+    mysqli_query($connection,$query);
+
+
+    $connection -> close();
+
+    //unfinished
+
+} 
+
+function deleteCommission(){
+
+    include "dbconnection.php";
 
 }
 
 function approveCommission(){ // for approving commission (Owner Only)
 
-} 
-
-
-function editCommission(){ // function for editing a commision details (Owner Only)
+    include "dbconnection.php";
 
 } 
 
 
-function calculateCommission(){
+function calculateCommission($quantity,$agentid,$cardid){
+
+    include "dbconnection.php";
     /*
-    formula: 
+    formula: [quantity(userinput) * amount(from cards) ] x Commissionpercent from agents table
     */
-}
 
+    $commissionPercent = "SELECT CommissionPercet FROM agents WHERE AgentID = '$agentid'";
+    mysqli_query($connection,$query);
+
+    $amount = "SELECT Amount FROM card WHERE CardID = '$cardid'";
+    mysqli_query($connection,$query);
+
+    $subtotal = $quantity * $amount;
+    $totalCommission = $subtotal * ($commissionPercent / 100);
+
+    $connection -> close();
+
+    return $totalCommission;
+
+}
 ?>

@@ -6,3 +6,39 @@ Problem: if you encounter Log in error with registered users:
     Solution:
         Change users table's password to VARCHAR 60 in the database so hashing works.
 
+
+To Edit:
+     #Users
+        Please remove user ID input field from Add user modal in Users page.
+
+    #Agents
+        Please remove agent ID input field from Add Agent modal in Agents page.
+
+     #Cards
+        Please let the user input and edit cards with a single modal
+            field should be: CardID , Bank(Dropdown), Cardtype(Dropdown), Amount, Status
+
+    #Commissions
+        Please remove 'Commission ID' input field from Manage Commission modal in Commissions page.
+
+        Please remove 'Total Commission' input field from Manage Commission modal. This should be automated when they press submit.
+            field should be: Username(Admin name or creator) , Agent name , Client name , Bank, Cardtype, quantity
+                note: Data rendered will be with the Commission ID and Total Commission.(but not in user input).
+                
+Suggestions:
+
+    #Commission
+        Make agents and users(Creator) input field a dropdown to remove confusion when passing agentid to functions.
+
+    #Settings
+        create bank and cardtype in settings tab for owner access only for creation of cardtype and banks 
+        create clear dissapproved in settings tab for owner access only
+
+
+
+
+Questions:
+
+    Is Total Commission User input? shoudn't it be automated ? 
+    Where does the show all button from dashboard lead to?
+    would there be any circumstance that we would delete a commission request ?
