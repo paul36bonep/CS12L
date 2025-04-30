@@ -9,7 +9,7 @@
     <div class="main" style="">
       <img class="logo" src="../images/DATCOM.png">
       <div class="title">DatCom</div>
-      <form id="loginForm">
+      <form method="POST" id="loginForm" action="../login.php" >
         <div class="credentials">
           <div class="username">
             <span class="glyphicon glyphicon-user"></span>
@@ -20,11 +20,11 @@
             <input type="password" name="password" id="password" placeholder="Password" required="">
           </div>
         </div>
-        <button class="submit" type="button" id="loginButton">Login</button>
+        <button class="submit" type="submit" name="login" id="loginButton">Login</button>
       </form>
       </div>
 
-      <script src="Login.js"></script>
+      <!-- <script src="Login.js"></script> -->
   </body>
 </html>
 

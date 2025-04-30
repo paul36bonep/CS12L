@@ -154,7 +154,7 @@ function editCommission($commissionid){ // function for editing a commision deta
 
 } 
 
-function deleteCommission(){
+function deleteCommission(){// might remove this
 
     include "dbconnection.php";
 

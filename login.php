@@ -7,13 +7,13 @@ include "dbconnection.php";
 //Login
 if (isset($_POST['login'])) {
 
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
     if (empty($username) || empty($password)) {
 
         echo "<script>alert('Please fill the required fields!')</script>";
-        echo "<script> window.location.href='index.php'</script>";
+        echo "<script> window.location.href='../Login/Login.php'</script>";
 
     } else {
 
@@ -29,19 +29,19 @@ if (isset($_POST['login'])) {
 
                 $_SESSION['username'] = $username;
                 echo $_SESSION['username'];
-                header("Location: testhomepage.php");
+                header("Location:Owner/Main_Page/Main_Page.html");
            
             }else{
 
                 echo "Invalid Password";
-                echo "<br><a href= 'index.php'> Go back to Log in Page </a>";
+                echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
 
             }
           
         }else{
 
             echo "Invalid Username";
-            echo "<br><a href= 'index.php'> Go back to Log in Page </a>";
+            echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
         }
 
         $connection->close();
