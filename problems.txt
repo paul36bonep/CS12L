@@ -56,11 +56,3 @@ Suggestions:
         create bank and cardtype in settings tab for owner access only for creation of cardtype and banks 
         create clear dissapproved in settings tab for owner access only
 
-
-
-
-Questions:
-
-    Is Total Commission User input? shoudn't it be automated ? 
-    Where does the show all button from dashboard lead to?
-    would there be any circumstance that we would delete a commission request ?
