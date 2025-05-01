@@ -1,3 +1,4 @@
+--------FOR TESTING--------
 Problem: if you encounter Log in error with registered users:
 
     Cause: 
@@ -5,10 +6,16 @@ Problem: if you encounter Log in error with registered users:
 
     Solution:
         Change users table's password to VARCHAR 60 in the database so hashing works.
+--------FOR TESTING------
+
 
 
 To Edit:
-     #Users
+    #Login
+        Trigger: Invalid Login
+        Please Create a script for invalid credentials(e.g pop-up message) before redirecting to Login page
+
+    #Users
         Please remove user ID input field from Add user modal in Users page.
 
     #Agents
