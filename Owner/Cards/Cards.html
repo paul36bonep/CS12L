@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+  <link rel="stylesheet" href="Cards.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <title>Sales Commission Tracker</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <!--Sidebar Section-->
+    <aside>
+      <div class="toggle">
+        <div class="logo">
+          <img src="../../images/DATCOM.png">
+          <h2>Dat<span class="danger">Com</span></h2>
+        </div>
+        <div class="close" id="close-btn">
+          <span class="material-icons-sharp">close</span>
+        </div>
+      </div>
+      <div class="sidebar">
+        <a href="../Main_Page/Main_Page.html">
+          <span class="material-icons-sharp">
+            dashboard
+          </span>
+          <h3>Dashboard</h3>
+        </a>
+        <a href="../Users/Users.html">
+          <span class="material-icons-sharp">
+            person_outline
+          </span>
+          <h3>Users</h3>
+        </a>
+        <a href="../Agents/Agents.html">
+          <span class="material-icons-sharp">
+            people
+          </span>
+          <h3>Agents</h3>
+        </a>
+        <a href="Cards.html">
+          <span class="material-icons-sharp">
+            credit_card
+          </span>
+          <h3>Cards</h3>
+        </a>
+        <a href="../Commissions/Commissions.html">
+          <span class="material-icons-sharp">
+            paid
+          </span>
+          <h3>Commissions</h3>
+        </a>
+        <a href="../Report/Reports.html">
+          <span class="material-icons-sharp">
+            article
+          </span>
+          <h3>Reports</h3>
+        </a>
+        <a href="../Settings/Settings.html">
+          <span class="material-icons-sharp">
+            settings
+          </span>
+          <h3>Settings</h3>
+        </a>
+        <a href="../../Login/Login.html">
+          <span class="material-icons-sharp">
+            logout
+          </span>
+          <h3>Logout</h3>
+        </a>
+      </div>
+    </aside>
+
+    <!--Main Page-->
+    <main>
+      <h1>Cards</h1>
+      <div class="user-div">
+        <div class="table-header">
+          <button class="action-btn add-btn" id="openModalBtn">Add Card</button>
+          <button class="action-btn add-btn" id="openBankModalBtn">Manage Banks</button>
+          <button class="action-btn add-btn" id="openCardTypeModalBtn">Manage Card Types</button>
+          <input type="text" id="searchbar" placeholder="Search..." class="search-bar">
+        </div>
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Card ID</th>
+              <th>Bank Name</th>
+              <th>Card Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="active-row">
+              <td>110001</td>
+              <td>BDO</td>
+              <td>Platinum</td>
+              <td>25000</td>
+              <td>Active</td>
+              <td>
+                <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
+                <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Card Modal -->
+    <div class="modal" id="registerModal">
+      <div class="modal-content">
+        <header>Card Details</header>
+        <form action="#">
+          <div class="form first">
+            <div class="personal info">
+              <span class="title">Add New Card</span>
+              <div class="fields">
+                <div class="input-field">
+                  <label>Card ID</label>
+                  <input type="number" placeholder="Enter card id" required>
+                </div>
+                <!--
+                <div class="input-field">
+                  <label>Bank Name</label>
+                  <select id="bankDropdown" required>
+                    <option value="">Select Bank</option>
+                  </select>
+                </div>
+                <div class="input-field">
+                  <label>Card Type</label>
+                  <select id="cardTypeDropdown" required>
+                    <option value="">Select Card Type</option>
+                  </select>
+                </div>
+              -->
+                <div class="input-field">
+                  <label>Amount</label>
+                  <input type="number" placeholder="Enter amount" required>
+                </div>
+                <div class="input-field">
+                  <label>Status:</label>
+                  <select id="status" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+              <div class="buttons">
+                <button type="button" class="backBtn" id="closeModalBtn"><span class="btnText">Close</span></button>
+                <button type="submit" class="submit"><span class="submitBtn">Submit</span></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bank Modal -->
+    <div class="modal" id="bankModal">
+      <div class="modal-content">
+        <header>Manage Banks</header>
+        <form id="bankForm">
+          <div class="fields">
+            <div class="input-field">
+              <label>Bank ID</label>
+              <input type="number" id="bankIdInput" placeholder="Enter Bank ID" required>
+            </div>
+            <div class="input-field" id="input-field2">
+              <label>Bank Name</label>
+              <input type="text" id="bankNameInput" placeholder="Enter Bank Name" required>
+            </div>
+          </div>
+          <div class="buttons">
+            <button type="button" class="backBtn" id="closeBankModalBtn"><span class="btnText">Close</span></button>
+            <button type="submit" class="submit"><span class="submitBtn">Add Bank</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Card Type Modal -->
+    <div class="modal" id="cardTypeModal">
+      <div class="modal-content">
+        <header>Manage Card Types</header>
+        <form id="cardTypeForm">
+          <div class="fields">
+            <div class="input-field">
+              <label>Card Type ID</label>
+              <input type="text" id="cardTypeIdInput" placeholder="Enter Card Type ID" required>
+            </div>
+            <div class="input-field" id="input-field3">
+              <label>Card Type</label>
+              <input type="text" id="cardTypeNameInput" placeholder="Enter Card Type" required>
+            </div>
+          </div>
+          <div class="buttons">
+            <button type="button" class="backBtn" id="closeCardTypeModalBtn"><span class="btnText">Close</span></button>
+            <button type="submit" class="submit"><span class="submitBtn">Add Card Type</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+     <!--Right Section nav-->
+     <div class="right-section">
+      <div class="nav">
+        <button id="menu-btn">
+          <span class="material-icons-sharp">
+            menu
+            </span>
+        </button>
+        <div class="dark-mode">
+          <span class="material-icons-sharp active">
+            light_mode
+            </span>
+            <span class="material-icons-sharp">
+              dark_mode
+              </span>
+        </div>
+
+        <div class="profile">
+          <div class="info">
+            <p>Hey, <b> Jeschann</b></p>
+            <small class="text-muted">
+              Owner
+            </small>
+          </div>
+          <div class="profile-photo">
+            <img src="../../images/Profile-1.jpg">           
+          </div>
+        </div>
+      </div>
+      <!--end of nav-->
+
+  </div>
+
+  <script src="../Main_Page/Main_Page.js"></script>
+  <script src="Cards.js"></script>
+</body>
+</html>
