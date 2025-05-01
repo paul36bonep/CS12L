@@ -48,7 +48,9 @@ To Edit:
 Suggestions:
 
     #Commission
-        Make agents and users(Creator) input field a dropdown to remove confusion when passing agentid to functions.
+        Make agents input field a dropdown to remove confusion when passing agentid to functions. (Data taken from the database)
+
+
 
     #Settings
         create bank and cardtype in settings tab for owner access only for creation of cardtype and banks 
