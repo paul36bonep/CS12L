@@ -29,17 +29,22 @@ if(isset($_POST['register'])){
                 $posID = 1;
                 break;
 
+            case "Unit Manager":
+                $posID = 3;
+                break;
+    
             default:
+                break;
         }
-        
+
         $query = "INSERT INTO users(`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) 
                             VALUES ('','$posID','$username','$hash','$name','1')";
         
         mysqli_query($connection,$query);
         $connection -> close();
 
-        echo "<script>alert('Username: {$username} is now registered.')</script>";
-        echo "<script> window.location.href='index.php'</script>";
+        echo "<script>alert('User registered Successfully')</script>";
+        echo "<script> window.location.href='Owner/Users/Users.html'</script>";
 
     }
 }

@@ -5,17 +5,17 @@ include "reusables.php";
 
 if(isset($_POST['register'])){
 
-    $name = $_POST['name'];
+    $name = $_POST['agentname'];
 
     if(isExistingInAgents($name) ){ 
 
-        echo "<script>alert('Username is already taken.')</script>";
-        echo "<script> window.location.href='registration.html'</script>";
+        echo "<script>alert('This agent is already registered.')</script>";
+        echo "<script> window.location.href='Owner/Agents/Agents.html'</script>";
 
     }else{ 
 
         $age = $_POST['age'];
-        $commissionpercent = $_POST['commissionpercent'];
+        $commissionpercent = $_POST['commissionpercent']/100;
         $area = $_POST['area'];
         
         $query = "INSERT INTO agents(`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) 
@@ -24,8 +24,8 @@ if(isset($_POST['register'])){
         mysqli_query($connection,$query);
         $connection -> close();
 
-        echo "<script>alert('Agent: {$username} is now registered.')</script>";
-        echo "<script> window.location.href='index.php'</script>";
+        echo "<script>alert('Agent is now registered.')</script>";
+        echo "<script> window.location.href='Owner/Agents/Agents.html'</script>";
 
     }
 }

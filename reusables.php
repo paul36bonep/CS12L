@@ -16,11 +16,11 @@ function isExistingInUsers($username){ //checks if the username already exists i
     }
 }
 
-function isExistingInAgents($username){ //checks if the username already exists in the database.
+function isExistingInAgents($name){ //checks if the username already exists in the database.
 
      include "dbconnection.php";
 
-     $query = "SELECT * FROM agents WHERE username = '$username'";
+     $query = "SELECT * FROM agents WHERE AgentName = '$name'";
      $result = mysqli_query($connection,$query);
 
      if($result -> num_rows > 0){

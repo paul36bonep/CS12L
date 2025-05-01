@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const users = [];
     userTable.querySelectorAll("tr").forEach((row) => {
       const user = {
-        userId: row.cells[0].textContent,
+        //userId: row.cells[0].textContent,
         position: row.cells[1].textContent,
         username: row.cells[2].textContent,
         name: row.cells[3].textContent,
@@ -49,36 +49,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+  // submitBtn.addEventListener("click", (e) => { //this prevents the database to connect.
+  //   e.preventDefault(); 
 
-    const userId = document.querySelector("input[placeholder='Enter user id']").value;
-    const positionId = document.getElementById("position").value;
-    const username = document.querySelector("input[placeholder='Enter username']").value;
-    const password = document.querySelector("input[placeholder='Enter new password']").value;
-    const name = document.querySelector("input[placeholder='Enter name']").value;
-    const status = document.getElementById("status").value;
+  //   //const userId = document.querySelector("input[placeholder='Enter user id']").value;
+  //   const positionId = document.getElementById("position").value;
+  //   const username = document.querySelector("input[placeholder='Enter username']").value;
+  //   const password = document.querySelector("input[placeholder='Enter new password']").value;
+  //   const name = document.querySelector("input[placeholder='Enter name']").value;
+  //   const status = document.getElementById("status").value;
 
-    if (userId && positionId && username && password && name) {
-      if (editingRow) {
-        editingRow.cells[0].textContent = userId;
-        editingRow.cells[1].textContent = positionId;
-        editingRow.cells[2].textContent = username;
-        editingRow.cells[3].textContent = name;
-        editingRow.cells[4].textContent = status;
-        editingRow.dataset.password = password; 
-      } else {
-        const newRow = createTableRow({ userId, position: positionId, username, name, status, password });
-        userTable.appendChild(newRow);
-        attachRowActions(newRow);
-      }
-      saveData(); 
-      modal.classList.remove("active"); 
-      clearForm();
-    } else {
-      alert("Please fill in all fields.");
-    }
-  });
+  //   if (positionId && username && password && name) {//removed userID on conditions
+  //     if (editingRow) {
+  //       editingRow.cells[0].textContent = userId;
+  //       editingRow.cells[1].textContent = positionId;
+  //       editingRow.cells[2].textContent = username;
+  //       editingRow.cells[3].textContent = name;
+  //       editingRow.cells[4].textContent = status;
+  //       editingRow.dataset.password = password; 
+  //     } else {
+  //       const newRow = createTableRow({position: positionId, username, name, status, password }); //removed UserID
+  //       userTable.appendChild(newRow);
+  //       attachRowActions(newRow);
+  //     }
+  //     saveData(); 
+  //     modal.classList.remove("active"); 
+  //     clearForm();
+  //   } else {
+  //     alert("Please fill in all fields.");
+  //   }
+  // });
 
   function createTableRow({ userId, position, username, name, status, password }) {
     const newRow = document.createElement("tr");
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editBtn.addEventListener("click", () => {
       editingRow = row;
       const cells = row.cells;
-      document.querySelector("input[placeholder='Enter user id']").value = cells[0].textContent;
+      //document.querySelector("input[placeholder='Enter user id']").value = cells[0].textContent;
       document.getElementById("position").value = cells[1].textContent;
       document.querySelector("input[placeholder='Enter username']").value = cells[2].textContent;
       document.querySelector("input[placeholder='Enter new password']").value = row.dataset.password; // Use the stored password
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearForm() {
-    document.querySelector("input[placeholder='Enter user id']").value = "";
+    //document.querySelector("input[placeholder='Enter user id']").value = "";
     document.getElementById("position").value = "Admin";
     document.querySelector("input[placeholder='Enter username']").value = "";
     document.querySelector("input[placeholder='Enter new password']").value = "";

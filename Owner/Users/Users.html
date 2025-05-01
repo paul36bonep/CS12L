@@ -17,8 +17,7 @@
       <div class="toggle">
         <div class="logo">
           <img src="../../images/DATCOM.png">
-          <h2>Dat<span class="danger">Com</
-            span></h2>
+          <h2>Dat<span class="danger">Com</span></h2>
         </div>
         <div class="close" id="close-btn">
           <span class="material-icons-sharp">
@@ -165,48 +164,50 @@
       <div class="modal" id="registerModal">
         <div class="modal-content">
           <header>Register User</header>
-          <form action="#">
+          <form method="POST" action="../../registeruser.php">
             <div class="form first">
               <div class="personal info">
-                <span class="title">Update User</span>
+                <span class="title">Register User</span>
                 <div class="fields">
-                  <div class="input-field">
-                    <label>User ID</label>
-                    <input type="text" placeholder="Enter user id" required>
-                  </div>
-                  <div class="input-field">
-                    <label for="position">Position:</label>
-                    <select id="position" required>
-                      <option value="Admin">Admin</option>
-                      <option value="Owner">Owner</option>
-                      <option value="Unit Manager">Unit Manager</option>
-                    </select>
-                  </div>
-                  <div class="input-field">
-                    <label>Username</label>
-                    <input type="text" placeholder="Enter username" required>
-                  </div>
-                  <div class="input-field">
-                    <label>Password</label>
-                    <input type="text" placeholder="Enter new password" required>
-                  </div>
+
                   <div class="input-field">
                     <label>Name</label>
-                    <input type="text" placeholder="Enter name" required>
+                    <input type="text" name="name" placeholder="Enter name" required>
                   </div>
+
+                  <div class="input-field">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter username" required>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Password</label>
+                    <input type="text" name="password" placeholder="Enter new password" required>
+                  </div>
+                 
+                  <div class="input-field">
+                    <label for="position">Position:</label>
+                    <select name="position" id="position" required>
+                      <option value="Admin">Admin</option>
+                      <option value="Owner">Owner</option>
+                      <option value="Unit Manager" selected>Unit Manager</option>
+                    </select>
+                  </div>
+
                   <div class="input-field">
                     <label for="status">Status:</label>
-                    <select id="status" required>
-                      <option value="Active">Active</option>
+                    <select name="status" id="status" required>
+                      <option value="Active" selected>Active</option>
                       <option value="Inactive">Inactive</option>
                     </select>
                   </div>
+
                 </div>
                 <div class="buttons">
                   <button type="button" class="backBtn" id="closeModalBtn">
                     <span class="btnText">Close</span>
                   </button>
-                  <button type="submit" class="submit">
+                  <button type="submit" name="register" class="submit">
                     <span class="submitBtn">Submit</span>
                   </button>
                 </div>
@@ -218,7 +219,7 @@
       
   </div>
 
-  <script src="../Main_Page/Main_Page.js"></script>
+  <!-- <script src="../Main_Page/Main_Page.js"></script> -->
   <script src="Users.js"></script>
   
 </body>

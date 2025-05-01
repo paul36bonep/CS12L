@@ -1,4 +1,11 @@
 --------FOR TESTING--------
+Default Credentials for Testing:
+Owner>> Username: SuperAdmin Password: admin
+Admin>> Username: admin Password: admin
+Unit_Manager>> Username: manager Password: manager
+
+
+
 Problem: if you encounter Log in error with registered users:
 
     Cause: 
@@ -6,6 +13,11 @@ Problem: if you encounter Log in error with registered users:
 
     Solution:
         Change users table's password to VARCHAR 60 in the database so hashing works.
+
+Problem: if you encounter database error with register user:
+
+    Cause: Unit Manager is not defined in the database
+    Solution: INSERT INTO `positions`(`PositionID`, `PositionName`) VALUES (3,'Unit Manager')
 --------FOR TESTING------
 
 
@@ -14,7 +26,8 @@ To Edit:
     #Login
         Trigger: Invalid Login
         Please Create a script for invalid credentials(e.g pop-up message) before redirecting to Login page
-
+        Password field: Change type to "password"
+        
     #Users
         Please remove user ID input field from Add user modal in Users page.
 

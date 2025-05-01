@@ -171,44 +171,51 @@
       <div class="modal" id="registerModal">
         <div class="modal-content">
           <header>Manage Agents</header>
-          <form action="#">
+          <form method="POST" action="../../registeragent.php">
             <div class="form first">
               <div class="personal info">
-                <span class="title">Update Agent</span>
+                <span class="title">Add Agent</span>
                 <div class="fields">
-                  <div class="input-field">
+
+                  <!-- <div class="input-field">
                     <label>Agent ID</label>
                     <input type="text" placeholder="Enter agent id" required>
-                  </div>
+                  </div> -->
+
                   <div class="input-field">
                     <label>Agent Name</label>
-                    <input type="text" placeholder="Enter agent name" required>
+                    <input type="text" name="agentname" placeholder="Enter agent name" required>
                   </div>
+
                   <div class="input-field">
                     <label>Age</label>
-                    <input type="number" placeholder="Enter age" required>
+                    <input type="number" name="age" placeholder="Enter age" required>
                   </div>
+
                   <div class="input-field">
                     <label>Commission %</label>
-                    <input type="number" placeholder="Enter commission percent" required>
+                    <input type="number" name="commissionpercent" placeholder="Enter commission percent" required>
                   </div>
+
                   <div class="input-field">
                     <label>Area</label>
-                    <input type="text" placeholder="Enter area" required>
+                    <input type="text" name="area" placeholder="Enter area" required>
                   </div>
+
                   <div class="input-field">
                     <label for="status">Status:</label>
                     <select id="status" required>
-                      <option value="Active">Active</option>
+                      <option value="Active" selected>Active</option>
                       <option value="Inactive">Inactive</option>
                     </select>
                   </div>
                 </div>
+
                 <div class="buttons">
                   <button type="button" class="backBtn" id="closeModalBtn">
                     <span class="btnText">Close</span>
                   </button>
-                  <button type="submit" class="submit">
+                  <button type="submit" name="register" class="submit">
                     <span class="submitBtn">Submit</span>
                   </button>
                 </div>
@@ -217,7 +224,6 @@
           </form>
         </div>
       </div>
-
   </div>
 
   <script src="../Main_Page/Main_Page.js"></script>
