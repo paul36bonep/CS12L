@@ -31,6 +31,5 @@
     </form>
     <button onclick="window.location.href='registration.html'" name="register" value="Register">Register</button>
     
-
 </body>
 </html>

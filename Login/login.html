@@ -6,38 +6,26 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="main">
-      <img class="logo" src="../images/DATCOM.png" />
+
+    <div class="main" style="">
+      <img class="logo" src="../images/DATCOM.png">
       <div class="title">DatCom</div>
-
-      <form id="loginForm" onsubmit="return false;">
+      <form method="POST" id="loginForm" action="../login.php" >
         <div class="credentials">
-          <label for="username" class="input-label">Username</label>
           <div class="username">
-            <i class="fas fa-user"></i>
-            <input type="text" name="username" id="username" placeholder="Enter username" required />
+            <span class="glyphicon glyphicon-user"></span>
+            <input type="text" name="username" id="username" placeholder="Username" required="">
           </div>
-
-          <label for="password" class="input-label">Password</label>
           <div class="password">
-            <i class="fas fa-key"></i>
-            <input type="password" name="password" id="password" placeholder="••••••••" required />
+            <span class="glyphicon glyphicon-lock"></span>
+            <input type="password" name="password" id="password" placeholder="Password" required="">
           </div>
         </div>
-
-        <div class="options">
-          <label>
-            <input type="checkbox" id="remember-me" /> Remember me
-          </label>
-          <label>
-            <input type="checkbox" id="show-password" onchange="togglePassword()" /> Show password
-          </label>
-        </div>
-
-        <button class="submit" type="button" id="loginButton">Sign in</button>
+        <button class="submit" type="submit" name="login" id="loginButton">Login</button>
       </form>
-    </div>
+      </div>
 
-    <script src="Login.js"></script>
+      <!-- <script src="Login.js"></script> -->
   </body>
 </html>
+
