@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+<<<<<<< HEAD
+=======
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+>>>>>>> newUI
   <link rel="stylesheet" href="Users.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
   <title>Sales Commission Tracker</title>
@@ -17,7 +21,12 @@
       <div class="toggle">
         <div class="logo">
           <img src="../../images/DATCOM.png">
+<<<<<<< HEAD
           <h2>Dat<span class="danger">Com</span></h2>
+=======
+          <h2>Dat<span class="danger">Com</
+            span></h2>
+>>>>>>> newUI
         </div>
         <div class="close" id="close-btn">
           <span class="material-icons-sharp">
@@ -69,11 +78,19 @@
             </span>
             <h3>Settings</h3>
         </a>
+<<<<<<< HEAD
         <a href="../../Login/Login.html">
           <span class="material-icons-sharp">
             logout
             </span>
             <h3>Logout</h3>
+=======
+        <a href="../../Login/login2.html">
+          <span class="material-icons-sharp">
+            logout
+            </span>
+            <h3>Sign Out</h3>
+>>>>>>> newUI
         </a>
       </div>
     </aside>
@@ -87,8 +104,29 @@
           <button class="action-btn add-btn" id="openModalBtn">
             Add User
           </button>
+<<<<<<< HEAD
           <input type="text" id="searchbar" placeholder="Search..." class="search-bar">
         </div>
+=======
+          <div class="filter-group">
+            <input type="text" id="searchbar" placeholder="Search..." class="search-bar" />
+            
+            <select id="roleFilter" class="search-bar">
+              <option value="All">All Roles</option>
+              <option value="Owner">Owner</option>
+              <option value="Admin">Admin</option>
+              <option value="Unit Manager">Unit Manager</option>
+            </select>
+        
+            <select id="statusFilter" class="search-bar">
+              <option value="All">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        
+>>>>>>> newUI
         <table class="user-table">
           <thead>
             <tr>
@@ -100,6 +138,7 @@
               <th>Action</th>
             </tr>
           </thead>
+<<<<<<< HEAD
               <tr class="active-row">
                 <td>10001</td>
                 <td>Admin</td>
@@ -118,6 +157,9 @@
                   </button>               
                 </td>
               </tr>
+=======
+              
+>>>>>>> newUI
         </table>
         
       </div>
@@ -164,6 +206,7 @@
       <div class="modal" id="registerModal">
         <div class="modal-content">
           <header>Register User</header>
+<<<<<<< HEAD
           <form method="POST" action="../../registeruser.php">
             <div class="form first">
               <div class="personal info">
@@ -175,11 +218,31 @@
                     <input type="text" name="name" placeholder="Enter name" required>
                   </div>
 
+=======
+          <form action="Users.php" method="POST">
+            <div class="form first">
+              <div class="personal info">
+                <span class="title">Update User</span>
+                <div class="fields">
+                  <div class="input-field">
+                    <label>User ID</label>
+                    <input type="text" readonly placeholder="User id" disabled>
+                  </div>
+                  <div class="input-field">
+                    <label for="position">Position:</label>
+                    <select id="position" name="position" required>
+                      <option value="Admin">Admin</option>
+                      <option value="Owner">Owner</option>
+                      <option value="Unit Manager">Unit Manager</option>
+                    </select>
+                  </div>
+>>>>>>> newUI
                   <div class="input-field">
                     <label>Username</label>
                     <input type="text" name="username" placeholder="Enter username" required>
                   </div>
 
+<<<<<<< HEAD
                   <div class="input-field">
                     <label>Password</label>
                     <input type="text" name="password" placeholder="Enter new password" required>
@@ -202,12 +265,35 @@
                     </select>
                   </div>
 
+=======
+                  <div class="input-field password-wrapper">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" />
+                    <i class="fas fa-eye" id="togglePassword"></i>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Enter name" required>
+                  </div>
+                  <div class="input-field">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+>>>>>>> newUI
                 </div>
                 <div class="buttons">
                   <button type="button" class="backBtn" id="closeModalBtn">
                     <span class="btnText">Close</span>
                   </button>
+<<<<<<< HEAD
                   <button type="submit" name="register" class="submit">
+=======
+                  <button type="submit" class="submit">
+>>>>>>> newUI
                     <span class="submitBtn">Submit</span>
                   </button>
                 </div>
@@ -219,8 +305,32 @@
       
   </div>
 
+<<<<<<< HEAD
   <!-- <script src="../Main_Page/Main_Page.js"></script> -->
   <script src="Users.js"></script>
+=======
+  <script src="../Main_Page/Main_Page.js"></script>
+  <script src="Users.js"></script>
+  <script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+  
+    // Ensure default is hidden
+    passwordInput.setAttribute("type", "password");
+    togglePassword.classList.remove("fa-eye-slash");
+    togglePassword.classList.add("fa-eye");
+  
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.getAttribute("type") === "password";
+      passwordInput.setAttribute("type", isPassword ? "text" : "password");
+  
+      // Toggle icon
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+    });
+  </script>
+  
+>>>>>>> newUI
   
 </body>
 

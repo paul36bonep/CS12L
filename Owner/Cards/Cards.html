@@ -66,11 +66,19 @@
           </span>
           <h3>Settings</h3>
         </a>
+<<<<<<< HEAD
         <a href="../../Login/Login.html">
           <span class="material-icons-sharp">
             logout
           </span>
           <h3>Logout</h3>
+=======
+        <a href="../../Login/login2.html">
+          <span class="material-icons-sharp">
+            logout
+          </span>
+          <h3>Sign out</h3>
+>>>>>>> newUI
         </a>
       </div>
     </aside>
@@ -80,9 +88,14 @@
       <h1>Cards</h1>
       <div class="user-div">
         <div class="table-header">
+<<<<<<< HEAD
           <button class="action-btn add-btn" id="openModalBtn">Add Card</button>
           <button class="action-btn add-btn" id="openBankModalBtn">Manage Banks</button>
           <button class="action-btn add-btn" id="openCardTypeModalBtn">Manage Card Types</button>
+=======
+          <button class="action-btn add-btn" id="openModalBtn">Add New Card</button>
+          
+>>>>>>> newUI
           <input type="text" id="searchbar" placeholder="Search..." class="search-bar">
         </div>
         <table class="user-table">
@@ -121,6 +134,7 @@
           <div class="form first">
             <div class="personal info">
               <span class="title">Add New Card</span>
+<<<<<<< HEAD
               <div class="fields">
                 <div class="input-field">
                   <label>Card ID</label>
@@ -152,6 +166,48 @@
                   </select>
                 </div>
               </div>
+=======
+              <div class="fields-container" style="position: relative;">
+                <!-- Left-side fields -->
+                <div class="fields">
+                  <div class="input-field">
+                    <label>Card ID</label>
+                    <input type="number" placeholder="Card ID" required readonly>
+                  </div>
+                
+                  <div class="input-field">
+                    <label>Amount</label>
+                    <input type="number" placeholder="Enter amount" required>
+                  </div>
+                
+                  <div class="input-field">
+                    <label>Status:</label>
+                    <select id="status" required>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+    
+                <!-- dropdowns -->
+                <div class="fields">
+                  <div class="input-field">
+                    <label>Bank Name</label>
+                    <select id="bankDropdown" required>
+                      <option value="">Select Bank</option>
+                    </select>
+                  </div>
+                
+                  <div class="input-field">
+                    <label>Card Type</label>
+                    <select id="cardTypeDropdown" required>
+                      <option value="">Select Card Type</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+    
+>>>>>>> newUI
               <div class="buttons">
                 <button type="button" class="backBtn" id="closeModalBtn"><span class="btnText">Close</span></button>
                 <button type="submit" class="submit"><span class="submitBtn">Submit</span></button>
@@ -162,6 +218,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Bank Modal -->
     <div class="modal" id="bankModal">
       <div class="modal-content">
@@ -208,6 +265,8 @@
       </div>
     </div>
 
+=======
+>>>>>>> newUI
      <!--Right Section nav-->
      <div class="right-section">
       <div class="nav">
