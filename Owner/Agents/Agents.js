@@ -49,72 +49,72 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+  // submitBtn.addEventListener("click", (e) => {
+  //   e.preventDefault();
 
-    const userId = agentIdInput.value;
-    const positionId = document.querySelector("input[placeholder='Enter agent name']").value;
-    const username = document.querySelector("input[placeholder='Enter age']").value;
-    const password = document.querySelector("input[placeholder='Enter commission percent']").value;
-    const name = document.getElementById("area").value;
-    const status = document.getElementById("status").value;
+  //   const userId = agentIdInput.value;
+  //   const positionId = document.querySelector("input[placeholder='Enter agent name']").value;
+  //   const username = document.querySelector("input[placeholder='Enter age']").value;
+  //   const password = document.querySelector("input[placeholder='Enter commission percent']").value;
+  //   const name = document.getElementById("area").value;
+  //   const status = document.getElementById("status").value;
 
-    if (userId && positionId && username && password && name) {
-      if (editingRow) {
-        const updatedAgent = {
-          id: userId,
-          name: positionId,
-          age: username,
-          commission: password,
-          area: name,
-          status: status
-        };
+  //   if (userId && positionId && username && password && name) {
+  //     if (editingRow) {
+  //       const updatedAgent = {
+  //         id: userId,
+  //         name: positionId,
+  //         age: username,
+  //         commission: password,
+  //         area: name,
+  //         status: status
+  //       };
 
-        editingRow.cells[0].textContent = userId;
-        editingRow.cells[1].textContent = positionId;
-        editingRow.cells[2].textContent = username;
-        editingRow.cells[3].textContent = password;
-        editingRow.cells[4].textContent = name;
-        editingRow.cells[5].textContent = status;
-        editingRow.dataset.password = password;
+  //       editingRow.cells[0].textContent = userId;
+  //       editingRow.cells[1].textContent = positionId;
+  //       editingRow.cells[2].textContent = username;
+  //       editingRow.cells[3].textContent = password;
+  //       editingRow.cells[4].textContent = name;
+  //       editingRow.cells[5].textContent = status;
+  //       editingRow.dataset.password = password;
 
-        const agents = getAgentsFromStorage();
-        const index = agents.findIndex(a => a.id === userId);
-        if (index !== -1) {
-          agents[index] = updatedAgent;
-          saveAgentsToStorage(agents);
-        }
+  //       const agents = getAgentsFromStorage();
+  //       const index = agents.findIndex(a => a.id === userId);
+  //       if (index !== -1) {
+  //         agents[index] = updatedAgent;
+  //         saveAgentsToStorage(agents);
+  //       }
 
-        alert("Agent successfully updated!");
-      } else {
-        const agents = getAgentsFromStorage();
-        const newAgent = {
-          id: userId,
-          name: positionId,
-          age: username,
-          commission: password,
-          area: name,
-          status: status
-        };
+  //       alert("Agent successfully updated!");
+  //     } else {
+  //       const agents = getAgentsFromStorage();
+  //       const newAgent = {
+  //         id: userId,
+  //         name: positionId,
+  //         age: username,
+  //         commission: password,
+  //         area: name,
+  //         status: status
+  //       };
 
-        agents.push(newAgent);
-        saveAgentsToStorage(agents);
-        addAgentToTable(newAgent);
+  //       agents.push(newAgent);
+  //       saveAgentsToStorage(agents);
+  //       addAgentToTable(newAgent);
 
-        // ✅ Increment lastAgentId only after successful addition
-        let lastId = parseInt(localStorage.getItem("lastAgentId") || "10001");
-        localStorage.setItem("lastAgentId", lastId + 1);
+  //       // ✅ Increment lastAgentId only after successful addition
+  //       let lastId = parseInt(localStorage.getItem("lastAgentId") || "10001");
+  //       localStorage.setItem("lastAgentId", lastId + 1);
 
-        alert("Agent successfully added!");
-      }
+  //       alert("Agent successfully added!");
+  //     }
 
-      modal.classList.remove("active");
-      clearForm();
-      filterTable();
-    } else {
-      alert("Please fill in all fields.");
-    }
-  });
+  //     modal.classList.remove("active");
+  //     clearForm();
+  //     filterTable();
+  //   } else {
+  //     alert("Please fill in all fields.");
+  //   }
+  // });
 
   function addAgentToTable(agent) {
     const row = document.createElement("tr");

@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     if (empty($username) || empty($password)) {
 
         echo "<script>alert('Please fill the required fields!')</script>";
-        echo "<script> window.location.href='../Login/Login.php'</script>";
+        echo "<script> window.location.href='../Login/Login.html'</script>";
 
     } else {
 
@@ -24,24 +24,54 @@ if (isset($_POST['login'])) {
 
             $row = mysqli_fetch_array($result);
             
-
             if(password_verify($password,$row["Password"])){
 
                 $_SESSION['username'] = $username;
-                echo $_SESSION['username'];
                 header("Location:Owner/Main_Page/Main_Page.html");
+
+                $position = $row["PositionID"];
+                
+                switch ($position) {
+                    case 1:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Owner";
+                        header("Location:Owner/Main_Page/Main_Page.html");
+                        break;
+
+                    case 2:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Admin";
+                        header("Location:Admin/Main_Page/Main_Page.html");
+                        break;
+
+                    case 3:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Unit Manager";
+                        header("Location:Unit_Manager/Main_Page/Main_Page.html");
+                        break; 
+
+                    default:
+                        session_start();
+                        session_unset();
+                        session_destroy();
+                        $connection->close();
+                        echo "<script>alert('Unknown User')</script>";
+                        echo "<script> window.location.href='Login/Login.html'</script>";
+                        break;
+                }
            
             }else{
 
                 echo "Invalid Password";
                 echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
-
+                $connection->close();
             }
           
         }else{
 
             echo "Invalid Username";
             echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
+            $connection->close();
         }
 
         $connection->close();
