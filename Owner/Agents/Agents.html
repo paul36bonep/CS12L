@@ -42,7 +42,7 @@
             <h3>Users</h3>
         </a>
      
-        <a href="Agents.html">
+        <a href="../Agents/Agents.html">
           <span class="material-icons-sharp">
             people
             </span>
@@ -172,30 +172,30 @@
       <div class="modal" id="registerModal">
         <div class="modal-content">
           <header>Manage Agents</header>
-          <form action="#">
+          <form action="../../registeragent.php" method="POST">
             <div class="form first">
               <div class="personal info">
                 <span class="title">Update Agent</span>
                 <div class="fields">
-                  <div class="input-field">
+                  <!-- <div class="input-field">
                     <label>Agent ID</label>
                     <input type="text" id="agentIdInput" placeholder="Auto-generated" required readonly>
-                  </div>
+                  </div> -->
                   <div class="input-field">
                     <label>Agent Name</label>
-                    <input type="text" placeholder="Enter agent name" required>
+                    <input type="text" name="agentname" placeholder="Enter agent name" required>
                   </div>
                   <div class="input-field">
                     <label>Age</label>
-                    <input type="number" placeholder="Enter age" required>
+                    <input type="number" name="age" placeholder="Enter age" required>
                   </div>
                   <div class="input-field">
                     <label>Commission %</label>
-                    <input type="text" placeholder="Enter commission percent" required>
+                    <input type="text" name="commissionpercent" placeholder="Enter commission percent" required>
                   </div>
                   <div class="input-field">
                     <label for="area">Area</label>
-                    <select id="area" required>
+                    <select id="area" name="area" required>
                       <option value="Davao-South">Davao-South</option>
                       <option value="Davao-North">Davao-North</option>
                       <option value="Davao-Central">Davao-Central</option>

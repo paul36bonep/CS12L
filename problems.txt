@@ -1,9 +1,8 @@
 --------FOR TESTING--------
 Default Credentials for Testing:
-Owner>> Username: SuperAdmin Password: admin
+Owner>> Username: SuperAdmin Password: 123
 Admin>> Username: admin Password: admin
 Unit_Manager>> Username: manager Password: manager
-
 
 
 Problem: if you encounter Log in error with registered users:
@@ -19,7 +18,6 @@ Problem: if you encounter database error with register user:
     Cause: Unit Manager is not defined in the database
     Solution: INSERT INTO `positions`(`PositionID`, `PositionName`) VALUES (3,'Unit Manager')
 --------FOR TESTING------
-
 
 
 To Edit:

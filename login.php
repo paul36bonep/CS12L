@@ -24,24 +24,53 @@ if (isset($_POST['login'])) {
 
             $row = mysqli_fetch_array($result);
             
-
             if(password_verify($password,$row["Password"])){
 
                 $_SESSION['username'] = $username;
-                echo $_SESSION['username'];
-                header("Location:Owner/Main_Page/Main_Page.html");
-           
+                $position = $row['PositionID'];
+
+                switch ($position) {
+                    case 1:
+                        $_SESSION['position'] = 'Owner';
+                        $_SESSION['name'] = $row['Name'];
+                        header("Location:Owner/Main_Page/Main_Page.html");
+                        break;
+
+                    case 2:
+                        $_SESSION['position'] = 'Admin'; 
+                        $_SESSION['name'] = $row['Name'];                     
+                        header("Location:Admin/Main_Page/Main_Page.html");
+                        break;
+
+                    case 3:
+                        $_SESSION['position'] = 'Unit Manager';
+                        $_SESSION['name'] = $row['Name'];
+                        header("Location:Unit_Manager/Main_Page/Main_Page.html");
+                        break;
+
+                    default:
+                        session_start();
+                        session_unset();
+                        session_destroy();
+                        echo "<script>alert('Unknown User Log in')</script>";
+                        echo "<script> window.location.href='Login/Login.html'</script>";
+                        $connection->close();
+                        break;
+                    }
+
             }else{
 
-                echo "Invalid Password";
-                echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
+                echo "<script>alert('Invalid Password')</script>";
+                echo "<script> window.location.href='Login/Login.html'</script>";
+                $connection->close();
 
             }
           
         }else{
 
-            echo "Invalid Username";
-            echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
+            echo "<script>alert('Invalid Username')</script>";
+            echo "<script> window.location.href='Login/Login.html'</script>";
+            $connection->close();
         }
 
         $connection->close();
