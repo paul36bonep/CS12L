@@ -30,42 +30,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+  // submitBtn.addEventListener("click", (e) => {
+  //   e.preventDefault();
   
-    const userId = document.querySelector("input[placeholder='User id']").value;
-    const positionId = document.getElementById("position").value;
-    const username = document.querySelector("input[placeholder='Enter username']").value;
-    const password = document.querySelector("input[placeholder='Enter new password']").value;
-    const name = document.querySelector("input[placeholder='Enter name']").value;
-    const status = document.getElementById("status").value;
+  //   const userId = document.querySelector("input[placeholder='User id']").value;
+  //   const positionId = document.getElementById("position").value;
+  //   const username = document.querySelector("input[placeholder='Enter username']").value;
+  //   const password = document.querySelector("input[placeholder='Enter new password']").value;
+  //   const name = document.querySelector("input[placeholder='Enter name']").value;
+  //   const status = document.getElementById("status").value;
   
-    if (userId && positionId && username && password && name) {
-      const formData = new FormData();
-      formData.append("position", positionId);
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("name", name);
-      formData.append("status", status);
+  //   if (userId && positionId && username && password && name) {
+  //     const formData = new FormData();
+  //     formData.append("position", positionId);
+  //     formData.append("username", username);
+  //     formData.append("password", password);
+  //     formData.append("name", name);
+  //     formData.append("status", status);
   
-      fetch("users.php", {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.text())
-      .then(data => {
-        alert(data);
-        modal.classList.remove("active");
-        clearForm();
-        // Optional: refresh page or re-fetch users from DB if you implement a display
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-    } else {
-      alert("Please fill in all fields.");
-    }
-  });  
+  //     fetch("users.php", {
+  //       method: "POST",
+  //       body: formData
+  //     })
+  //     .then(res => res.text())
+  //     .then(data => {
+  //       alert(data);
+  //       modal.classList.remove("active");
+  //       clearForm();
+  //       // Optional: refresh page or re-fetch users from DB if you implement a display
+  //     })
+  //     .catch(error => {
+  //       console.error("Error:", error);
+  //     });
+  //   } else {
+  //     alert("Please fill in all fields.");
+  //   }
+  // });  
 
  
   function clearForm() {

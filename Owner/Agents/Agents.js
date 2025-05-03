@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editBtn.addEventListener("click", () => {
       editingRow = row;
       const cells = row.cells;
-      agentIdInput.value = cells[0].textContent;
+      //agentIdInput.value = cells[0].textContent;
       document.querySelector("input[placeholder='Enter agent name']").value = cells[1].textContent;
       document.querySelector("input[placeholder='Enter age']").value = cells[2].textContent;
       document.querySelector("input[placeholder='Enter commission percent']").value = cells[3].textContent;
