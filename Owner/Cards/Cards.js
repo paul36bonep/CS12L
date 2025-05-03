@@ -208,7 +208,6 @@ function deleteCard(cardId) {
   alert("Card successfully deleted!");
 }
 
-
 function editCard(cardId) {
   const cards = JSON.parse(localStorage.getItem("cards")) || [];
   const index = cards.findIndex(c => c.cardId === cardId);
