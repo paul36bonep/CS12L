@@ -430,6 +430,7 @@ main table tbody tr:last-child td{
   z-index: 2;
   box-shadow: 0 1rem 1rem var(--color-light);
   margin: 0;
+  
  }
 
  .right-section .nav .dark-mode{

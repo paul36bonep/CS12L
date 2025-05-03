@@ -237,6 +237,5 @@ function editCard(cardId) {
       break;
     }
   }
-
   document.getElementById("registerModal").classList.add("active");
 }
