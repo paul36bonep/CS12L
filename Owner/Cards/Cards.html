@@ -96,17 +96,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="active-row">
-              <td>110001</td>
-              <td>BDO</td>
-              <td>Platinum</td>
-              <td>25000</td>
-              <td>Active</td>
-              <td>
-                <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
-                <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
-              </td>
-            </tr>
+            
           </tbody>
         </table>
       </div>
@@ -116,7 +106,7 @@
     <div class="modal" id="registerModal">
       <div class="modal-content">
         <header>Card Details</header>
-        <form action="#">
+        <form id="cardForm" action="#">
           <div class="form first">
             <div class="personal info">
               <span class="title">Add New Card</span>
@@ -125,37 +115,44 @@
                 <div class="fields">
                   <div class="input-field">
                     <label>Card ID</label>
-                    <input type="number" placeholder="Card ID" required readonly>
+                    <input type="number" id="cardIdInput" placeholder="Card ID" required readonly>
                   </div>
                 
                   <div class="input-field">
                     <label>Amount</label>
-                    <input type="number" placeholder="Enter amount" required>
+                    <input type="number" id="amountInput" placeholder="Enter amount" required>
                   </div>
                 
                   <div class="input-field">
                     <label>Status:</label>
-                    <select id="status" required>
+                    <select id="statusInput" required>
                       <option value="Active">Active</option>
                       <option value="Inactive">Inactive</option>
                     </select>
                   </div>
                 </div>
     
-                <!-- dropdowns -->
                 <div class="fields">
+                  <!-- Bank Dropdown -->
                   <div class="input-field">
                     <label>Bank Name</label>
-                    <select id="bankDropdown" required>
+                    <select id="bankDropdown" onchange="handleBankDropdownChange(this)" required>
                       <option value="">Select Bank</option>
+                      <option value="define-new">Define New</option>
+                      <!-- Other bank options here -->
                     </select>
+                    
                   </div>
                 
+                  <!-- Card Type Dropdown -->
                   <div class="input-field">
                     <label>Card Type</label>
-                    <select id="cardTypeDropdown" required>
+                    <select id="cardTypeDropdown" onchange="handleCardTypeDropdownChange(this)" required>
                       <option value="">Select Card Type</option>
+                      <option value="define-new">Define New</option>
+                      <!-- Other card type options here -->
                     </select>
+                    
                   </div>
                 </div>
               </div>
@@ -169,6 +166,29 @@
         </form>
       </div>
     </div>
+      <!-- Mini Modal for Adding Bank -->
+<div id="bankModal" class="mini-modal">
+  <div class="mini-modal-content">
+    <h3>Define New Bank</h3>
+    <input type="text" id="newBankName" placeholder="Enter bank name">
+    <div class="mini-modal-actions">
+      <button onclick="closeBankModal()">Cancel</button>
+      <button onclick="addNewBank()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mini Modal for Adding Card Type -->
+<div id="cardTypeModal" class="mini-modal">
+  <div class="mini-modal-content">
+    <h3>Define New Card Type</h3>
+    <input type="text" id="newCardTypeName" placeholder="Enter card type">
+    <div class="mini-modal-actions">
+      <button onclick="closeCardTypeModal()">Cancel</button>
+      <button onclick="addNewCardType()">Add</button>
+    </div>
+  </div>
+</div>
 
      <!--Right Section nav-->
      <div class="right-section">

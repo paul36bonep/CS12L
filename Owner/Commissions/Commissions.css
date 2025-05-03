@@ -557,9 +557,12 @@ main .span{
 }
 
 .modal-content{
-  position: relative;
+  position: absolute; /*originally relative*/
+  top: 5%;
   max-width: 900px;
   width: 100%;
+  max-height: 400px;
+  height: 100%;
   border-radius: 6px;
   padding: 30px;
   margin: 0 15px;
@@ -586,7 +589,7 @@ main .span{
 .modal-content form{
   position: relative;
   margin-top: 16px;
-  min-height: 350px;
+  min-height: 300px;
   background-color: #f2f2f2;
 }
 
@@ -769,3 +772,113 @@ tr td:nth-child(5):contains("Approved") {
   padding: 5px 10px;
   cursor: pointer;
 }
+
+#statusContainer{
+  position: absolute;
+  top: -30px;
+  right:-1px;
+}
+
+/*commission lines modal*/
+/* Commission Lines Section */
+.commission-lines-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.commission-lines-section header {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.commission-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.commission-fields label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  flex: 1 1 22%;
+}
+
+.commission-fields input {
+  padding: 0.4rem 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Table for Commission Lines */
+.commission-lines-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.commission-lines-table thead {
+  background-color: #f4f4f4;
+}
+
+.commission-lines-table th,
+.commission-lines-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.commission-lines-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* Add Entry Fields */
+.add-entry-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.add-entry-fields input {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1 1 18%;
+}
+
+.add-entry-fields button {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-entry-fields button:hover {
+  background-color: #388e3c;
+}
+
+/* Utility */
+.hidden {
+  display: hidden;
+}
+/*end of commission lines modal*/
+
+#embeddedCommissionLines{
+  max-height: 320px;
+  margin-top: -10px;
+  padding: 2rem;
+}
+
+div.buttons{
+  margin-top: -5px;
+}
+

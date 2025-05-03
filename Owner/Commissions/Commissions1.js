@@ -4,13 +4,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("registerModal");
   const submitBtn = document.querySelector(".submit");
   const userTable = document.querySelector(".user-table tbody");
+  const commissionLinesSection = document.getElementById("commissionLinesSection");
+  const commissionLinesTable = document.querySelector(".commission-lines-table tbody");
+  const addLineBtn = document.getElementById("addLineBtn");
 
-  let editingRow = null; 
+  let editingRow = null;
 
   openModalBtn.addEventListener("click", () => {
     modal.classList.add("active");
     clearForm();
-    editingRow = null; 
+    commissionLinesSection.classList.add("hidden");
+    commissionLinesTable.innerHTML = "";
+    editingRow = null;
   });
 
   closeModalBtn.addEventListener("click", () => {
@@ -27,46 +32,38 @@ document.addEventListener("DOMContentLoaded", () => {
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const userId = document.querySelector("input[placeholder='Enter commission id']").value;
-    const positionId = document.querySelector("input[placeholder='Enter username']").value;
-    const username = document.querySelector("input[placeholder='Enter agent name']").value;
-    const password = document.querySelector("input[placeholder='Enter total commission']").value;
-    const status = document.getElementById("status").value;
+    const commissionId = document.getElementById("commissionId").value;
+    const date = document.getElementById("date").value;
+    const agent = document.getElementById("agent").value;
+    const remarks = document.getElementById("remarks").value;
 
-    if (userId && positionId && username && password) {
+    if (commissionId && date && agent) {
       if (editingRow) {
-        editingRow.cells[0].textContent = userId;
-        editingRow.cells[1].textContent = positionId;
-        editingRow.cells[2].textContent = username;
-        editingRow.cells[3].textContent = password;
-        editingRow.cells[4].textContent = status;
-        editingRow.dataset.password = password;
+        editingRow.cells[0].textContent = commissionId;
+        editingRow.cells[1].textContent = "Prepared User";
+        editingRow.cells[2].textContent = agent;
+        editingRow.cells[3].textContent = "0.00";
+        editingRow.cells[4].textContent = "Pending";
       } else {
         const newRow = document.createElement("tr");
-        newRow.dataset.password = password; 
         newRow.innerHTML = `
-          <td>${userId}</td>
-          <td>${positionId}</td>
-          <td>${username}</td>
-          <td>${password}</td>
-          <td>${status}</td>
+          <td>${commissionId}</td>
+          <td>Prepared User</td>
+          <td>${agent}</td>
+          <td>0.00</td>
+          <td>Pending</td>
           <td>
-            <button class="action-btn edit-btn">
-              <span class="material-icons-sharp">edit</span>
-            </button>
-            <button class="action-btn delete-btn">
-              <span class="material-icons-sharp">delete</span>
-            </button>
+            <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
+            <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
           </td>
         `;
         userTable.appendChild(newRow);
         attachRowActions(newRow);
       }
 
-      modal.classList.remove("active"); 
-      clearForm();
+      commissionLinesSection.classList.remove("hidden");
     } else {
-      alert("Please fill in all fields.");
+      alert("Please fill in all required fields.");
     }
   });
 
@@ -77,104 +74,52 @@ document.addEventListener("DOMContentLoaded", () => {
     editBtn.addEventListener("click", () => {
       editingRow = row;
       const cells = row.cells;
-      document.querySelector("input[placeholder='Enter commission id']").value = cells[0].textContent;
-      document.querySelector("input[placeholder='Enter username']").value = cells[1].textContent;
-      document.querySelector("input[placeholder='Enter agent name']").value = cells[2].textContent;
-      document.querySelector("input[placeholder='Enter total commission']").value = cells[3].textContent;
-      document.getElementById("status").value = cells[4].textContent;
-
+      document.getElementById("commissionId").value = cells[0].textContent;
+      document.getElementById("agent").value = cells[2].textContent;
+      document.getElementById("remarks").value = "";
       modal.classList.add("active");
     });
 
     deleteBtn.addEventListener("click", () => {
-      const confirmDelete = confirm("Are you sure you want to delete this user?");
-      if (confirmDelete) {
+      if (confirm("Are you sure you want to delete this entry?")) {
         row.remove();
       }
     });
   }
 
   function clearForm() {
-    document.querySelector("input[placeholder='Enter commission id']").value = "";
-    document.querySelector("input[placeholder='Enter username']").value = "";
-    document.querySelector("input[placeholder='Enter agent name']").value = "";
-    document.querySelector("input[placeholder='Enter total commission']").value = "";
-    document.getElementById("status").value = "";
+    document.getElementById("commissionId").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("agent").value = "";
+    document.getElementById("remarks").value = "";
   }
 
-  document.querySelectorAll(".user-table tbody tr").forEach((row) => {
-    attachRowActions(row);
-  });
-});
+  addLineBtn.addEventListener("click", () => {
+    const cardId = document.getElementById("cardIdInput").value.trim();
+    const clientName = document.getElementById("clientNameInput").value.trim();
+    const quantity = parseFloat(document.getElementById("quantityInput").value.trim());
+    const amount = parseFloat(document.getElementById("amountInput").value.trim());
 
-document.getElementById('viewCommissionLinesBtn').addEventListener('click', async (event) => {
-  event.preventDefault();
-  document.getElementById('commissionLinesModal').style.display = 'block';
+    if (!cardId || !clientName || isNaN(quantity) || isNaN(amount)) {
+      alert("Please fill in all fields correctly.");
+      return;
+    }
 
-  const response = await fetch('/api/commission_lines'); 
-  const commissionLines = await response.json();
-
-  const tbody = document.querySelector('.commission-lines-table tbody');
-  tbody.innerHTML = ''; 
-
-  commissionLines.forEach(line => {
+    const total = (quantity * amount).toFixed(2);
     const row = `
       <tr>
-        <td>${line.Coms_Lines}</td>
-        <td>${line.CommissionID}</td>
-        <td>${line.CardID}</td>
-        <td>${line.ClientName}</td>
-        <td>${line.Quantity}</td>
-        <td>${line.Amount}</td>
-        <td>${line.TotalAmount}</td>
+        <td>${cardId}</td>
+        <td>${clientName}</td>
+        <td>${quantity}</td>
+        <td>${amount}</td>
+        <td>${total}</td>
       </tr>`;
-    tbody.innerHTML += row;
+    commissionLinesTable.insertAdjacentHTML("beforeend", row);
+
+    document.getElementById("cardIdInput").value = "";
+    document.getElementById("clientNameInput").value = "";
+    document.getElementById("quantityInput").value = "";
+    document.getElementById("amountInput").value = "";
   });
+
 });
-
-document.getElementById('closeCommissionLinesBtn').addEventListener('click', () => {
-  document.getElementById('commissionLinesModal').style.display = 'none';
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  document.getElementById('commissionLinesModal').style.display = 'none';
-});
-
-document.getElementById('addLineBtn').addEventListener('click', () => {
-  const lineId = document.getElementById('lineIdInput').value.trim();
-  const commissionId = document.getElementById('commissionIdInput').value.trim();
-  const cardId = document.getElementById('cardIdInput').value.trim();
-  const clientName = document.getElementById('clientNameInput').value.trim();
-  const quantity = document.getElementById('quantityInput').value.trim();
-  const amount = document.getElementById('amountInput').value.trim();
-
-  if (!lineId || !commissionId || !cardId || !clientName || !quantity || !amount) {
-    alert('Please fill in all fields.');
-    return;
-  }
-
-  const tbody = document.querySelector('.commission-lines-table tbody');
-  const totalAmount = (parseFloat(quantity) * parseFloat(amount)).toFixed(2);
-
-  const newRow = `
-    <tr>
-      <td>${lineId}</td>
-      <td>${commissionId}</td>
-      <td>${cardId}</td>
-      <td>${clientName}</td>
-      <td>${quantity}</td>
-      <td>${amount}</td>
-      <td>${totalAmount}</td>
-    </tr>`;
-  
-  tbody.insertAdjacentHTML('beforeend', newRow);
-
-  document.getElementById('lineIdInput').value = '';
-  document.getElementById('commissionIdInput').value = '';
-  document.getElementById('cardIdInput').value = '';
-  document.getElementById('clientNameInput').value = '';
-  document.getElementById('quantityInput').value = '';
-  document.getElementById('amountInput').value = '';
-});
-
