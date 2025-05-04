@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => {
       console.error("Error fetching Cards Information:", error);
     });
+    
   });
   //for cards dropdown(end)
 
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearForm() {
-    //document.getElementById("commissionId").value = "";
+    document.getElementById("commissionId").value = "";
     document.getElementById("date").value = "";
     document.getElementById("agent").value = "";
     document.getElementById("remarks").value = "";
@@ -229,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardId = document.getElementById("cardsDropDown").value.trim();
     const clientName = document.getElementById("clientNameInput").value.trim();
     const quantity = parseFloat(document.getElementById("quantityInput").value.trim());
-    const amount = parseFloat(document.getElementById("amountInput").value.trim());
+    const amount = parseFloat(document.getElementById("cardAmount").value.trim());
 
     if (!cardId || !clientName || isNaN(quantity) || isNaN(amount)) {
       alert("Please fill in all fields correctly.");
@@ -238,19 +239,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const total = (quantity * amount).toFixed(2);
     const row = `
-      <tr>
+      <tr id="row${cardId}">
         <td>${cardId}</td>
         <td>${clientName}</td>
         <td>${quantity}</td>
         <td>${amount}</td>
         <td>${total}</td>
       </tr>`;
+
     commissionLinesTable.insertAdjacentHTML("beforeend", row);
 
-    //document.getElementById("cardIdInput").value = "";
+    document.getElementById("cardDropDown").value = "";
     document.getElementById("clientNameInput").value = "";
     document.getElementById("quantityInput").value = "";
     document.getElementById("amountInput").value = "";
+
   });
 
 });
