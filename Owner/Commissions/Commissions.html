@@ -131,37 +131,47 @@
             <div class="personal info">
               <span class="title">Update Commission Details</span>
               <div class="fields">
+
                 <div class="input-field">
                   <label>Transaction Number</label>
                   <input type="number" placeholder="Transaction Number" required readonly />
                 </div>
+
                 <div class="input-field">
                   <label>Transaction Date</label>
-                  <input type="text" placeholder="Transaction Date" required readonly />
+                  <input type="text" id="transactionDate" placeholder="Transaction Date" required readonly />
                 </div>
+
                 <div class="input-field">
-                  <label>Agent Name</label>
-                  <input type="text" placeholder="Enter agent name" required />
+                  <label>Agent Names</label>
+                  <select name="agentname" id="agentDropDown" required>
+                    <!-- Agents names from db through JS -->
+                  </select>
                 </div>
+
                 <div class="input-field">
                   <label>Total Sales</label>
-                  <input type="number" placeholder="Enter Total Sales" required />
+                  <input type="number" id="totalSales" placeholder="Enter Total Sales" required readonly/>
                 </div>
+
                 <div class="input-field">
-                  <label>Commission Rate</label>
-                  <input type="number" placeholder="Enter Commission Rate" required />
+                  <label>Commission Rate(%)</label>
+                  <input type="number" id="commissionRate" placeholder="Enter Commission Rate" required readonly/>
                 </div>
+
                 <div class="input-field">
                   <label>Total Commission</label>
-                  <input type="number" placeholder="Enter total commission" required />
+                  <input type="number" id="totalCommission" name="totalcommission" placeholder="Enter total commission" required readonly/>
                 </div>
+
                 <div class="input-field" id="statusContainer">
                   <label for="status">Approval Status:</label>
-                  <select id="status" required>
+                  <select name=status id="status" required>
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                   </select>
                 </div>
+
               </div>
 
               <!-- Buttons -->
@@ -169,7 +179,7 @@
                 <button type="button" class="backBtn" id="closeModalBtn">
                   <span class="btnText">Close</span>
                 </button>
-                <button type="button" class="submit">
+                <button type="submit" class="submit">
                   <span class="submitBtn">Submit</span>
                 </button>
               </div>
@@ -180,14 +190,14 @@
                 <div class="commission-fields">
                   <label>Subtotal: <input type="number" id="subtotal" readonly /></label>
                   <label>Total: <input type="number" id="finalTotal" readonly /></label>
-                  <label>Commission Rate (%): <input type="number" id="commissionRate" /></label>
+                  <label>Commission Rate (%): <input id="commissionRate" type="number" readonly/></label>
                   <label>Commission: <input type="number" id="commission" readonly /></label>
                 </div>
 
                 <table class="commission-lines-table">
                   <thead>
                     <tr>
-                      <th>Card ID</th>
+                      <th>Card</th>
                       <th>Client Name</th>
                       <th>Quantity</th>
                       <th>Amount</th>
@@ -200,10 +210,16 @@
                 </table>
 
                 <div class="add-entry-fields">
-                  <input type="text" placeholder="Card ID" id="cardIdInput" />
+
+                  <div class="input-field">
+                    <select name="card" id="cardsDropDown" required>
+                      <!-- Card names from db through JS -->
+                    </select>
+                  </div>
+
                   <input type="text" placeholder="Client Name" id="clientNameInput" />
                   <input type="number" placeholder="Quantity" id="quantityInput" />
-                  <input type="number" placeholder="Amount" id="amountInput" />
+                  <input type="number" placeholder="Amount" id="cardAmount" readonly/>
                   <input type="number" placeholder="Total Amount" id="totalInput" readonly />
                   <button class="action-btn add-btn" id="addLineBtn">Add</button>
                 </div>
@@ -217,6 +233,6 @@
   </div>
 
   <script src="../Main_Page/Main_Page.js"></script>
-  <script src="Commissions1.js"></script>
+  <script src="Commissions.js"></script>
 </body>
 </html>
