@@ -9,23 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const bankDropdown = document.getElementById("bankDropdown");
   const cardTypeDropdown = document.getElementById("cardTypeDropdown");
 
-  const cardIdInput = document.getElementById("cardIdInput");
+ // const cardIdInput = document.getElementById("cardIdInput");
   const amountInput = document.getElementById("amountInput");
   const statusInput = document.getElementById("statusInput");
   const cardForm = document.getElementById("cardForm");
 
-  let banks = JSON.parse(localStorage.getItem("banks")) || [
-    { bankId: "1", bankName: "BDO" },
-    { bankId: "2", bankName: "BPI" }
-  ];
+  fetch("../../getbanks.php")
+  .then(response => response.json())
+  .then(banknames => {
+    updateDropdown(bankDropdown, banknames, "bankId", "bankName");
+  })
+  .catch(error => {
+    console.error("Error fetching bank names:", error);
+  });
 
-  let cardTypes = JSON.parse(localStorage.getItem("cardTypes")) || [
-    { cardTypeId: "1", cardTypeName: "Platinum" },
-    { cardTypeId: "2", cardTypeName: "Gold" }
-  ];
+  fetch("../../getcardtypes.php")
+  .then(response => response.json())
+  .then(cardTypes => {
+    updateDropdown(cardTypeDropdown, cardTypes, "cardTypeId", "cardTypeName");
+  })
+  .catch(error => {
+    console.error("Error fetching card types:", error);
+  });
 
-  updateDropdown(bankDropdown, banks, "bankId", "bankName");
-  updateDropdown(cardTypeDropdown, cardTypes, "cardTypeId", "cardTypeName");
 
   const showModal = (modal) => modal.classList.add("active");
   const hideModal = (modal) => modal.classList.remove("active");
@@ -33,40 +39,40 @@ document.addEventListener("DOMContentLoaded", () => {
   openCardModalBtn.addEventListener("click", () => {
     editingIndex = null;
     clearForm();
-    updateCardIdField();
+    //updateCardIdField();
     showModal(cardModal);
   });
 
   closeCardModalBtn.addEventListener("click", () => hideModal(cardModal));
 
-  cardForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  // cardForm.addEventListener("submit", (e) => {
+  //   e.preventDefault();
 
-    const cardId = parseInt(cardIdInput.value);
-    const amount = amountInput.value;
-    const status = statusInput.value;
-    const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
-    const cardType = cardTypeDropdown.options[cardTypeDropdown.selectedIndex].text;
+  //   const cardId = parseInt(cardIdInput.value);
+  //   const amount = amountInput.value;
+  //   const status = statusInput.value;
+  //   const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
+  //   const cardType = cardTypeDropdown.options[cardTypeDropdown.selectedIndex].text;
 
-    const cards = JSON.parse(localStorage.getItem("cards")) || [];
-    const cardData = { cardId, amount, status, bank, cardType };
+  //   const cards = JSON.parse(localStorage.getItem("cards")) || [];
+  //   const cardData = { cardId, amount, status, bank, cardType };
 
-    if (editingIndex !== null) {
-      cards[editingIndex] = cardData;
-    } else {
-      cards.push(cardData);
-      localStorage.setItem("nextCardId", cardId + 1);
-    }
+  //   if (editingIndex !== null) {
+  //     cards[editingIndex] = cardData;
+  //   } else {
+  //     cards.push(cardData);
+  //     localStorage.setItem("nextCardId", cardId + 1);
+  //   }
 
-    localStorage.setItem("cards", JSON.stringify(cards));
-    alert(editingIndex !== null ? "Card updated successfully!" : "Card added successfully!");
-    editingIndex = null;
+  //   localStorage.setItem("cards", JSON.stringify(cards));
+  //   alert(editingIndex !== null ? "Card updated successfully!" : "Card added successfully!");
+  //   editingIndex = null;
 
-    hideModal(cardModal);
-    clearForm();
-    updateCardIdField();
-    renderCardTable();
-  });
+  //   hideModal(cardModal);
+  //   clearForm();
+  //   updateCardIdField();
+  //   renderCardTable();
+  // });
 
   function getNextCardId() {
     let nextId = parseInt(localStorage.getItem("nextCardId"));
@@ -77,9 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return nextId;
   }
 
-  function updateCardIdField() {
-    cardIdInput.value = getNextCardId();
-  }
+  // function updateCardIdField() {
+  //   cardIdInput.value = getNextCardId();
+  // }
 
   function updateDropdown(dropdown, items, valueKey, textKey) {
     dropdown.innerHTML = `
@@ -145,6 +151,9 @@ function addNewBank() {
     updateDropdown(document.getElementById("bankDropdown"), banks, "bankId", "bankName");
     document.getElementById("bankDropdown").value = value;
     closeBankModal();
+  }else{
+    alert("Bank name cannot be empty!");
+    return;
   }
 }
 
@@ -159,6 +168,9 @@ function addNewCardType() {
     updateDropdown(document.getElementById("cardTypeDropdown"), cardTypes, "cardTypeId", "cardTypeName");
     document.getElementById("cardTypeDropdown").value = value;
     closeCardTypeModal();
+  }else{
+    alert("Card type name cannot be empty!");
+    return;
   }
 }
 
