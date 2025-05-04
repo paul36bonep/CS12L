@@ -9,13 +9,14 @@
         if(empty($bankname) || $bankname == "Enter bank name"){
 
             echo "<script>alert('Please enter bank name')</script>";
-            echo "<script> window.location.href='Owner/Cards/Cards.php'</script>";
+            echo "<script> window.location.href='Owner/Cards/Cards.html'</script>";
 
         }else{
     
             if(isExistingInBank($bankname)){
     
             echo "<script>alert('Bank already Exists in the database.')</script>";
+            echo "<script> window.location.href='Owner/Cards/Cards.html'</script>";
     
             }else{
 
@@ -26,7 +27,7 @@
                 unset($_POST['addbank']);
 
                 echo "<script>alert('Card added Successfully')</script>";
-                echo "<script> window.location.href='Owner/Cards/Cards.php'</script>";
+                echo "<script> window.location.href='Owner/Cards/Cards.html'</script>";
             }
         }
     }

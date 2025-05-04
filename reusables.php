@@ -186,19 +186,6 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
     return $hash;
 }
 
-
-//Cards
-function addCard($cardid, $cardtypeid, $bankname, $amount){
-
-    include "dbconnection.php";
-    $query = "INSERT INTO card(`CardID`, `TypeID','BankID','Amount','Status') 
-                            VALUES ('$cardid','$cardtypeid','$bankname','$amount','1')";
-        
-        mysqli_query($connection,$query);
-        $connection -> close();
-
-}
-
 //Commissions
 function createCommissionrequest($agentid, $cardid, $quantity){ // creating a commission request: for approval to owner
     include "dbconnection.php";
@@ -230,7 +217,6 @@ function editCommission($commissionid){ // function for editing a commision deta
 
     $query = "SELECT * FROM commissions WHERE CommissionID = '$commissionid'";
     mysqli_query($connection,$query);
-
 
     $connection -> close();
 
