@@ -1,11 +1,12 @@
 <?php
    session_start();
 
-function isExistingInUsers($username){ //checks if the username already exists in the database.
+//checkers
+function isExistingInCardTypes($cardtypename){
 
     include "dbconnection.php";
 
-    $query = "SELECT * FROM users WHERE Username = '$username'";
+    $query = "SELECT * FROM cardtype WHERE LOWER(CardType) = LOWER('$cardtypename')";
     $result = mysqli_query($connection,$query);
 
     if($result -> num_rows > 0){
@@ -13,22 +14,128 @@ function isExistingInUsers($username){ //checks if the username already exists i
         $connection->close();
         return true;
 
+    }else{
+
+        $connection->close();
+        return false;
+
     }
 }
 
+function isExistingInBank($bankname){
+
+    include "dbconnection.php";
+
+    $query = "SELECT * FROM bank WHERE LOWER(BankName) = LOWER('$bankname')";
+    $result = mysqli_query($connection,$query);
+
+    if($result -> num_rows > 0){
+
+        $connection->close();
+        return true;
+
+    }else{
+
+        $connection->close();
+        return false;
+
+    }
+}
+
+// function getTypeID($cardtype){
+
+//     include "dbconnection.php";
+
+//     $query = "SELECT TypeID FROM cardtype WHERE LOWER(CardType) = LOWER('$cardtype')";
+//     $result = mysqli_query($connection,$query);
+//     $typeid = null;
+
+//     if ($row = mysqli_fetch_assoc($result)) {
+//         $typeid = $row['TypeID'];
+//     }
+
+//     $connection->close();
+//     return $typeid;
+
+// }
+
+// function getBankID($bankname){
+
+//     include "dbconnection.php";
+    
+//     $query = "SELECT BankID FROM bank WHERE LOWER(BankName) = LOWER('$bankname')";
+//     $result = mysqli_query($connection,$query);
+
+//     $bankid = null;
+
+//     if ($row = mysqli_fetch_assoc($result)) {
+//         $bankid = $row['BankID'];
+//     }
+
+//     $connection->close();
+//     return $bankid;
+// }
+
+function isExistingInCard($cardtypeid, $bankid){
+
+    include "dbconnection.php";
+
+    $query = "SELECT * FROM card WHERE TypeID = '$cardtypeid' AND BankID = '$bankid'";
+    $result = mysqli_query($connection,$query);
+
+    if($result -> num_rows > 0){
+
+        $connection->close();
+        return true;
+
+    }else{
+
+        $connection->close();
+        return false;
+
+    }
+
+}
+
+function isExistingInUsers($username){ //checks if the username already exists in the database.
+
+    include "dbconnection.php";
+
+    $query = "SELECT * FROM users WHERE LOWER(Username) = LOWER('$username')";
+    $result = mysqli_query($connection,$query);
+
+    if($result -> num_rows > 0){
+
+        $connection->close();
+        return true;
+
+    }else{
+
+        $connection->close();
+        return false;
+
+    }
+}
+
+
 function isExistingInAgents($name){ //checks if the username already exists in the database.
 
-     include "dbconnection.php";
+    include "dbconnection.php";
 
-     $query = "SELECT * FROM agents WHERE AgentName = '$name'";
-     $result = mysqli_query($connection,$query);
+    $query = "SELECT * FROM agents WHERE LOWER(AgentName) = LOWER('$name')";
+    $result = mysqli_query($connection,$query);
 
-     if($result -> num_rows > 0){
+    if($result -> num_rows > 0){
 
          $connection->close();
          return true;
 
-     }
+    }else{
+
+        $connection->close();
+        return false;
+
+    }
  }
 
 function sessionTimer(){ //checks for inactivity and timeout.
@@ -62,7 +169,6 @@ function checkExistingSession(){ //checks if there is an existing session.
         return true;
 
     }
-
 }
 
 function noSession(){ //checks if there are no sessions.
@@ -82,28 +188,6 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 
 
 //Cards
-function addCardtype($cardtype){
-
-    include "dbconnection.php";
-    $query = "INSERT INTO cardtype(`TypeID`, `CardType') 
-                            VALUES ('$typeid','$cardtype')";
-        
-        mysqli_query($connection,$query);
-        $connection -> close();
-    
-}
-
-function addBank($bankname){
-
-    include "dbconnection.php";
-    $query = "INSERT INTO bank(`BankID`, `BankName') 
-                            VALUES ('','$bankname')";
-        
-        mysqli_query($connection,$query);
-        $connection -> close();
-
-}
-
 function addCard($cardid, $cardtypeid, $bankname, $amount){
 
     include "dbconnection.php";
