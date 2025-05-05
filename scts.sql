@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Dec 07, 2024 at 03:11 PM
+-- Host: 127.0.0.1
+-- Generation Time: May 05, 2025 at 03:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,14 @@ CREATE TABLE `agents` (
   `Status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `agents`
+--
+
+INSERT INTO `agents` (`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) VALUES
+(1, 'newAgent', 27, 20, 'Davao-South', 1),
+(2, 'Agent2', 29, 10, 'Davao-North', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +54,16 @@ CREATE TABLE `bank` (
   `BankID` int(6) NOT NULL,
   `BankName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bank`
+--
+
+INSERT INTO `bank` (`BankID`, `BankName`) VALUES
+(2, 'banknewbank'),
+(3, 'bcnp'),
+(4, 'chinabank'),
+(1, 'newbank');
 
 -- --------------------------------------------------------
 
@@ -61,6 +79,16 @@ CREATE TABLE `card` (
   `Status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `card`
+--
+
+INSERT INTO `card` (`CardID`, `TypeID`, `BankID`, `Amount`, `Status`) VALUES
+(1, 1, 1, 5000, 1),
+(4, 2, 2, 50000, 1),
+(5, 7, 3, 10000, 1),
+(6, 8, 4, 465132000, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -71,6 +99,20 @@ CREATE TABLE `cardtype` (
   `TypeID` int(6) NOT NULL,
   `CardType` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cardtype`
+--
+
+INSERT INTO `cardtype` (`TypeID`, `CardType`) VALUES
+(5, 'Black2'),
+(4, 'Blacker'),
+(8, 'ChinaType'),
+(3, 'NewBlack'),
+(6, 'NewCardType'),
+(1, 'newtype'),
+(2, 'UltraBlack'),
+(7, 'ZaNueCard');
 
 -- --------------------------------------------------------
 
@@ -113,6 +155,15 @@ CREATE TABLE `positions` (
   `PositionName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `positions`
+--
+
+INSERT INTO `positions` (`PositionID`, `PositionName`) VALUES
+(1, 'Owner'),
+(2, 'Admin'),
+(3, 'Unit Manager');
+
 -- --------------------------------------------------------
 
 --
@@ -123,10 +174,23 @@ CREATE TABLE `users` (
   `UserID` int(6) NOT NULL,
   `PositionID` int(6) NOT NULL,
   `UserName` varchar(16) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `Password` varchar(60) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) VALUES
+(2, 1, 'SuperAdmin', '$2y$10$z8DZLiIikQZ8pg.dE0vQnOmhhbrmn2X1nKCO4M7ROdb8zB4yd7wZe', 'ZaOwner', 1),
+(3, 2, 'admin', '$2y$10$LstfFNkH5v3gMQghUrmRfuVf4Bw5J89Sn/9cwy7cBieWLy0z0pcPq', 'userAdmin', 1),
+(4, 2, 'username', '$2y$10$BVkR1WOp736lSgrc0SO//u/i3y59YwTqdIGsNQ6Sa4niF8nFMV92q', 'newUser', 1),
+(6, 3, 'manager', '$2y$10$oyoauC0m/MPntM6XoAV0quY8.3Z0w5K5qWsd62Bra5kPl/5eXsxfa', 'newManager', 1),
+(7, 2, 'admin2', '$2y$10$67lxTEFqNxRcOkDLpUy2UusYZpIz3nH3wXxue4y/KAmvIGb0llz8u', 'admin2', 1),
+(8, 2, 'admin3', '$2y$10$WI8I2m1systph74bwx164.n94cecKqW/Vu4MIkycWe.M94VNQd1jG', 'newerAdmin', 1),
+(9, 2, 'admin4', '$2y$10$2LlxlWaTiP4FZAJrfDvPmuBRo2lY.vQoPiqs5gor/M/ZvZbgw0M2q', 'chingolinwoo', 1);
 
 --
 -- Indexes for dumped tables
@@ -194,16 +258,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `agents`
+--
+ALTER TABLE `agents`
+  MODIFY `AgentID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `BankID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `BankID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `card`
+--
+ALTER TABLE `card`
+  MODIFY `CardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cardtype`
 --
 ALTER TABLE `cardtype`
-  MODIFY `TypeID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `TypeID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `commissions`
@@ -218,10 +294,16 @@ ALTER TABLE `commissions_lines`
   MODIFY `Coms_Lines` int(6) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `positions`
+--
+ALTER TABLE `positions`
+  MODIFY `PositionID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

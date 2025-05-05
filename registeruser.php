@@ -2,13 +2,13 @@
 include "dbconnection.php";
 include "reusables.php";
 
-
 if(isset($_POST['register'])){
 
     $username = trim($_POST['username']);
 
     if(isExistingInUsers($username)){ //|| isExistingInAgents($username)
 
+        unset($_POST['register']);
         echo "<script>alert('Username is already taken.')</script>";
         echo "<script> window.location.href='Owner/Users/Users.html'</script>";
 
@@ -34,6 +34,9 @@ if(isset($_POST['register'])){
                 break;
     
             default:
+                unset($_POST['register']);
+                echo "<script>alert('Undefined Position name.')</script>";
+                echo "<script> window.location.href='Owner/Users/Users.html'</script>";
                 break;
         }
 
@@ -42,11 +45,12 @@ if(isset($_POST['register'])){
         
         mysqli_query($connection,$query);
         $connection -> close();
+        unset($_POST['register']);
+
 
         echo "<script>alert('User registered Successfully')</script>";
         echo "<script> window.location.href='Owner/Users/Users.html'</script>";
-
+        
     }
 }
-
 ?>

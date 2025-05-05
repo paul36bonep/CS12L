@@ -4,12 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("registerModal");
   const submitBtn = document.querySelector(".submit");
   const userTable = document.querySelector(".user-table tbody");
-  const commissionLinesSection = document.getElementById(
-    "commissionLinesSection"
-  );
-  const commissionLinesTable = document.querySelector(
-    ".commission-lines-table tbody"
-  );
+  const commissionLinesSection = document.getElementById("commissionLinesSection");
+  const commissionLinesTable = document.querySelector(".commission-lines-table tbody");
   const addLineBtn = document.getElementById("addLineBtn");
   const agentdropdown = document.getElementById("agentDropDown");
   const cardsdropdown = document.getElementById("cardsDropDown");
@@ -18,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //the date today(dunno how this works just copied this.)
   const today = new Date();
-  const dd = String(today.getDate()).padStart(2, "0");
-  const mm = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
   const yyyy = today.getFullYear();
 
   const formattedDate = `${mm}/${dd}/${yyyy}`;
@@ -28,13 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //for the Agent names dropdown
   fetch("../../getagents.php")
-    .then((response) => response.json())
-    .then((agentnames) => {
-      updateAgentsDropdown(agentdropdown, agentnames, "agentId", "agentName");
-    })
-    .catch((error) => {
-      console.error("Error fetching Agent names:", error);
-    });
+  .then(response => response.json())
+  .then(agentnames => {
+    updateAgentsDropdown(agentdropdown, agentnames, "agentId", "agentName");
+  })
+  .catch(error => {
+    console.error("Error fetching Agent names:", error);
+  });
 
   function updateAgentsDropdown(dropdown, items, value, text) {
     dropdown.innerHTML = `
@@ -48,37 +44,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  agentdropdown.addEventListener("change", function () {
+  agentdropdown.addEventListener("change", function (){
+      
     const thisagentId = this.value;
 
     fetch("../../getagents.php")
-      .then((response) => response.json())
-      .then((agentnames) => {
-        const agent = agentnames.find((agent) => agent.agentId == thisagentId);
+    .then(response => response.json())
+    .then(agentnames => {
+      
+      const agent = agentnames.find(agent => agent.agentId == thisagentId);
 
-        if (agent) {
-          document.getElementById("commissionRate").value =
-            agent.commissionRate;
-        } else {
-          document.getElementById("commissionRate").value = "";
-        }
-      })
+      if (agent) {
 
-      .catch((error) => {
-        console.error("Error fetching Agent names:", error);
-      });
+        document.getElementById("commissionRate").value = agent.commissionRate;
+
+      } else{
+        document.getElementById("commissionRate").value = "";
+      }
+    })
+
+    .catch(error => {
+      console.error("Error fetching Agent names:", error);
+    });
   });
   //for the Agent names dropdown(end)
 
   //for cards dropdown
   fetch("../../getcards.php")
-    .then((response) => response.json())
-    .then((cards) => {
-      updateCardsDropdown(cardsdropdown, cards, "cardId", "cardType");
-    })
-    .catch((error) => {
-      console.error("Error fetching Cards information:", error);
-    });
+  .then(response => response.json())
+  .then(cards => {
+    updateCardsDropdown(cardsdropdown, cards, "cardId", "cardType");
+  })
+  .catch(error => {
+    console.error("Error fetching Cards information:", error);
+  });
 
   function updateCardsDropdown(dropdown, items, value, text) {
     dropdown.innerHTML = `
@@ -92,43 +91,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  cardsdropdown.addEventListener("change", function () {
+  cardsdropdown.addEventListener("change", function (){
+      
     const thiscardId = this.value;
 
     fetch("../../getcards.php")
-      .then((response) => response.json())
-      .then((cards) => {
-        const card = cards.find((card) => card.cardId == thiscardId);
+    .then(response => response.json())
+    .then(cards => {
+      
+      const card = cards.find(card => card.cardId == thiscardId);
 
-        if (card) {
-          document.getElementById("cardAmount").value = card.cardAmount;
-        } else {
-          document.getElementById("cardAmount").value = "";
-        }
-      })
+      if (card) {
 
-      .catch((error) => {
-        console.error("Error fetching Cards Information:", error);
-      });
+        document.getElementById("cardAmount").value = card.cardAmount;
+
+      } else{
+        document.getElementById("cardAmount").value = "";
+      }
+    })
+
+    .catch(error => {
+      console.error("Error fetching Cards Information:", error);
+    });
+    
   });
   //for cards dropdown(end)
 
   //To calculate amount while typing Changes(start)
   const quantity = document.getElementById("quantityInput");
 
-  quantity.addEventListener("change", function () {
+  quantity.addEventListener("change",function(){
     const quantityval = this.value;
     const amount = document.getElementById("cardAmount").value;
     console.log(amount);
     console.log(quantityval);
 
-    if (quantityval && amount) {
+    if(quantityval && amount){
+
       document.getElementById("totalInput").value = quantityval * amount;
-    } else {
+
+    }else{
+
       document.getElementById("totalInput").value = "";
+
     }
+    
   });
   //To calculate amount while typing Changes(end)
+  
+
 
   openModalBtn.addEventListener("click", () => {
     modal.classList.add("active");
@@ -136,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     commissionLinesSection.classList.add("hidden");
     commissionLinesTable.innerHTML = "";
     editingRow = null;
+
   });
 
   closeModalBtn.addEventListener("click", () => {
@@ -217,12 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
   addLineBtn.addEventListener("click", () => {
     const cardId = document.getElementById("cardsDropDown").value.trim();
     const clientName = document.getElementById("clientNameInput").value.trim();
-    const quantity = parseFloat(
-      document.getElementById("quantityInput").value.trim()
-    );
-    const amount = parseFloat(
-      document.getElementById("cardAmount").value.trim()
-    );
+    const quantity = parseFloat(document.getElementById("quantityInput").value.trim());
+    const amount = parseFloat(document.getElementById("cardAmount").value.trim());
 
     if (!cardId || !clientName || isNaN(quantity) || isNaN(amount)) {
       alert("Please fill in all fields correctly.");
@@ -245,5 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("clientNameInput").value = "";
     document.getElementById("quantityInput").value = "";
     document.getElementById("amountInput").value = "";
+
   });
+
 });

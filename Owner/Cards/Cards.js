@@ -9,23 +9,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const bankDropdown = document.getElementById("bankDropdown");
   const cardTypeDropdown = document.getElementById("cardTypeDropdown");
 
-  const cardIdInput = document.getElementById("cardIdInput");
+  // const cardIdInput = document.getElementById("cardIdInput");
   const amountInput = document.getElementById("amountInput");
   const statusInput = document.getElementById("statusInput");
   const cardForm = document.getElementById("cardForm");
 
-  let banks = JSON.parse(localStorage.getItem("banks")) || [
-    { bankId: "1", bankName: "BDO" },
-    { bankId: "2", bankName: "BPI" }
-  ];
+  fetch("../../getbanks.php")
+    .then((response) => response.json())
+    .then((banknames) => {
+      updateDropdown(bankDropdown, banknames, "bankId", "bankName");
+    })
+    .catch((error) => {
+      console.error("Error fetching bank names:", error);
+    });
 
-  let cardTypes = JSON.parse(localStorage.getItem("cardTypes")) || [
-    { cardTypeId: "1", cardTypeName: "Platinum" },
-    { cardTypeId: "2", cardTypeName: "Gold" }
-  ];
-
-  updateDropdown(bankDropdown, banks, "bankId", "bankName");
-  updateDropdown(cardTypeDropdown, cardTypes, "cardTypeId", "cardTypeName");
+  fetch("../../getcardtypes.php")
+    .then((response) => response.json())
+    .then((cardTypes) => {
+      updateDropdown(cardTypeDropdown, cardTypes, "cardTypeId", "cardTypeName");
+    })
+    .catch((error) => {
+      console.error("Error fetching card types:", error);
+    });
 
   const showModal = (modal) => modal.classList.add("active");
   const hideModal = (modal) => modal.classList.remove("active");
@@ -33,40 +38,40 @@ document.addEventListener("DOMContentLoaded", () => {
   openCardModalBtn.addEventListener("click", () => {
     editingIndex = null;
     clearForm();
+    //updateCardIdField();
     showModal(cardModal);
   });
 
   closeCardModalBtn.addEventListener("click", () => hideModal(cardModal));
 
-  cardForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  // cardForm.addEventListener("submit", (e) => {
+  //   e.preventDefault();
 
-    const cardId = editingIndex !== null
-      ? JSON.parse(localStorage.getItem("cards"))[editingIndex].cardId
-      : getNextCardId();
-    const amount = amountInput.value;
-    const status = statusInput.value;
-    const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
-    const cardType = cardTypeDropdown.options[cardTypeDropdown.selectedIndex].text;
+  //   const cardId = parseInt(cardIdInput.value);
+  //   const amount = amountInput.value;
+  //   const status = statusInput.value;
+  //   const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
+  //   const cardType = cardTypeDropdown.options[cardTypeDropdown.selectedIndex].text;
 
-    const cards = JSON.parse(localStorage.getItem("cards")) || [];
-    const cardData = { cardId, amount, status, bank, cardType };
+  //   const cards = JSON.parse(localStorage.getItem("cards")) || [];
+  //   const cardData = { cardId, amount, status, bank, cardType };
 
-    if (editingIndex !== null) {
-      cards[editingIndex] = cardData;
-    } else {
-      cards.push(cardData);
-      localStorage.setItem("nextCardId", cardId + 1);
-    }
+  //   if (editingIndex !== null) {
+  //     cards[editingIndex] = cardData;
+  //   } else {
+  //     cards.push(cardData);
+  //     localStorage.setItem("nextCardId", cardId + 1);
+  //   }
 
-    localStorage.setItem("cards", JSON.stringify(cards));
-    alert(editingIndex !== null ? "Card updated successfully!" : "Card added successfully!");
-    editingIndex = null;
+  //   localStorage.setItem("cards", JSON.stringify(cards));
+  //   alert(editingIndex !== null ? "Card updated successfully!" : "Card added successfully!");
+  //   editingIndex = null;
 
-    hideModal(cardModal);
-    clearForm();
-    renderCardTable();
-  });
+  //   hideModal(cardModal);
+  //   clearForm();
+  //   updateCardIdField();
+  //   renderCardTable();
+  // });
 
   function getNextCardId() {
     let nextId = parseInt(localStorage.getItem("nextCardId"));
@@ -76,6 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return nextId;
   }
+
+  // function updateCardIdField() {
+  //   cardIdInput.value = getNextCardId();
+  // }
 
   function updateDropdown(dropdown, items, valueKey, textKey) {
     dropdown.innerHTML = `
@@ -103,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchText = e.target.value;
     renderCardTable(searchText);
   });
-  
 });
 
 function handleBankDropdownChange(select) {
@@ -138,9 +146,17 @@ function addNewBank() {
     banks.push(newBank);
     localStorage.setItem("banks", JSON.stringify(banks));
 
-    updateDropdown(document.getElementById("bankDropdown"), banks, "bankId", "bankName");
+    updateDropdown(
+      document.getElementById("bankDropdown"),
+      banks,
+      "bankId",
+      "bankName"
+    );
     document.getElementById("bankDropdown").value = value;
     closeBankModal();
+  } else {
+    alert("Bank name cannot be empty!");
+    return;
   }
 }
 
@@ -152,9 +168,17 @@ function addNewCardType() {
     cardTypes.push(newType);
     localStorage.setItem("cardTypes", JSON.stringify(cardTypes));
 
-    updateDropdown(document.getElementById("cardTypeDropdown"), cardTypes, "cardTypeId", "cardTypeName");
+    updateDropdown(
+      document.getElementById("cardTypeDropdown"),
+      cardTypes,
+      "cardTypeId",
+      "cardTypeName"
+    );
     document.getElementById("cardTypeDropdown").value = value;
     closeCardTypeModal();
+  } else {
+    alert("Card type name cannot be empty!");
+    return;
   }
 }
 
@@ -165,7 +189,7 @@ function renderCardTable(filterText = "") {
   const cards = JSON.parse(localStorage.getItem("cards")) || [];
   tbody.innerHTML = "";
 
-  const filteredCards = cards.filter(card => {
+  const filteredCards = cards.filter((card) => {
     const searchText = filterText.toLowerCase();
     return (
       card.bank.toLowerCase().includes(searchText) ||
@@ -195,10 +219,9 @@ function renderCardTable(filterText = "") {
   });
 }
 
-
 function deleteCard(cardId) {
   let cards = JSON.parse(localStorage.getItem("cards")) || [];
-  cards = cards.filter(c => c.cardId !== cardId);
+  cards = cards.filter((c) => c.cardId !== cardId);
   localStorage.setItem("cards", JSON.stringify(cards));
   renderCardTable(document.getElementById("searchbar").value);
   alert("Card successfully deleted!");
@@ -206,7 +229,7 @@ function deleteCard(cardId) {
 
 function editCard(cardId) {
   const cards = JSON.parse(localStorage.getItem("cards")) || [];
-  const index = cards.findIndex(c => c.cardId === cardId);
+  const index = cards.findIndex((c) => c.cardId === cardId);
   if (index === -1) return;
 
   const card = cards[index];

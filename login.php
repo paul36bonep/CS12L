@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     if (empty($username) || empty($password)) {
 
         echo "<script>alert('Please fill the required fields!')</script>";
-        echo "<script> window.location.href='../Login/Login.php'</script>";
+        echo "<script> window.location.href='../Login/Login.html'</script>";
 
     } else {
 
@@ -27,49 +27,50 @@ if (isset($_POST['login'])) {
             if(password_verify($password,$row["Password"])){
 
                 $_SESSION['username'] = $username;
-                $position = $row['PositionID'];
+                header("Location:Owner/Main_Page/Main_Page.html");
 
+                $position = $row["PositionID"];
+                
                 switch ($position) {
                     case 1:
-                        $_SESSION['position'] = 'Owner';
-                        $_SESSION['name'] = $row['Name'];
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Owner";
                         header("Location:Owner/Main_Page/Main_Page.html");
                         break;
 
                     case 2:
-                        $_SESSION['position'] = 'Admin'; 
-                        $_SESSION['name'] = $row['Name'];                     
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Admin";
                         header("Location:Admin/Main_Page/Main_Page.html");
                         break;
 
                     case 3:
-                        $_SESSION['position'] = 'Unit Manager';
-                        $_SESSION['name'] = $row['Name'];
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Unit Manager";
                         header("Location:Unit_Manager/Main_Page/Main_Page.html");
-                        break;
+                        break; 
 
                     default:
                         session_start();
                         session_unset();
                         session_destroy();
-                        echo "<script>alert('Unknown User Log in')</script>";
-                        echo "<script> window.location.href='Login/Login.html'</script>";
                         $connection->close();
+                        echo "<script>alert('Unknown User')</script>";
+                        echo "<script> window.location.href='Login/Login.html'</script>";
                         break;
-                    }
-
+                }
+           
             }else{
 
-                echo "<script>alert('Invalid Password')</script>";
-                echo "<script> window.location.href='Login/Login.html'</script>";
+                echo "Invalid Password";
+                echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
                 $connection->close();
-
             }
           
         }else{
 
-            echo "<script>alert('Invalid Username')</script>";
-            echo "<script> window.location.href='Login/Login.html'</script>";
+            echo "Invalid Username";
+            echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
             $connection->close();
         }
 

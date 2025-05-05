@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
  
   function clearForm() {
-    document.querySelector("input[placeholder='User id']").value = "";
+    //document.querySelector("input[placeholder='User id']").value = "";
     document.getElementById("position").value = "Admin";
     document.querySelector("input[placeholder='Enter username']").value = "";
     document.querySelector("input[placeholder='Enter new password']").value = "";

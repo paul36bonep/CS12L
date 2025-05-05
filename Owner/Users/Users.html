@@ -1,164 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="Users.css">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-  <title>Sales Commission Tracker</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="Users.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <title>Sales Commission Tracker</title>
+  </head>
 
-<body>
-
-  <div class="container">
-    <!--Sidebar Section-->
-    <aside>
-      <div class="toggle">
-        <div class="logo">
-          <img src="../../images/DATCOM.png">
-          <h2>Dat<span class="danger">Com</
-            span></h2>
+  <body>
+    <div class="container">
+      <!--Sidebar Section-->
+      <aside>
+        <div class="toggle">
+          <div class="logo">
+            <img src="../../images/DATCOM.png" />
+            <h2>Dat<span class="danger">Com</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
         </div>
-        <div class="close" id="close-btn">
-          <span class="material-icons-sharp">
-            close
-          </span>
-        </div>
-      </div>
 
-      <div class="sidebar">
-        <a href="../Main_Page/Main_Page.html">
-          <span class="material-icons-sharp">
-            dashboard
-            </span>
+        <div class="sidebar">
+          <a href="../Main_Page/Main_Page.html">
+            <span class="material-icons-sharp"> dashboard </span>
             <h3>Dashboard</h3>
-        </a>
-        <a href="Users.html">
-          <span class="material-icons-sharp">
-            person_outline
-            </span>
+          </a>
+          <a href="Users.html">
+            <span class="material-icons-sharp"> person_outline </span>
             <h3>Users</h3>
-        </a>
-        <a href="../Agents/Agents.html">
-          <span class="material-icons-sharp">
-            people
-            </span>
+          </a>
+          <a href="../Agents/Agents.html">
+            <span class="material-icons-sharp"> people </span>
             <h3>Agents</h3>
-        </a>
-        <a href="../Cards/Cards.html">
-          <span class="material-icons-sharp">
-            credit_card
-            </span>
+          </a>
+          <a href="../Cards/Cards.html">
+            <span class="material-icons-sharp"> credit_card </span>
             <h3>Cards</h3>
-        </a>
-        <a href="../Commissions/Commissions.html">
-          <span class="material-icons-sharp">
-            paid
-            </span>
+          </a>
+          <a href="../Commissions/Commissions.html">
+            <span class="material-icons-sharp"> paid </span>
             <h3>Commissions</h3>
-        </a>
-        <a href="../Report/Reports.html">
-          <span class="material-icons-sharp">
-            article
-            </span>
+          </a>
+          <a href="../Report/Reports.html">
+            <span class="material-icons-sharp"> article </span>
             <h3>Reports</h3>
-        </a>
-        <a href="../Settings/Settings.html">
-          <span class="material-icons-sharp">
-            settings
-            </span>
+          </a>
+          <a href="../Settings/Settings.html">
+            <span class="material-icons-sharp"> settings </span>
             <h3>Settings</h3>
-        </a>
-        <a href="../../Login/login2.html">
-          <span class="material-icons-sharp">
-            logout
-            </span>
+          </a>
+          <a href="../../Login/login2.html">
+            <span class="material-icons-sharp"> logout </span>
             <h3>Sign Out</h3>
-        </a>
-      </div>
-    </aside>
-    <!--end of sidebar section :)-->
+          </a>
+        </div>
+      </aside>
+      <!--end of sidebar section :)-->
 
-    <!--Main Page-->
-    <main>
-      <h1>Users</h1>
-      <div class="user-div">
-        <div class="table-header">
-          <button class="action-btn add-btn" id="openModalBtn">
-            Add User
+      <!--Main Page-->
+      <main>
+        <h1>Users</h1>
+        <div class="user-div">
+          <div class="table-header">
+            <button class="action-btn add-btn" id="openModalBtn">
+              Add User
+            </button>
+            <div class="filter-group">
+              <input
+                type="text"
+                id="searchbar"
+                placeholder="Search..."
+                class="search-bar"
+              />
+
+              <select id="roleFilter" class="search-bar">
+                <option value="All">All Roles</option>
+                <option value="Owner">Owner</option>
+                <option value="Admin">Admin</option>
+                <option value="Unit Manager">Unit Manager</option>
+              </select>
+
+              <select id="statusFilter" class="search-bar">
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>UserID</th>
+                <th>Position</th>
+                <th>UserName</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </main>
+      <!--end of main content-->
+
+      <!--Right Section nav-->
+      <div class="right-section">
+        <div class="nav">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
           </button>
-          <div class="filter-group">
-            <input type="text" id="searchbar" placeholder="Search..." class="search-bar" />
-            
-            <select id="roleFilter" class="search-bar">
-              <option value="All">All Roles</option>
-              <option value="Owner">Owner</option>
-              <option value="Admin">Admin</option>
-              <option value="Unit Manager">Unit Manager</option>
-            </select>
-        
-            <select id="statusFilter" class="search-bar">
-              <option value="All">All Status</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
+          <div class="dark-mode">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b> Jeschann</b></p>
+              <small class="text-muted"> Owner </small>
+            </div>
+            <div class="profile-photo">
+              <img src="../../images/Profile-1.jpg" />
+            </div>
           </div>
         </div>
-        
-        <table class="user-table">
-          <thead>
-            <tr>
-              <th>UserID</th>
-              <th>Position</th>
-              <th>UserName</th>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-              
-        </table>
-        
       </div>
-    
 
-    </main>
-    <!--end of main content-->
-
-    <!--Right Section nav-->
-    <div class="right-section">
-      <div class="nav">
-        <button id="menu-btn">
-          <span class="material-icons-sharp">
-            menu
-            </span>
-        </button>
-        <div class="dark-mode">
-          <span class="material-icons-sharp active">
-            light_mode
-            </span>
-            <span class="material-icons-sharp">
-              dark_mode
-              </span>
-        </div>
-
-        <div class="profile">
-          <div class="info">
-            <p>Hey, <b> Jeschann</b></p>
-            <small class="text-muted">
-              Owner
-            </small>
-          </div>
-          <div class="profile-photo">
-            <img src="../../images/Profile-1.jpg">           
-          </div>
-        </div>
-
-      </div>
-    </div>
-  
       <!--end of nav-->
 
       <!--registration form-->
@@ -169,31 +150,48 @@
             <div class="form first">
               <div class="personal info">
                 <span class="title">Update User</span>
+
                 <div class="fields">
                   <!-- <div class="input-field">
                     <label>User ID</label>
                     <input type="text" readonly placeholder="User id" disabled>
                   </div> -->
+
                   <div class="input-field">
                     <label>Username</label>
-                    <input type="text" name="username" placeholder="Enter username" required>
+                    <input
+                      type="text"
+                      name="username"
+                      placeholder="Enter username"
+                      required
+                    />
                   </div>
 
                   <div class="input-field password-wrapper">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter password" />
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Enter password"
+                    />
                     <i class="fas fa-eye" id="togglePassword"></i>
                   </div>
 
                   <div class="input-field">
                     <label>Name</label>
-                    <input type="text" name="name" placeholder="Enter name" required>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter name"
+                      required
+                    />
                   </div>
 
                   <div class="input-field">
                     <label for="position">Position:</label>
                     <select id="position" name="position" required>
-                      <option value="Admin" selected>Admin</option>
+                      <option value="Admin">Admin</option>
                       <option value="Owner">Owner</option>
                       <option value="Unit Manager">Unit Manager</option>
                     </select>
@@ -206,7 +204,6 @@
                       <option value="Inactive">Inactive</option>
                     </select>
                   </div>
-                  
                 </div>
                 <div class="buttons">
                   <button type="button" class="backBtn" id="closeModalBtn">
@@ -221,31 +218,27 @@
           </form>
         </div>
       </div>
-      
-  </div>
+    </div>
 
-  <script src="../Main_Page/Main_Page.js"></script>
-  <script src="Users.js"></script>
-  <script>
-    const togglePassword = document.getElementById("togglePassword");
-    const passwordInput = document.getElementById("password");
-  
-    // Ensure default is hidden
-    passwordInput.setAttribute("type", "password");
-    togglePassword.classList.remove("fa-eye-slash");
-    togglePassword.classList.add("fa-eye");
-  
-    togglePassword.addEventListener("click", () => {
-      const isPassword = passwordInput.getAttribute("type") === "password";
-      passwordInput.setAttribute("type", isPassword ? "text" : "password");
-  
-      // Toggle icon
-      togglePassword.classList.toggle("fa-eye");
-      togglePassword.classList.toggle("fa-eye-slash");
-    });
-  </script>
-  
-  
-</body>
+    <script src="../Main_Page/Main_Page.js"></script>
+    <script src="Users.js"></script>
+    <script>
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
 
+      // Ensure default is hidden
+      passwordInput.setAttribute("type", "password");
+      togglePassword.classList.remove("fa-eye-slash");
+      togglePassword.classList.add("fa-eye");
+
+      togglePassword.addEventListener("click", () => {
+        const isPassword = passwordInput.getAttribute("type") === "password";
+        passwordInput.setAttribute("type", isPassword ? "text" : "password");
+
+        // Toggle icon
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+      });
+    </script>
+  </body>
 </html>

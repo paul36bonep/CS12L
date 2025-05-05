@@ -5,7 +5,8 @@ Admin>> Username: admin Password: admin
 Unit_Manager>> Username: manager Password: manager
 
 
-Problem: if you encounter Log in error with registered users:
+
+Problem #1: if you encounter Log in error with registered users:
 
     Cause: 
         Hashing needed 60 characters
@@ -13,10 +14,19 @@ Problem: if you encounter Log in error with registered users:
     Solution:
         Change users table's password to VARCHAR 60 in the database so hashing works.
 
-Problem: if you encounter database error with register user:
+Problem #2: if you encounter database error with register user:
 
     Cause: Unit Manager is not defined in the database
     Solution: INSERT INTO `positions`(`PositionID`, `PositionName`) VALUES (3,'Unit Manager')
+
+Problem #3: if you encounter Duplicated cardID when adding new cards
+
+    Cause: 
+        CardID in database is not auto incremented.
+
+    Solution:
+        Edit CardId to Auto increment.
+
 --------FOR TESTING------
 
 

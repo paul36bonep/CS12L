@@ -177,7 +177,7 @@
                     <input
                       type="number"
                       id="totalSales"
-                      placeholder="Total Sales"
+                      placeholder="Enter Total Sales"
                       required
                       readonly
                     />
@@ -235,7 +235,34 @@
                     <label
                       >Subtotal: <input type="number" id="subtotal" readonly
                     /></label>
+                    <label
+                      >Total: <input type="number" id="finalTotal" readonly
+                    /></label>
+                    <label
+                      >Commission Rate (%):
+                      <input id="commissionRate" type="number" readonly
+                    /></label>
+                    <label
+                      >Commission:
+                      <input type="number" id="commission" readonly
+                    /></label>
                   </div>
+
+                  <table class="commission-lines-table">
+                    <thead>
+                      <tr>
+                        <th>Card</th>
+                        <th>Client Name</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="commissionLinesTableBody">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+
                   <div class="add-entry-fields">
                     <div class="input-field">
                       <select name="card" id="cardsDropDown" required>
@@ -269,22 +296,6 @@
                       Add
                     </button>
                   </div>
-                  <table class="commission-lines-table">
-                    <thead>
-                      <tr>
-                        <th>Card</th>
-                        <th>Client Name</th>
-                        <th>Quantity</th>
-                        <th>Amount</th>
-                        <th>Total Amount</th>
-                      </tr>
-                    </thead>
-                    <div class="scrollable-table">
-                      <tbody id="commissionLinesTableBody">
-                        <!-- Dynamic rows -->
-                      </tbody>
-                    </div>
-                  </table>
                 </div>
               </div>
             </div>
@@ -295,6 +306,6 @@
     </div>
 
     <script src="../Main_Page/Main_Page.js"></script>
-    <script src="Commissions1.js"></script>
+    <script src="Commissions.js"></script>
   </body>
 </html>
