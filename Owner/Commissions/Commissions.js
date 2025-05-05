@@ -123,8 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
   quantity.addEventListener("change",function(){
     const quantityval = this.value;
     const amount = document.getElementById("cardAmount").value;
-    console.log(amount);
-    console.log(quantityval);
 
     if(quantityval && amount){
 
@@ -152,12 +150,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeModalBtn.addEventListener("click", () => {
     modal.classList.remove("active");
+    commissionLinesTable.innerHTML = "";
     clearForm();
+    tabledata = []; // clear memory
   });
 
   window.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.remove("active");
+      commissionLinesTable.innerHTML = "";
+      clearForm();
+      tabledata = []; // clear memory
     }
   });
 
@@ -220,40 +223,81 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearForm() {
-    document.getElementById("commissionId").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("agent").value = "";
-    document.getElementById("remarks").value = "";
+    //document.getElementById("commissionId").value = "";
+    //document.getElementById("transactionDate").value = "";
+    document.getElementById("agentDropDown").value = "";
+    document.getElementById("commissionRate").value = "";
+    document.getElementById("totalSales").value = "";
+    document.getElementById("totalCommission").value = "";
+    //document.getElementById("remarks").value = "";
+    subtotal = 0;
+    totalComm = 0;
   }
+
+  let tabledata = [];
+  subtotal = 0;
+  totalComm = 0;
 
   addLineBtn.addEventListener("click", () => {
     const cardId = document.getElementById("cardsDropDown").value.trim();
     const clientName = document.getElementById("clientNameInput").value.trim();
     const quantity = parseFloat(document.getElementById("quantityInput").value.trim());
     const amount = parseFloat(document.getElementById("cardAmount").value.trim());
+    const rate = parseInt(document.getElementById("commissionRate").value.trim());
+    const agentID = document.getElementById("agentDropDown").value.trim();
 
-    if (!cardId || !clientName || isNaN(quantity) || isNaN(amount)) {
+    if (!cardId || !clientName || isNaN(quantity) || isNaN(amount) || !rate) {
       alert("Please fill in all fields correctly.");
       return;
     }
-
     const total = (quantity * amount).toFixed(2);
+    subtotal += (quantity * amount);
+    totalComm = subtotal * (rate / 100);
+    tabledata.push({cardId,agentID,clientName,quantity,amount,total,totalComm}); //store data to a temporary array.(clientside)
+    console.log(subtotal + "Hey");
     const row = `
-      <tr id="row${cardId}">
+      <tr>
         <td>${cardId}</td>
-        <td>${clientName}</td>
-        <td>${quantity}</td>
-        <td>${amount}</td>
-        <td>${total}</td>
+        <td contenteditable="true">${clientName}</td>
+        <td contenteditable="true">${quantity}</td>
+        <td contenteditable="true">${amount}</td>
+        <td contenteditable="true">${total}</td>
       </tr>`;
 
     commissionLinesTable.insertAdjacentHTML("beforeend", row);
 
-    document.getElementById("cardDropDown").value = "";
+    document.getElementById("cardsDropDown").value = "";
     document.getElementById("clientNameInput").value = "";
     document.getElementById("quantityInput").value = "";
-    document.getElementById("amountInput").value = "";
+    document.getElementById("cardAmount").value = "";
+    document.getElementById("totalInput").value = "";
+    
+    document.getElementById("totalSales").value = subtotal;
+    document.getElementById("totalCommission").value = totalComm;
 
   });
 
+  submitBtn.addEventListener("click", () => {
+    if (tabledata.length == 0) {
+      alert("No data to submit.");
+      return;
+    }
+  
+    fetch("../../createcommission.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tabledata)
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      tabledata = []; // clear memory
+      commissionLinesTable.innerHTML = ""; // clear table display
+      clearForm();
+    })
+    .catch(err => console.error("Error submitting data:", err));
+  });
+  
 });

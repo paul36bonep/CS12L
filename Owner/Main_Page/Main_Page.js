@@ -19,16 +19,16 @@ darkMode.addEventListener('click', () =>{
   
 })
 
-Commissions.forEach(commission =>{
-  const tr = document.createElement('tr');
-  const trContent = `
-      <td>${commission.agentName}</td>
-      <td>${commission.agentNumber}</td>
-      <td>${commission.cardType}</td>
-      <td class="${commission.status === 'Declined' ? 'danger' : commission.status === 'Inactive' ? 'warning'
-        : 'primary'}">${commission.status}</td>
-        <td class="primary">Details</td>
-  `;
-  tr.innerHTML = trContent;
-  document.querySelector('table tbody').appendChild(tr);
-});
+// Commissions.forEach(commission =>{
+//   const tr = document.createElement('tr');
+//   const trContent = `
+//       <td>${commission.agentName}</td>
+//       <td>${commission.agentNumber}</td>
+//       <td>${commission.cardType}</td>
+//       <td class="${commission.status === 'Declined' ? 'danger' : commission.status === 'Inactive' ? 'warning'
+//         : 'primary'}">${commission.status}</td>
+//         <td class="primary">Details</td>
+//   `;
+//   tr.innerHTML = trContent;
+//   document.querySelector('table tbody').appendChild(tr);
+// });
