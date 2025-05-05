@@ -190,7 +190,7 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 function createCommission($agentid, $cardid, $quantity){ //for owner only :no posting for approval
 
     include "dbconnection.php";
-    $totalcommission = calculateCommission($quantity,$agentid, $cardid);
+
     $query = "INSERT INTO commissions(`CommissionID`, `UserID','AgentID','TotalCommission','ApprovalStatus') 
                             VALUES ('',$userid','$agentid','$totalcommission','1')";
     
