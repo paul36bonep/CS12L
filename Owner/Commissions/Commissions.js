@@ -226,6 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("remarks").value = "";
   }
 
+  let tabledata = [];
+
   addLineBtn.addEventListener("click", () => {
     const cardId = document.getElementById("cardsDropDown").value.trim();
     const clientName = document.getElementById("clientNameInput").value.trim();
@@ -236,15 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please fill in all fields correctly.");
       return;
     }
-
     const total = (quantity * amount).toFixed(2);
+    tabledata.push({cardId,clientName,quantity,amount,total}); //store data to a temporary array.(clientside)
     const row = `
-      <tr id="row${cardId}">
+      <tr>
         <td>${cardId}</td>
-        <td>${clientName}</td>
-        <td>${quantity}</td>
-        <td>${amount}</td>
-        <td>${total}</td>
+        <td contenteditable="true">${clientName}</td>
+        <td contenteditable="true">${quantity}</td>
+        <td contenteditable="true">${amount}</td>
+        <td contenteditable="true">${total}</td>
       </tr>`;
 
     commissionLinesTable.insertAdjacentHTML("beforeend", row);
@@ -254,6 +256,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("quantityInput").value = "";
     document.getElementById("amountInput").value = "";
 
+  });
+
+  submitBtn.addEventListener("click", () => {
+    if (tabledata.length == 0) {
+      alert("No data to submit.");
+      return;
+    }
+  
+    fetch("../../createcommission.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tabledata)
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      tabledata = []; // clear memory
+      commissionLinesTable.innerHTML = ""; // clear table display
+    })
+    .catch(err => console.error("Error submitting data:", err));
   });
 
 });

@@ -187,18 +187,6 @@ function passwordHashing($password){ //encrpt the passowrds to be stored in data
 }
 
 //Commissions
-function createCommissionrequest($agentid, $cardid, $quantity){ // creating a commission request: for approval to owner
-    include "dbconnection.php";
-
-    $totalcommission = calculateCommission($quantity,$agentid, $cardid);
-    $query = "INSERT INTO commissions(`CommissionID`, `UserID','AgentID','TotalCommission','ApprovalStatus') 
-                            VALUES ('',$userid','$agentid','$totalcommission','2')";
-    
-    mysqli_query($connection,$query);
-    $connection -> close();
-
-} 
-
 function createCommission($agentid, $cardid, $quantity){ //for owner only :no posting for approval
 
     include "dbconnection.php";
