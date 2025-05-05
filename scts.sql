@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 03:12 AM
+-- Generation Time: May 05, 2025 at 11:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -128,6 +128,15 @@ CREATE TABLE `commissions` (
   `ApprovalStatus` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `commissions`
+--
+
+INSERT INTO `commissions` (`CommissionID`, `UserID`, `AgentID`, `TotalCommission`, `ApprovalStatus`) VALUES
+(3, 2, 1, 1000, 'Pending'),
+(4, 2, 1, 8000, 'Pending'),
+(5, 2, 2, 500, 'Pending');
+
 -- --------------------------------------------------------
 
 --
@@ -143,6 +152,16 @@ CREATE TABLE `commissions_lines` (
   `Amount` float NOT NULL,
   `TotalAmount` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `commissions_lines`
+--
+
+INSERT INTO `commissions_lines` (`Coms_Lines`, `CommissionID`, `CardID`, `ClientName`, `Quantity`, `Amount`, `TotalAmount`) VALUES
+(1, 3, 1, 'Ze Client', 1, 5000, 5000),
+(2, 4, 5, 'Ze Client', 4, 10000, 40000),
+(3, 4, 4, 'Ze Client', 2, 50000, 100000),
+(4, 5, 1, 'Ze Client', 1, 5000, 5000);
 
 -- --------------------------------------------------------
 
@@ -285,13 +304,13 @@ ALTER TABLE `cardtype`
 -- AUTO_INCREMENT for table `commissions`
 --
 ALTER TABLE `commissions`
-  MODIFY `CommissionID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `CommissionID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `commissions_lines`
 --
 ALTER TABLE `commissions_lines`
-  MODIFY `Coms_Lines` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `Coms_Lines` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `positions`
