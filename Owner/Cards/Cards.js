@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   openCardModalBtn.addEventListener("click", () => {
     editingIndex = null;
     clearForm();
-    updateCardIdField();
     showModal(cardModal);
   });
 
@@ -42,7 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
   cardForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const cardId = parseInt(cardIdInput.value);
+    const cardId = editingIndex !== null
+      ? JSON.parse(localStorage.getItem("cards"))[editingIndex].cardId
+      : getNextCardId();
     const amount = amountInput.value;
     const status = statusInput.value;
     const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
@@ -64,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hideModal(cardModal);
     clearForm();
-    updateCardIdField();
     renderCardTable();
   });
 
@@ -75,10 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("nextCardId", nextId);
     }
     return nextId;
-  }
-
-  function updateCardIdField() {
-    cardIdInput.value = getNextCardId();
   }
 
   function updateDropdown(dropdown, items, valueKey, textKey) {
@@ -216,7 +212,6 @@ function editCard(cardId) {
   const card = cards[index];
   editingIndex = index;
 
-  document.getElementById("cardIdInput").value = card.cardId;
   document.getElementById("amountInput").value = card.amount;
   document.getElementById("statusInput").value = card.status;
 

@@ -3,25 +3,40 @@
   <head>
     <title>Sales Commission Tracker System</title>
     <link rel="stylesheet" type="text/css" href="Login.css" />
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="main">
       <img class="logo" src="../images/DATCOM.png" />
       <div class="title">DatCom</div>
 
-      <form id="loginForm" onsubmit="return false;">
+      <form id="loginForm" method="POST" action="login.php">
         <div class="credentials">
           <label for="username" class="input-label">Username</label>
           <div class="username">
             <i class="fas fa-user"></i>
-            <input type="text" name="username" id="username" placeholder="Enter username" required />
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter username"
+              required
+            />
           </div>
 
           <label for="password" class="input-label">Password</label>
           <div class="password">
             <i class="fas fa-key"></i>
-            <input type="password" name="password" id="password" placeholder="••••••••" required />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter password"
+              required
+            />
           </div>
         </div>
 
@@ -30,11 +45,18 @@
             <input type="checkbox" id="remember-me" /> Remember me
           </label>
           <label>
-            <input type="checkbox" id="show-password" onchange="togglePassword()" /> Show password
+            <input
+              type="checkbox"
+              id="show-password"
+              onchange="togglePassword()"
+            />
+            Show password
           </label>
         </div>
 
-        <button class="submit" type="button" id="loginButton">Sign in</button>
+        <button class="submit" name="login" type="submit" id="loginButton">
+          Sign in
+        </button>
       </form>
     </div>
 

@@ -10,11 +10,11 @@ if(isset($_POST['register'])){
     if(isExistingInUsers($username)){ //|| isExistingInAgents($username)
 
         echo "<script>alert('Username is already taken.')</script>";
-        echo "<script> window.location.href='registration.html'</script>";
+        echo "<script> window.location.href='Owner/Users/Users.html'</script>";
 
     }else{
 
-        $name = $_POST['name'];
+        $name = $_POST['username'];
         $position = $_POST['position'];
         $password = trim($_POST['password']);
         $hash = passwordHashing($password);

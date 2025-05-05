@@ -5,5 +5,5 @@
     session_destroy();
 
     echo "<script>alert('Log Out Sucessfully!')</script>";
-    echo "<script> window.location.href='index.php'</script>";
+    echo "<script> window.location.href='Login/login.html'</script>";
 ?>

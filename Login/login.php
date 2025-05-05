@@ -1,37 +1,81 @@
 <?php
-session_start();
-$conn = new mysqli("localhost", "root", "", "scts");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
+include "../reusables.php";
+include "../dbconnection.php";
 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password']; // assuming plaintext for now, you can hash it later
+//Login
+if (isset($_POST['login'])) {
 
-    $stmt = $conn->prepare("SELECT users.UserID, users.UserName, users.Name, positions.PositionName
-                            FROM users
-                            JOIN positions ON users.PositionID = positions.PositionID
-                            WHERE users.UserName = ? AND users.Password = ? AND users.Status = 1");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-    $result = $stmt->get_result();
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
-        $_SESSION['users'] = $user;
+    if (empty($username) || empty($password)) {
 
-        echo json_encode([
-          'success' => true,
-          'role' => strtolower($user['PositionName']) // normalize role
-        ]);
+        echo "<script>alert('Please fill the required fields!')</script>";
+        echo "<script> window.location.href='../Login/Login.html'</script>";
+
     } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid credentials or inactive user']);
+
+        $query = "SELECT * FROM users WHERE username = '$username'";
+        $result = mysqli_query($connection,$query);
+
+        if($result->num_rows > 0){
+
+            $row = mysqli_fetch_array($result);
+            
+            if(password_verify($password,$row["Password"])){
+
+                $_SESSION['username'] = $username;
+                header("Location:../Owner/Main_Page/Main_Page.html");
+
+                $position = $row["PositionID"];
+                
+                switch ($position) {
+                    case 1:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Owner";
+                        header("Location:../Owner/Main_Page/Main_Page.html");
+                        break;
+
+                    case 2:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Admin";
+                        header("Location:../Admin/Main_Page/Main_Page.html");
+                        break;
+
+                    case 3:
+                        $_SESSION["name"] = $row['Name'];
+                        $_SESSION["position"] = "Unit Manager";
+                        header("Location:../Unit_Manager/Main_Page/Main_Page.html");
+                        break; 
+
+                    default:
+                        session_start();
+                        session_unset();
+                        session_destroy();
+                        $connection->close();
+                        echo "<script>alert('Unknown User')</script>";
+                        echo "<script> window.location.href='Login/Login.html'</script>";
+                        break;
+                }
+           
+            }else{
+
+                echo "Invalid Password";
+                echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
+                $connection->close();
+            }
+          
+        }else{
+
+            echo "Invalid Username";
+            echo "<br><a href= 'Login/Login.html'> Go back to Log in Page </a>";
+            $connection->close();
+        }
+
+        $connection->close();
     }
 }
+
 ?>
-
-
-
-

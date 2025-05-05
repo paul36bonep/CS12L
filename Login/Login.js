@@ -5,9 +5,11 @@ document.getElementById("loginButton").addEventListener("click", function () {
   fetch("login.php", {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    body: `username=${encodeURIComponent(
+      username
+    )}&password=${encodeURIComponent(password)}`,
   })
     .then((response) => response.json())
     .then((data) => {
@@ -15,13 +17,13 @@ document.getElementById("loginButton").addEventListener("click", function () {
         // Redirect based on role
         switch (data.role) {
           case "Owner":
-            window.location.href = "Owner/dashboard.php";
+            window.location.href = "../Owner/dashboard.php";
             break;
           case "Admin":
-            window.location.href = "Admin/dashboard.php";
+            window.location.href = "../Admin/dashboard.php";
             break;
           case "Unit Manager":
-            window.location.href = "Unit_Manager/dashboard.php";
+            window.location.href = "../Unit_Manager/dashboard.php";
             break;
           default:
             alert("Unknown role");
@@ -33,14 +35,14 @@ document.getElementById("loginButton").addEventListener("click", function () {
     .catch((error) => {
       console.error("Error:", error);
       alert("An error occurred during login.");
-    })
-    if (!username || !password) {
-      alert("Please fill in both username and password.");
-      return;
-    }
-    ;
-    function togglePassword() {
-      const passwordInput = document.getElementById("password");
-      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-    }
+    });
+  if (!username || !password) {
+    alert("Please fill in both username and password.");
+    return;
+  }
+  function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type =
+      passwordInput.type === "password" ? "text" : "password";
+  }
 });
