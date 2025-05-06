@@ -2,55 +2,54 @@
 include "dbconnection.php";
 include "reusables.php";
 
-if(isset($_POST['register'])){
+header("Content-Type: application/json"); // Return JSON
+
+$response = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = trim($_POST['username']);
 
-    if(isExistingInUsers($username)){ //|| isExistingInAgents($username)
-
-        unset($_POST['register']);
-        echo "<script>alert('Username is already taken.')</script>";
-        echo "<script> window.location.href='Owner/Users/Users.html'</script>";
-
-    }else{
-
+    if (isExistingInUsers($username)) {
+        $response['success'] = false;
+        $response['message'] = "Username is already taken.";
+    } else {
         $name = $_POST['username'];
         $position = $_POST['position'];
         $password = trim($_POST['password']);
         $hash = passwordHashing($password);
 
-        switch($position){ //Assign PositionID for database
-
+        switch ($position) {
             case "Admin":
                 $posID = 2;
                 break;
-
             case "Owner":
                 $posID = 1;
                 break;
-
             case "Unit Manager":
                 $posID = 3;
                 break;
-    
             default:
-                unset($_POST['register']);
-                echo "<script>alert('Undefined Position name.')</script>";
-                echo "<script> window.location.href='Owner/Users/Users.html'</script>";
-                break;
+                $response['success'] = false;
+                $response['message'] = "Undefined Position name.";
+                echo json_encode($response);
+                exit;
+        }
+        $status = $_POST['status'] === 'Inactive' ? 0 : 1;
+        $query = "INSERT INTO users (`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) 
+                  VALUES ('', '$posID', '$username', '$hash', '$name', '$status')";
+
+        if (mysqli_query($connection, $query)) {
+            $response['success'] = true;
+            $response['message'] = "User registered successfully.";
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Database error: " . mysqli_error($connection);
         }
 
-        $query = "INSERT INTO users(`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `Status`) 
-                            VALUES ('','$posID','$username','$hash','$name','1')";
-        
-        mysqli_query($connection,$query);
-        $connection -> close();
-        unset($_POST['register']);
-
-
-        echo "<script>alert('User registered Successfully')</script>";
-        echo "<script> window.location.href='Owner/Users/Users.html'</script>";
-        
+        $connection->close();
     }
+
+    echo json_encode($response);
 }
 ?>

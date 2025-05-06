@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalBtn = document.getElementById("closeModalBtn");
   const modal = document.getElementById("registerModal");
   const submitBtn = document.querySelector(".submit");
+  const form = document.querySelector("#registerModal form");
 
   const searchBar = document.getElementById("searchbar");
   const roleFilter = document.getElementById("roleFilter");
@@ -68,6 +69,31 @@ document.addEventListener("DOMContentLoaded", () => {
   //   }
   // });
 
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("../../registeruser.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert(data.message);
+          modal.classList.remove("active");
+          clearForm();
+          fetchAndRenderUsers(); // Reload updated users
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  });
+
   function clearForm() {
     //document.querySelector("input[placeholder='User id']").value = "";
     document.getElementById("position").value = "Admin";
@@ -104,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function fetchAndRenderUsers() {
-    fetch("../Users.php")
+    fetch("Users.php")
       .then((res) => res.json())
       .then((data) => {
         const table = document.querySelector(".user-table");
@@ -125,16 +151,54 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${user.username}</td>
             <td>${user.name}</td>
             <td>${user.status}</td>
-            <td><button class="edit-btn">Edit</button></td>
+            <td><button class="edit-btn" data-id="${user.id}">Edit</button></td>
           `;
           tbody.appendChild(tr);
         });
+
+        document.querySelectorAll(".edit-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const tr = btn.closest("tr");
+            document.getElementById("edit-userid").value =
+              tr.children[0].textContent;
+            document.getElementById("edit-position").value =
+              tr.children[1].textContent;
+            document.getElementById("edit-username").value =
+              tr.children[2].textContent;
+            document.getElementById("edit-name").value =
+              tr.children[3].textContent;
+            document.getElementById("edit-status").value =
+              tr.children[4].textContent;
+
+            document.getElementById("editModal").classList.add("active");
+          });
+        });
+
+        document
+          .getElementById("editUserForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("updateuser.php", {
+              method: "POST",
+              body: formData,
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                alert(data.message);
+                if (data.success) {
+                  document
+                    .getElementById("editModal")
+                    .classList.remove("active");
+                  fetchAndRenderUsers(); // Refresh table
+                }
+              });
+          });
 
         filterTable(); // Re-apply filters
       });
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchAndRenderUsers(); // Load users when the page starts
-  });
+  fetchAndRenderUsers(); // Load users when the page starts
 });
