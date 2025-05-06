@@ -73,20 +73,20 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("../../getcards.php")
   .then(response => response.json())
   .then(cards => {
-    updateCardsDropdown(cardsdropdown, cards, "cardId", "cardType");
+    updateCardsDropdown(cardsdropdown, cards, "cardId","bankName","cardType");
   })
   .catch(error => {
     console.error("Error fetching Cards information:", error);
   });
 
-  function updateCardsDropdown(dropdown, items, value, text) {
+  function updateCardsDropdown(dropdown, items, value, bankName, cardType) {
     dropdown.innerHTML = `
       <option value="">Select Card</option>
     `;
     items.forEach((item) => {
       const option = document.createElement("option");
       option.value = item[value];
-      option.textContent = item[text];
+      option.textContent = item[bankName] + "("+ item[cardType]+ ")";
       dropdown.appendChild(option);
     });
   }
