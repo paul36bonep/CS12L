@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+  <link rel="stylesheet" href="Cards.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <title>Sales Commission Tracker</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <!--Sidebar Section-->
+    <aside>
+      <div class="toggle">
+        <div class="logo">
+          <img src="../../images/DATCOM.png">
+          <h2>Dat<span class="danger">Com</span></h2>
+        </div>
+        <div class="close" id="close-btn">
+          <span class="material-icons-sharp">close</span>
+        </div>
+      </div>
+      <div class="sidebar">
+        <a href="/Admin/Main_Page/Main_Page.html">
+          <span class="material-icons-sharp"> dashboard </span>
+          <h3>Dashboard</h3>
+        </a>
+
+        <a href="/Admin/Agents/Agents.html">
+          <span class="material-icons-sharp"> people </span>
+          <h3>Agents</h3>
+        </a>
+
+        <a href="/Admin/Cards/Cards.html">
+          <span class="material-icons-sharp"> credit_card </span>
+          <h3>Cards</h3>
+        </a>
+
+        <a href="/Admin/Commissions/Commissions.html">
+          <span class="material-icons-sharp"> paid </span>
+          <h3>Commissions</h3>
+        </a>
+        <a href="/Admin/Report/Reports.html">
+          <span class="material-icons-sharp"> article </span>
+          <h3>Reports</h3>
+        </a>
+        <a href="/Admin/Settings/Settings.html">
+          <span class="material-icons-sharp"> settings </span>
+          <h3>Settings</h3>
+        </a>
+        <a href="../../logout.php">
+          <span class="material-icons-sharp"> logout </span>
+          <h3>Logout</h3>
+        </a>
+      </div>
+    </aside>
+
+    <!--Main Page-->
+    <main>
+      <h1>Cards</h1>
+      <div class="user-div">
+        <div class="table-header">
+          <button class="action-btn add-btn" id="openModalBtn">Add New Card</button>
+          
+          <input type="text" id="searchbar" placeholder="Search..." class="search-bar">
+        </div>
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Card ID</th>
+              <th>Bank Name</th>
+              <th>Card Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Card Modal -->
+    <div class="modal" id="registerModal">
+      <div class="modal-content">
+        <header>Card Details</header>
+        <form id="cardForm" action="../../addcard.php" method="POST">
+          <div class="form first">
+            <div class="personal info">
+              <span class="title">Add New Card</span>
+              <div class="fields-container" style="position: relative;">
+                <!-- Left-side fields -->
+                <div class="fields">
+
+                  <!-- <div class="input-field">
+                    <label>Card ID</label>
+                    <input type="number" id="cardIdInput" placeholder="Card ID" required readonly>
+                  </div> -->
+                
+                  <div class="input-field">
+                    <label>Amount</label>
+                    <input type="number" name="cardamount" id="amountInput" placeholder="Enter amount" required>
+                  </div>
+                
+                  <div class="input-field">
+                    <label>Status:</label>
+                    <select name="status" id="statusInput" required>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+
+                </div>
+    
+                <div class="fields">
+
+                  <!-- Bank Dropdown -->
+                  <div class="input-field">
+                    <label>Bank Name</label>
+                    <select name="bankname" id="bankDropdown" onchange="handleBankDropdownChange(this)" required>
+                      <option value="">Select Bank</option>
+                      <!-- Other bank options here -->
+                      <option value="define-new">Define New</option>
+                    </select>
+                  </div>
+                
+                  <!-- Card Type Dropdown -->
+                  <div class="input-field">
+                    <label>Card Type</label>
+                    <select name="cardtype" id="cardTypeDropdown" onchange="handleCardTypeDropdownChange(this)" required> 
+                      <option value="">Select Card Type</option>
+                      <!-- Other card type options here -->
+                      <option value="define-new">Define New</option>
+                    </select>
+                  </div>
+                  
+                </div>
+
+              </div>
+    
+              <div class="buttons">
+                <button type="button" class="backBtn" id="closeModalBtn"><span class="btnText">Close</span></button>
+                <button type="submit" name="addcard" class="submit"><span class="submitBtn">Submit</span></button>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+      <!-- Mini Modal for Adding Bank -->
+<div id="bankModal" class="mini-modal">
+  <div class="mini-modal-content">
+    <h3>Define New Bank</h3>
+    <form action="../../addbank.php" method="POST">
+
+      <input type="text" name="newbankname" id="newBankName" placeholder="Enter bank name" required>
+
+      <div class="mini-modal-actions">
+        <button onclick="closeBankModal()">Cancel</button>
+        <button type="submit" name="addbank">Add</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- Mini Modal for Adding Card Type -->
+<div id="cardTypeModal" class="mini-modal">
+  <div class="mini-modal-content">
+    <h3>Define New Card Type</h3>
+    <form action="../../addcardtype.php" method="POST">
+
+      <input type="text" name="newcardtype" id="newCardTypeName" placeholder="Enter card type" required>
+
+      <div class="mini-modal-actions">
+        <button onclick="closeCardTypeModal()">Cancel</button>
+        <button type="submit" onclick="clickAddButton()"name="addcardtype">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+     <!--Right Section nav-->
+     <div class="right-section">
+      <div class="nav">
+        <button id="menu-btn">
+          <span class="material-icons-sharp">
+            menu
+            </span>
+        </button>
+        <div class="dark-mode">
+          <span class="material-icons-sharp active">
+            light_mode
+            </span>
+            <span class="material-icons-sharp">
+              dark_mode
+              </span>
+        </div>
+
+        <div class="profile">
+          <div class="info">
+            <p>Hey, <b> DrChaos</b></p>
+            <small class="text-muted"> Admin </small>
+          </div>
+          <div class="profile-photo">
+            <img src="../../images/Profile-3.jpg" />
+          </div>
+        </div>
+      </div>
+      <!--end of nav-->
+  </div>
+  <script src="../Main_Page/Main_Page.js"></script>
+  <script src="Cards.js"></script>
+</body>
+</html>
