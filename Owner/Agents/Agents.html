@@ -1,170 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-  <link rel="stylesheet" href="Agents.css">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-  <title>Sales Commission Tracker</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Agents.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <title>Sales Commission Tracker</title>
+  </head>
 
-<body>
-
-  <div class="container">
-    <!--Sidebar Section-->
-    <aside>
-      <div class="toggle">
-        <div class="logo">
-          <img src="../../images/DATCOM.png">
-          <h2>Dat<span class="danger">Com</span></h2>
+  <body>
+    <div class="container">
+      <!--Sidebar Section-->
+      <aside>
+        <div class="toggle">
+          <div class="logo">
+            <img src="../../images/DATCOM.png" />
+            <h2>Dat<span class="danger">Com</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
         </div>
-        <div class="close" id="close-btn">
-          <span class="material-icons-sharp">
-            close
-          </span>
-        </div>
-      </div>
 
-      <div class="sidebar">
-        <a href="../Main_Page/Main_Page.html">
-          <span class="material-icons-sharp">
-            dashboard
-            </span>
+        <div class="sidebar">
+          <a href="../Main_Page/Main_Page.html">
+            <span class="material-icons-sharp"> dashboard </span>
             <h3>Dashboard</h3>
-        </a>
-        
-        <a href="../Users/Users.html">
-          <span class="material-icons-sharp">
-            person_outline
-            </span>
+          </a>
+
+          <a href="../Users/Users.html">
+            <span class="material-icons-sharp"> person_outline </span>
             <h3>Users</h3>
-        </a>
-     
-        <a href="Agents.html">
-          <span class="material-icons-sharp">
-            people
-            </span>
+          </a>
+
+          <a href="Agents.html">
+            <span class="material-icons-sharp"> people </span>
             <h3>Agents</h3>
-        </a>
+          </a>
 
-        <a href="../Cards/Cards.html">
-          <span class="material-icons-sharp">
-            credit_card
-            </span>
+          <a href="../Cards/Cards.html">
+            <span class="material-icons-sharp"> credit_card </span>
             <h3>Cards</h3>
-        </a>
+          </a>
 
-        <a href="../Commissions/Commissions.html">
-          <span class="material-icons-sharp">
-            paid
-            </span>
+          <a href="../Commissions/Commissions.html">
+            <span class="material-icons-sharp"> paid </span>
             <h3>Commissions</h3>
-        </a>
+          </a>
 
-        <a href="../Report/Reports.html">
-          <span class="material-icons-sharp">
-            article
-            </span>
+          <a href="../Report/Reports.html">
+            <span class="material-icons-sharp"> article </span>
             <h3>Reports</h3>
-        </a>
+          </a>
 
-        <a href="../Settings/Settings.html">
-          <span class="material-icons-sharp">
-            settings
-            </span>
+          <a href="../Settings/Settings.html">
+            <span class="material-icons-sharp"> settings </span>
             <h3>Settings</h3>
-        </a>
+          </a>
 
-        <a href="../../Login/login2.html">
-          <span class="material-icons-sharp">
-            logout
-            </span>
+          <a href="../../Login/login.html">
+            <span class="material-icons-sharp"> logout </span>
             <h3>Sign Out</h3>
-        </a>
-      </div>
-    </aside>
-    <!--end of sidebar section :)-->
+          </a>
+        </div>
+      </aside>
+      <!--end of sidebar section :)-->
 
-    <!--Main Page-->
-    <main>
-      <h1>Agents</h1>
-      <div class="user-div">
-        <div class="table-header">
-          <button class="action-btn add-btn" id="openModalBtn">
-            Add Agent
+      <!--Main Page-->
+      <main>
+        <h1>Agents</h1>
+        <div class="user-div">
+          <div class="table-header">
+            <button class="action-btn add-btn" id="openModalBtn">
+              Add Agent
+            </button>
+            <div class="filter-group">
+              <input
+                type="text"
+                id="searchbar"
+                placeholder="Search..."
+                class="search-bar"
+              />
+
+              <select id="areaFilter" class="search-bar">
+                <option value="All">All Areas</option>
+                <option value="Davao-South">Davao-South</option>
+                <option value="Davao-North">Davao-North</option>
+                <option value="Davao-Central">Davao-Central</option>
+              </select>
+
+              <select id="statusFilter" class="search-bar">
+                <option value="All">All Statuses</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>Agent ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Commission %</th>
+                <th>Area</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </main>
+      <!--end of main content-->
+
+      <!--Right Section nav-->
+      <div class="right-section">
+        <div class="nav">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
           </button>
-          <div class="filter-group">
-            <input type="text" id="searchbar" placeholder="Search..." class="search-bar" />
-        
-            <select id="areaFilter" class="search-bar">
-              <option value="All">All Areas</option>
-              <option value="Davao-South">Davao-South</option>
-              <option value="Davao-North">Davao-North</option>
-              <option value="Davao-Central">Davao-Central</option>
-              
-            </select>
-        
-            <select id="statusFilter" class="search-bar">
-              <option value="All">All Statuses</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
+          <div class="dark-mode">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b> Jeschann</b></p>
+              <small class="text-muted"> Owner </small>
+            </div>
+            <div class="profile-photo">
+              <img src="../../images/Profile-1.jpg" />
+            </div>
           </div>
         </div>
-        
-        <table class="user-table">
-          <thead>
-            <tr>
-              <th>Agent ID</th>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Commission %</th>
-              <th>Area</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-              
-            </tbody>
-        </table>     
       </div>
-    </main>
-    <!--end of main content-->
 
-    <!--Right Section nav-->
-    <div class="right-section">
-      <div class="nav">
-        <button id="menu-btn">
-          <span class="material-icons-sharp">
-            menu
-            </span>
-        </button>
-        <div class="dark-mode">
-          <span class="material-icons-sharp active">
-            light_mode
-            </span>
-            <span class="material-icons-sharp">
-              dark_mode
-              </span>
-        </div>
-
-        <div class="profile">
-          <div class="info">
-            <p>Hey, <b> Jeschann</b></p>
-            <small class="text-muted">
-              Owner
-            </small>
-          </div>
-          <div class="profile-photo">
-            <img src="../../images/Profile-1.jpg">           
-          </div>
-        </div>
-
-      </div>
-    </div>
-  
       <!--end of nav-->
 
       <!--registration form-->
@@ -182,15 +162,30 @@
                   </div> -->
                   <div class="input-field">
                     <label>Agent Name</label>
-                    <input type="text" name="agentname" placeholder="Enter agent name" required>
+                    <input
+                      type="text"
+                      name="agentname"
+                      placeholder="Enter agent name"
+                      required
+                    />
                   </div>
                   <div class="input-field">
                     <label>Age</label>
-                    <input type="number" name="age" placeholder="Enter age" required>
+                    <input
+                      type="number"
+                      name="age"
+                      placeholder="Enter age"
+                      required
+                    />
                   </div>
                   <div class="input-field">
                     <label>Commission %</label>
-                    <input type="text" name="commissionpercent" placeholder="Enter commission percent" required>
+                    <input
+                      type="text"
+                      name="commissionpercent"
+                      placeholder="Enter commission percent"
+                      required
+                    />
                   </div>
                   <div class="input-field">
                     <label for="area">Area</label>
@@ -198,10 +193,9 @@
                       <option value="Davao-South" selected>Davao-South</option>
                       <option value="Davao-North">Davao-North</option>
                       <option value="Davao-Central">Davao-Central</option>
-                      
                     </select>
                   </div>
-                  
+
                   <div class="input-field">
                     <label for="status">Status:</label>
                     <select id="status" required>
@@ -224,12 +218,9 @@
           </form>
         </div>
       </div>
+    </div>
 
-  </div>
-
-  <script src="../Main_Page/Main_Page.js"></script>
-  <script src="Agents.js"></script>
-  
-</body>
-
+    <script src="../Main_Page/Main_Page.js"></script>
+    <script src="Agents.js"></script>
+  </body>
 </html>

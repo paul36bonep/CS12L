@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   openModalBtn.addEventListener("click", () => {
     modal.classList.add("active");
     clearForm();
-    document.querySelector("input[placeholder='User id']").value = "Auto-generated";
+    document.querySelector("input[placeholder='User id']").value =
+      "Auto-generated";
   });
 
   closeModalBtn.addEventListener("click", () => {
@@ -32,14 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // submitBtn.addEventListener("click", (e) => {
   //   e.preventDefault();
-  
+
   //   const userId = document.querySelector("input[placeholder='User id']").value;
   //   const positionId = document.getElementById("position").value;
   //   const username = document.querySelector("input[placeholder='Enter username']").value;
   //   const password = document.querySelector("input[placeholder='Enter new password']").value;
   //   const name = document.querySelector("input[placeholder='Enter name']").value;
   //   const status = document.getElementById("status").value;
-  
+
   //   if (userId && positionId && username && password && name) {
   //     const formData = new FormData();
   //     formData.append("position", positionId);
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //     formData.append("password", password);
   //     formData.append("name", name);
   //     formData.append("status", status);
-  
+
   //     fetch("users.php", {
   //       method: "POST",
   //       body: formData
@@ -65,14 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
   //   } else {
   //     alert("Please fill in all fields.");
   //   }
-  // });  
+  // });
 
- 
   function clearForm() {
     //document.querySelector("input[placeholder='User id']").value = "";
     document.getElementById("position").value = "Admin";
     document.querySelector("input[placeholder='Enter username']").value = "";
-    document.querySelector("input[placeholder='Enter new password']").value = "";
+    document.querySelector("input[placeholder='Enter new password']").value =
+      "";
     document.querySelector("input[placeholder='Enter name']").value = "";
     document.getElementById("status").value = "Active";
   }
@@ -94,9 +95,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const matchesSearch = username.includes(query) || name.includes(query);
       const matchesRole = selectedRole === "All" || role === selectedRole;
-      const matchesStatus = selectedStatus === "All" || status === selectedStatus;
+      const matchesStatus =
+        selectedStatus === "All" || status === selectedStatus;
 
-      row.style.display = matchesSearch && matchesRole && matchesStatus ? "" : "none";
+      row.style.display =
+        matchesSearch && matchesRole && matchesStatus ? "" : "none";
     });
-  } 
+  }
+
+  function fetchAndRenderUsers() {
+    fetch("../Users.php")
+      .then((res) => res.json())
+      .then((data) => {
+        const table = document.querySelector(".user-table");
+        let tbody = table.querySelector("tbody");
+
+        if (!tbody) {
+          tbody = document.createElement("tbody");
+          table.appendChild(tbody);
+        }
+
+        tbody.innerHTML = ""; // Clear existing rows
+
+        data.forEach((user) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.position}</td>
+            <td>${user.username}</td>
+            <td>${user.name}</td>
+            <td>${user.status}</td>
+            <td><button class="edit-btn">Edit</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        filterTable(); // Re-apply filters
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchAndRenderUsers(); // Load users when the page starts
+  });
 });

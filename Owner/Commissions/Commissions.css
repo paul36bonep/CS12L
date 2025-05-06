@@ -571,7 +571,7 @@ main .span {
 .modal-content header::before {
   content: "";
   position: absolute;
-  bottom: 550px;
+  bottom: 565px;
   height: 3px;
   width: 50px;
   border-radius: 8px;
@@ -837,16 +837,17 @@ tr td:nth-child(5):contains("Approved") {
 /* Add Entry Fields */
 .add-entry-fields {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
   align-items: center;
+  margin-left: 2rem;
 }
 
 .add-entry-fields input {
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  flex: 1 1 18%;
+  width: 165px;
 }
 
 .add-entry-fields button {
@@ -881,23 +882,23 @@ div.buttons {
 
 /*scrollable table for commission lines*/
 /* Scrollable table container */
-.scrollable-table {
+/* .scrollable-table {
   max-height: 100px; /* adjust as needed */
-  overflow-y: auto;
+/* overflow-y: auto;
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-}
+}*/
 
 /* Optional: make headers sticky */
-.scrollable-table thead th {
+/*.scrollable-table thead th {
   position: sticky;
-  top: 0;
-  /*background-color: #f9f9f9;*/
-  z-index: 1;
+  top: 0;*/
+/*background-color: #f9f9f9;*/
+/*z-index: 1;
 }
 
 /* Optional: consistent table layout */
@@ -912,3 +913,22 @@ div.buttons {
   text-align: left;
 }
 /*end scrollable table for commission lines*/
+
+.table-wrapper {
+  max-height: 200px; /* or any height limit you want */
+  overflow-y: auto;
+  display: block;
+}
+
+/* Optional: Keep header fixed (if needed) */
+.commission-lines-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.commission-lines-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #28adfa;
+  z-index: 2;
+}
