@@ -1,5 +1,5 @@
 <?php
-include "dbconnection.php";
+include "../../dbconnection.php";
 
 header("Content-Type: application/json");
 
