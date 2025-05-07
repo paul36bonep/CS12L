@@ -556,7 +556,7 @@ main .span {
 
 .modal-content {
   position: relative;
-  max-width: 900px;
+  max-width: 700px;
   width: 100%;
   border-radius: 6px;
   padding: 30px;
@@ -574,7 +574,7 @@ main .span {
 .modal-content header::before {
   content: "";
   position: absolute;
-  bottom: 385px;
+  bottom: 290px;
   height: 3px;
   width: 50px;
   border-radius: 8px;
@@ -584,7 +584,7 @@ main .span {
 .modal-content form {
   position: relative;
   margin-top: 16px;
-  min-height: 350px;
+  min-height: 250px;
   background-color: #f2f2f2;
 }
 
