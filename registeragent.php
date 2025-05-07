@@ -19,7 +19,7 @@ if(isset($_POST['register'])){
         $area = $_POST['area'];
         
         $query = "INSERT INTO agents(`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) 
-                            VALUES ('','$name','$age','$commissionpercent','$area','1')";
+                            VALUES ('','$name','$age','$commissionpercent','$area','$status')";
         
         mysqli_query($connection,$query);
         $connection -> close();
