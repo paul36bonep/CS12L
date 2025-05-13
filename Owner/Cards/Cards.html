@@ -176,10 +176,10 @@
     <h3>Define New Bank</h3>
     <form action="../../addbank.php" method="POST">
 
-      <input type="text" name="newbankname" id="newBankName" placeholder="Enter bank name" required>
+      <input type="text" name="newbankname" id="newBankName" placeholder="Enter bank name" required >
 
       <div class="mini-modal-actions">
-        <button onclick="closeBankModal()">Cancel</button>
+        <button type="button" onclick="closeBankModal()">Cancel</button>
         <button type="submit" name="addbank">Add</button>
       </div>
 
@@ -196,7 +196,7 @@
       <input type="text" name="newcardtype" id="newCardTypeName" placeholder="Enter card type" required>
 
       <div class="mini-modal-actions">
-        <button onclick="closeCardTypeModal()">Cancel</button>
+        <button type="button" onclick="closeCardTypeModal()">Cancel</button>
         <button type="submit" onclick="clickAddButton()"name="addcardtype">Add</button>
       </div>
     </form>

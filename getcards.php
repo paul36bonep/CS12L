@@ -2,15 +2,19 @@
 
 include "dbconnection.php";
 
-$query = "SELECT card.CardID,
-cardtype.CardType,
-bank.BankName,
-card.Amount
-FROM card
-JOIN cardtype ON card.TypeID = cardtype.TypeID
-JOIN bank ON card.BankID = bank.BankID";
+// Query to get card details
+$query = "SELECT card.CardID, cardtype.CardType, bank.BankName, card.Amount, card.Status
+          FROM card
+          JOIN cardtype ON card.TypeID = cardtype.TypeID
+          JOIN bank ON card.BankID = bank.BankID";
 
 $result = $connection->query($query);
+
+if (!$result) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Database query failed"]);
+    exit;
+}
 
 $cards = [];
 while($row = $result->fetch_assoc()) {
@@ -18,7 +22,9 @@ while($row = $result->fetch_assoc()) {
         "cardId" => $row["CardID"],
         "bankName" => $row["BankName"],
         "cardType" => $row["CardType"],
-        "cardAmount" => $row["Amount"]
+        "cardAmount" => $row["Amount"],
+        "status" => $row["Status"] == 1 ? "Active" : "Inactive"
+       
     ];
 }
 
