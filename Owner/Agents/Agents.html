@@ -156,14 +156,20 @@
               <div class="personal info">
                 <span class="title">Update Agent</span>
                 <div class="fields">
-                  <!-- <div class="input-field">
-                    <label>Agent ID</label>
-                    <input type="text" id="agentIdInput" placeholder="Auto-generated" required readonly>
-                  </div> -->
+                  <input
+                    type="hidden"
+                    id="agentIdInput"
+                    name="id"
+                    placeholder="Auto-generated"
+                    required
+                    readonly
+                  />
+
                   <div class="input-field">
                     <label>Agent Name</label>
                     <input
                       type="text"
+                      id="agentNameInput"
                       name="agentname"
                       placeholder="Enter agent name"
                       required
@@ -173,6 +179,7 @@
                     <label>Age</label>
                     <input
                       type="number"
+                      id="agentAgeInput"
                       name="age"
                       placeholder="Enter age"
                       required
@@ -182,6 +189,7 @@
                     <label>Commission %</label>
                     <input
                       type="text"
+                      id="commissionInput"
                       name="commissionpercent"
                       placeholder="Enter commission percent"
                       required

@@ -17,6 +17,7 @@ if(isset($_POST['register'])){
         $age = $_POST['age'];
         $commissionpercent = $_POST['commissionpercent'];
         $area = $_POST['area'];
+        $status = ($_POST['status'] === "Active") ? 1 : 0;
         
         $query = "INSERT INTO agents(`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) 
                             VALUES ('','$name','$age','$commissionpercent','$area','$status')";
@@ -29,5 +30,6 @@ if(isset($_POST['register'])){
 
     }
 }
+
 
 ?>
