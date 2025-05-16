@@ -8,6 +8,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="Main_Page.css" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>Sales Commission Tracker</title>
   </head>
 
@@ -68,7 +71,6 @@
       <!--HomePage-->
       <main>
         <h1>Dashboard</h1>
-        <!--dashboard-->
         <div class="dashboard">
           <div class="sales">
             <div class="status">
@@ -89,7 +91,7 @@
           <div class="visits">
             <div class="status">
               <div class="info">
-                <h3>Active Users</h3>
+                <h3>Sales Count</h3>
                 <h1>4</h1>
               </div>
               <div class="progress">
@@ -123,48 +125,34 @@
 
         <!--Users Section-->
         <div class="users">
-          <h2>Users</h2>
+          <h2>Commission Trends</h2>
           <div class="user-list">
-            <div class="user">
-              <img src="../../images/Profile-1.jpg" />
-              <h2>Jeschann</h2>
-              <p>20 Min Ago</p>
-            </div>
-            <div class="user">
-              <img src="../../images/Profile-2.png" />
-              <h2>DanGoku</h2>
-              <p>46 Min Ago</p>
-            </div>
-            <div class="user">
-              <img src="../../images/Profile-3.jpg" />
-              <h2>DrChaos</h2>
-              <p>1 Hour Ago</p>
-            </div>
-            <div class="user">
-              <a href="../Users/Users.html">
-                <img src="../../images/plus.png" alt="Add User" />
-              </a>
-              <h2>More</h2>
-              <p>Add User</p>
-            </div>
+            <div class="chart">
+              <canvas id="myChart" width="960" height="300"></canvas>
           </div>
         </div>
         <!--end of user section-->
 
         <!--recent commissions table-->
         <div class="recent-commissions">
-          <h2>Recent Commissions</h2>
+          <h2>Recent Sales</h2>
           <table>
-            <thead>
-              <tr>
-                <th>Agent Name</th>
-                <th>Agent Number</th>
-                <th>Card Type</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
+            <tbody>
+              <thead>
+                <tr>
+                  <th>Dan Oro</th>
+                  <td>₱50,000</td>
+                </tr>
+                <tr>
+                  <th>Schann Alves</th>
+                  <td>₱60,000</td>
+                </tr>
+                <tr>
+                  <th>Paul Tristan</th>
+                  <td>₱30,000</td>
+                </tr>
+              </thead>
+            </tbody>
           </table>
           <a href="#">Show All</a>
         </div>
@@ -199,5 +187,12 @@
 
     <script src="Commissions/commissions1.js"></script>
     <script src="Main_Page.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="areaChart.js"></script>
   </body>
 </html>

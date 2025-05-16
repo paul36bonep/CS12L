@@ -85,28 +85,30 @@
             <thead>
               <tr>
                 <th>Commission ID</th>
-                <th>Prepared By</th>
+
                 <th>Agent name</th>
                 <th>Total Commission</th>
                 <th>Approval Status</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tr class="active-row">
-              <td>1</td>
-              <td>Jeschann</td>
-              <td>Paul Teves</td>
-              <td>75000</td>
-              <td>Pending</td>
-              <td>
-                <button class="action-btn edit-btn">
-                  <span class="material-icons-sharp">edit</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-icons-sharp">delete</span>
-                </button>
-              </td>
-            </tr>
+            <tbody>
+              <tr class="active-row">
+                <td>1</td>
+
+                <td>Paul Teves</td>
+                <td>75000</td>
+                <td>Pending</td>
+                <td>
+                  <button class="action-btn edit-btn">
+                    <span class="material-icons-sharp">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-icons-sharp">delete</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </main>
@@ -148,8 +150,8 @@
                     <label>Transaction Number</label>
                     <input
                       type="number"
+                      id="transactionNumber"
                       placeholder="Transaction Number"
-                      required
                       readonly
                     />
                   </div>
@@ -178,7 +180,6 @@
                       type="number"
                       id="totalSales"
                       placeholder="Total Sales"
-                      required
                       readonly
                     />
                   </div>
@@ -201,7 +202,6 @@
                       id="totalCommission"
                       name="totalcommission"
                       placeholder="total commission"
-                      required
                       readonly
                     />
                   </div>
@@ -235,6 +235,13 @@
                     <label
                       >Subtotal: <input type="number" id="subtotal" readonly
                     /></label>
+                    <button
+                      class="action-btn add-btn"
+                      type="button"
+                      id="addLineBtn"
+                    >
+                      Add
+                    </button>
                   </div>
 
                   <div class="add-entry-fields">
@@ -266,13 +273,6 @@
                       id="totalInput"
                       readonly
                     />
-                    <button
-                      class="action-btn add-btn"
-                      type="button"
-                      id="addLineBtn"
-                    >
-                      Add
-                    </button>
                   </div>
                   <div id="commissionLinesWrapper" class="table-wrapper">
                     <table class="commission-lines-table">
@@ -287,6 +287,14 @@
                       </thead>
                       <tbody id="commissionLinesTableBody">
                         <!-- Dynamic rows -->
+                        <tr class="no-data">
+                          <td
+                            colspan="5"
+                            style="text-align: center; color: #aaa"
+                          >
+                            No commission lines yet
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

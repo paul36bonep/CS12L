@@ -1,102 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-  <link rel="stylesheet" href="Reports.css">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-  <title>Sales Commission Tracker</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Reports.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=print"
+    />
+    <title>Sales Commission Tracker</title>
+  </head>
 
-<body>
-
-  <div class="container">
-    <!--Sidebar Section-->
-    <aside>
-      <div class="toggle">
-        <div class="logo">
-          <img src="../../images/DATCOM.png">
-          <h2>Dat<span class="danger">Com</
-            span></h2>
-        </div>
-        <div class="close" id="close-btn">
-          <span class="material-icons-sharp">
-            close
-          </span>
-        </div>
-      </div>
-
-      <div class="sidebar">
-        <a href="../Main_Page/Main_Page.html">
-          <span class="material-icons-sharp">
-            dashboard
-            </span>
-            <h3>Dashboard</h3>
-        </a>
-        
-        <a href="../Users/Users.html">
-          <span class="material-icons-sharp">
-            person_outline
-            </span>
-            <h3>Users</h3>
-        </a>
-      
-        <a href="../Agents/Agents.html">
-          <span class="material-icons-sharp">
-            people
-            </span>
-            <h3>Agents</h3>
-        </a>
-        <a href="../Cards/Cards.html">
-          <span class="material-icons-sharp">
-            credit_card
-            </span>
-            <h3>Cards</h3>
-        </a>
-        
-        <a href="../Commissions/Commissions.html">
-          <span class="material-icons-sharp">
-            paid
-            </span>
-            <h3>Commissions</h3>
-        </a>
-        <a href="Reports.html">
-          <span class="material-icons-sharp">
-            article
-            </span>
-            <h3>Reports</h3>
-        </a>
-        <a href="../Settings/Settings.html">
-          <span class="material-icons-sharp">
-            settings
-            </span>
-            <h3>Settings</h3>
-        </a>
-        <a href="../../Login/login.html">
-          <span class="material-icons-sharp">
-            logout
-            </span>
-            <h3>Logout</h3>
-        </a>
-      </div>
-    </aside>
-    <!--end of sidebar section :)-->
-
-    <!--Main Page-->
-    <main>
-      <div>
-        <section id="reports">
-          <h1>Reports</h1>
-          <div class="report-actions">
-            <button class="action-btn" id="generateDetailedReport">Detailed Report</button>
-            <button class="action-btn" id="generateSummaryReport">Summary Report</button>
-            <button class="action-btn" id="printReport">Print Report</button>
+  <body>
+    <div class="container">
+      <!--Sidebar Section-->
+      <aside>
+        <div class="toggle">
+          <div class="logo">
+            <img src="../../images/DATCOM.png" />
+            <h2>Dat<span class="danger">Com</span></h2>
           </div>
-      </div>
-      
-    
-        <!-- Report Table -->
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="../Main_Page/Main_Page.html">
+            <span class="material-icons-sharp"> dashboard </span>
+            <h3>Dashboard</h3>
+          </a>
+
+          <a href="../Users/Users.html">
+            <span class="material-icons-sharp"> person_outline </span>
+            <h3>Users</h3>
+          </a>
+
+          <a href="../Agents/Agents.html">
+            <span class="material-icons-sharp"> people </span>
+            <h3>Agents</h3>
+          </a>
+          <a href="../Cards/Cards.html">
+            <span class="material-icons-sharp"> credit_card </span>
+            <h3>Cards</h3>
+          </a>
+
+          <a href="../Commissions/Commissions.html">
+            <span class="material-icons-sharp"> paid </span>
+            <h3>Commissions</h3>
+          </a>
+          <a href="Reports.html">
+            <span class="material-icons-sharp"> article </span>
+            <h3>Reports</h3>
+          </a>
+          <a href="../Settings/Settings.html">
+            <span class="material-icons-sharp"> settings </span>
+            <h3>Settings</h3>
+          </a>
+          <a href="../../Login/login.html">
+            <span class="material-icons-sharp"> logout </span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <!--end of sidebar section :)-->
+
+      <!--Main Page-->
+      <main>
+        <div class="container2">
+          <div class="tabs">
+            <button class="tab active" data-tab="1">
+              List of All Commissions
+            </button>
+            <button class="tab" data-tab="2">2. Sales Details per Agent</button>
+            <button class="tab" data-tab="3">3. Sales Details per Card</button>
+            <button class="tab" data-tab="4">4. Sales per Area</button>
+
+            <button class="print-btn" onclick="window.print()">
+              <span class="material-symbols-sharp"> print </span>
+              Print
+            </button>
+          </div>
+          <div class="tab-content">
+            <div class="tab-panel active" id="tab-1">
+              <h2>List of All Commissions</h2>
+              <div class="table-container">
+                <table class="report-table2">
+                  <thead>
+                    <tr>
+                      <th>Transaction Date</th>
+                      <th>Agent</th>
+                      <th>Total</th>
+                      <th>Commission Rate</th>
+                      <th>Commission Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-2">
+              <h2>Sales Details per Agent</h2>
+              <label for="agent-select">Agent</label>
+              <select id="agent-select">
+                <option selected>Agent1</option>
+                <option>Agent2</option>
+                <option>Agent3</option>
+              </select>
+              <div class="table-container">
+                <table class="report-table2">
+                  <thead>
+                    <tr>
+                      <th>Transaction Date</th>
+                      <th>Client Name</th>
+                      <th>Card</th>
+                      <th>Amount</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-3">
+              <h2>Sales Details per Card</h2>
+              <label for="card-select">Card</label>
+              <select id="card-select">
+                <option selected>Gold</option>
+                <option>Silver</option>
+                <option>Platinum</option>
+              </select>
+              <div class="table-container">
+                <table class="report-table2">
+                  <thead>
+                    <tr>
+                      <th>Transaction Date</th>
+                      <th>Agent</th>
+                      <th>Client Name</th>
+                      <th>Amount</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-4">
+              <h2>Sales per Area</h2>
+              <label for="area-select">Agent Area</label>
+              <select id="area-select">
+                <option selected>Davao-North</option>
+                <option>Davao-South</option>
+                <option>Davao-Central</option>
+              </select>
+              <div class="table-container">
+                <table class="report-table2">
+                  <thead>
+                    <tr>
+                      <th>Transaction Date</th>
+                      <th>Agent</th>
+                      <th>Card</th>
+                      <th>Client Name</th>
+                      <th>Amount</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report Table 
         <div id="reportTableWrapper" style="display: none;">
           <h3 id="reportTitle"></h3>
           <table id="reportTable" class="report-table">
@@ -108,53 +215,54 @@
             </tbody>
           </table>
         </div>
-      </section>
+      </section>-->
+      </main>
+      <!--end of main content-->
 
-    </main>
-    <!--end of main content-->
-
-    <!--Right Section nav-->
-    <div class="right-section">
-      <div class="nav">
-        <button id="menu-btn">
-          <span class="material-icons-sharp">
-            menu
-            </span>
-        </button>
-        <div class="dark-mode">
-          <span class="material-icons-sharp active">
-            light_mode
-            </span>
-            <span class="material-icons-sharp">
-              dark_mode
-              </span>
-        </div>
-
-        <div class="profile">
-          <div class="info">
-            <p>Hey, <b> Jeschann</b></p>
-            <small class="text-muted">
-              Owner
-            </small>
+      <!--Right Section nav-->
+      <div class="right-section">
+        <div class="nav">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
+          </button>
+          <div class="dark-mode">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
           </div>
-          <div class="profile-photo">
-            <img src="../../images/Profile-1.jpg">           
+
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b> Jeschann</b></p>
+              <small class="text-muted"> Owner </small>
+            </div>
+            <div class="profile-photo">
+              <img src="../../images/Profile-1.jpg" />
+            </div>
           </div>
         </div>
-
       </div>
-    </div>
-  
+
       <!--end of nav-->
+    </div>
 
-  </div>
+    <script src="../Main_Page/Main_Page.js"></script>
+    <script src="Reports.js"></script>
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      const panels = document.querySelectorAll(".tab-panel");
 
-  <script src="../Main_Page/Main_Page.js"></script>
-  <script src="Reports.js"></script>
-  
-</body>
-
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          panels.forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById(`tab-${tab.dataset.tab}`)
+            .classList.add("active");
+        });
+      });
+    </script>
+  </body>
 </html>
-
 
 <!--to add filter for the report tables-->
