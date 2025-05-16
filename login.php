@@ -35,18 +35,24 @@ if (isset($_POST['login'])) {
                     case 1:
                         $_SESSION["name"] = $row['Name'];
                         $_SESSION["position"] = "Owner";
+                        $_SESSION["UserID"] = $row['UserID'];
+                        $_SESSION["positionID"] = $row["PositionID"];
                         header("Location:Owner/Main_Page/Main_Page.html");
                         break;
 
                     case 2:
                         $_SESSION["name"] = $row['Name'];
                         $_SESSION["position"] = "Admin";
+                        $_SESSION["UserID"] = $row['UserID'];
+                        $_SESSION["positionID"] = $row["PositionID"];
                         header("Location:Admin/Main_Page/Main_Page.html");
                         break;
 
                     case 3:
                         $_SESSION["name"] = $row['Name'];
                         $_SESSION["position"] = "Unit Manager";
+                        $_SESSION["UserID"] = $row['UserID'];
+                        $_SESSION["positionID"] = $row["PositionID"];
                         header("Location:Unit_Manager/Main_Page/Main_Page.html");
                         break; 
 
