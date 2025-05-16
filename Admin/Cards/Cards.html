@@ -24,36 +24,48 @@
         </div>
       </div>
       <div class="sidebar">
-        <a href="/Admin/Main_Page/Main_Page.html">
-          <span class="material-icons-sharp"> dashboard </span>
+        <a href="../Main_Page/Main_Page.html">
+          <span class="material-icons-sharp">
+            dashboard
+          </span>
           <h3>Dashboard</h3>
         </a>
-
-        <a href="/Admin/Agents/Agents.html">
-          <span class="material-icons-sharp"> people </span>
+   
+        <a href="../Agents/Agents.html">
+          <span class="material-icons-sharp">
+            people
+          </span>
           <h3>Agents</h3>
         </a>
-
-        <a href="/Admin/Cards/Cards.html">
-          <span class="material-icons-sharp"> credit_card </span>
+        <a href="Cards.php">
+          <span class="material-icons-sharp">
+            credit_card
+          </span>
           <h3>Cards</h3>
         </a>
-
-        <a href="/Admin/Commissions/Commissions.html">
-          <span class="material-icons-sharp"> paid </span>
+        <a href="../Commissions/Commissions.html">
+          <span class="material-icons-sharp">
+            paid
+          </span>
           <h3>Commissions</h3>
         </a>
-        <a href="/Admin/Report/Reports.html">
-          <span class="material-icons-sharp"> article </span>
+        <a href="../Report/Reports.html">
+          <span class="material-icons-sharp">
+            article
+          </span>
           <h3>Reports</h3>
         </a>
-        <a href="/Admin/Settings/Settings.html">
-          <span class="material-icons-sharp"> settings </span>
+        <a href="../Settings/Settings.html">
+          <span class="material-icons-sharp">
+            settings
+          </span>
           <h3>Settings</h3>
         </a>
-        <a href="../../logout.php">
-          <span class="material-icons-sharp"> logout </span>
-          <h3>Logout</h3>
+        <a href="../../Login/login.html">
+          <span class="material-icons-sharp">
+            logout
+          </span>
+          <h3>Sign Out</h3>
         </a>
       </div>
     </aside>
@@ -159,10 +171,10 @@
     <h3>Define New Bank</h3>
     <form action="../../addbank.php" method="POST">
 
-      <input type="text" name="newbankname" id="newBankName" placeholder="Enter bank name" required>
+      <input type="text" name="newbankname" id="newBankName" placeholder="Enter bank name" required >
 
       <div class="mini-modal-actions">
-        <button onclick="closeBankModal()">Cancel</button>
+        <button type="button" onclick="closeBankModal()">Cancel</button>
         <button type="submit" name="addbank">Add</button>
       </div>
 
@@ -179,7 +191,7 @@
       <input type="text" name="newcardtype" id="newCardTypeName" placeholder="Enter card type" required>
 
       <div class="mini-modal-actions">
-        <button onclick="closeCardTypeModal()">Cancel</button>
+        <button type="button" onclick="closeCardTypeModal()">Cancel</button>
         <button type="submit" onclick="clickAddButton()"name="addcardtype">Add</button>
       </div>
     </form>
@@ -205,11 +217,11 @@
 
         <div class="profile">
           <div class="info">
-            <p>Hey, <b> DrChaos</b></p>
-            <small class="text-muted"> Admin </small>
-          </div>
-          <div class="profile-photo">
-            <img src="../../images/Profile-3.jpg" />
+           <p>Hey, <b> DrChaos</b></p>
+              <small class="text-muted"> Admin </small>
+            </div>
+            <div class="profile-photo">
+              <img src="../../images/Profile-3.jpg" />         
           </div>
         </div>
       </div>

@@ -44,34 +44,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeCardModalBtn.addEventListener("click", () => hideModal(cardModal));
 
-  // cardForm.addEventListener("submit", (e) => {
-  //   e.preventDefault();
+  cardForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  //   const cardId = parseInt(cardIdInput.value);
-  //   const amount = amountInput.value;
-  //   const status = statusInput.value;
-  //   const bank = bankDropdown.options[bankDropdown.selectedIndex].text;
-  //   const cardType = cardTypeDropdown.options[cardTypeDropdown.selectedIndex].text;
+    const amount = amountInput.value;
+    const status = statusInput.value === "Active" ? 1 : 0;
+    const bankId = bankDropdown.value;
+    const cardTypeId = cardTypeDropdown.value;
 
-  //   const cards = JSON.parse(localStorage.getItem("cards")) || [];
-  //   const cardData = { cardId, amount, status, bank, cardType };
+    if (!amount || bankId === "" || cardTypeId === "") {
+      alert("Please fill in all fields.");
+      return;
+    }
 
-  //   if (editingIndex !== null) {
-  //     cards[editingIndex] = cardData;
-  //   } else {
-  //     cards.push(cardData);
-  //     localStorage.setItem("nextCardId", cardId + 1);
-  //   }
+    const payload = {
+      cardType: cardTypeId,
+      bank: bankId,
+      cardAmount: amount,
+      status: status,
+    };
 
-  //   localStorage.setItem("cards", JSON.stringify(cards));
-  //   alert(editingIndex !== null ? "Card updated successfully!" : "Card added successfully!");
-  //   editingIndex = null;
+    const url = editingIndex ? `updatecard.php` : `../../addcard.php`;
 
-  //   hideModal(cardModal);
-  //   clearForm();
-  //   updateCardIdField();
-  //   renderCardTable();
-  // });
+    if (editingIndex) {
+      payload.cardId = editingIndex;
+    }
+
+    //console.log("Status being sent:", status); for debugging purposes
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert(
+            editingIndex
+              ? "Card updated successfully!"
+              : "Card added successfully!"
+          );
+          editingIndex = null;
+          hideModal(cardModal);
+          clearForm();
+          renderCardTable();
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Card submit error:", error);
+        alert("Error processing card");
+      });
+  });
 
   function getNextCardId() {
     let nextId = parseInt(localStorage.getItem("nextCardId"));
@@ -131,6 +159,7 @@ function handleCardTypeDropdownChange(select) {
 function closeBankModal() {
   document.getElementById("bankModal").style.display = "none";
   document.getElementById("newBankName").value = "";
+  document.getElementById("bankDropdown").value = "";
 }
 
 function closeCardTypeModal() {
@@ -186,73 +215,90 @@ let editingIndex = null;
 
 function renderCardTable(filterText = "") {
   const tbody = document.querySelector(".user-table tbody");
-  const cards = JSON.parse(localStorage.getItem("cards")) || [];
   tbody.innerHTML = "";
 
-  const filteredCards = cards.filter((card) => {
-    const searchText = filterText.toLowerCase();
-    return (
-      card.bank.toLowerCase().includes(searchText) ||
-      card.cardType.toLowerCase().includes(searchText) ||
-      card.status.toLowerCase().includes(searchText)
-    );
-  });
+  fetch("../../getcards.php")
+    .then((res) => res.json())
+    .then((cards) => {
+      const filteredCards = cards.filter((card) => {
+        const search = filterText.toLowerCase();
+        return (
+          String(card.cardId).toLowerCase().includes(search) ||
+          (card.bankName || "").toLowerCase().includes(search) ||
+          (card.cardType || "").toLowerCase().includes(search)
+        );
+      });
 
-  filteredCards.forEach((card, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${card.cardId}</td>
-      <td>${card.bank}</td>
-      <td>${card.cardType}</td>
-      <td>${card.amount}</td>
-      <td>${card.status}</td>
-      <td>
-        <button class="action-btn edit-btn" onclick="editCard(${card.cardId})">
-          <i class="uil uil-edit"></i>
-        </button>
-        <button class="action-btn delete-btn" onclick="deleteCard(${card.cardId})">
-          <i class="uil uil-trash"></i>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(row);
-  });
+      filteredCards.forEach((card) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${card.cardId}</td>
+          <td>${card.bankName}</td>
+          <td>${card.cardType}</td>
+          <td>${card.cardAmount}</td>
+          <td>${card.status}</td>
+          <td>
+            <button class="action-btn" onclick="editCard('${card.cardId}')"><i class="uil uil-edit"></i></button>
+            <button class="action-btn" onclick="deleteCard('${card.cardId}')"><i class="uil uil-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch((err) => {
+      console.error("Error fetching cards:", err);
+    });
 }
 
 function deleteCard(cardId) {
-  let cards = JSON.parse(localStorage.getItem("cards")) || [];
-  cards = cards.filter((c) => c.cardId !== cardId);
-  localStorage.setItem("cards", JSON.stringify(cards));
-  renderCardTable(document.getElementById("searchbar").value);
-  alert("Card successfully deleted!");
+  if (!confirm("Are you sure you want to delete this card?")) return;
+
+  fetch("deletecard.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cardId }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        alert("Card deleted successfully!");
+        renderCardTable(document.getElementById("searchbar").value);
+      } else {
+        alert("Error deleting card: " + data.message);
+      }
+    })
+    .catch((err) => {
+      console.error("Error deleting card:", err);
+      alert("Failed to delete card.");
+    });
 }
 
 function editCard(cardId) {
-  const cards = JSON.parse(localStorage.getItem("cards")) || [];
-  const index = cards.findIndex((c) => c.cardId === cardId);
-  if (index === -1) return;
+  fetch(`getcardbyid.php?cardId=${cardId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success || !data.card) {
+        alert("Card not found.");
+        return;
+      }
 
-  const card = cards[index];
-  editingIndex = index;
+      const card = data.card;
 
-  document.getElementById("amountInput").value = card.amount;
-  document.getElementById("statusInput").value = card.status;
+      // Fill the modal with the fetched data
+      document.getElementById("amountInput").value = card.amount;
+      console.log("Setting status to:", card.status);
+      document.getElementById("statusInput").value =
+        card.status === "Active" ? "Active" : "Inactive";
 
-  const bankDropdown = document.getElementById("bankDropdown");
-  const cardTypeDropdown = document.getElementById("cardTypeDropdown");
+      const bankDropdown = document.getElementById("bankDropdown");
+      const cardTypeDropdown = document.getElementById("cardTypeDropdown");
 
-  for (let i = 0; i < bankDropdown.options.length; i++) {
-    if (bankDropdown.options[i].text === card.bank) {
-      bankDropdown.selectedIndex = i;
-      break;
-    }
-  }
+      bankDropdown.value = card.bankId;
+      cardTypeDropdown.value = card.cardTypeId;
 
-  for (let i = 0; i < cardTypeDropdown.options.length; i++) {
-    if (cardTypeDropdown.options[i].text === card.cardType) {
-      cardTypeDropdown.selectedIndex = i;
-      break;
-    }
-  }
-  document.getElementById("registerModal").classList.add("active");
+      // Store editing cardId in a global variable
+      editingIndex = card.cardId;
+      document.getElementById("registerModal").classList.add("active");
+    })
+    .catch((err) => console.error("Error fetching card for edit:", err));
 }

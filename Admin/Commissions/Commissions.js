@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const openModalBtn = document.getElementById("openModalBtn");
   const closeModalBtn = document.getElementById("closeModalBtn");
+  const statusContainer = document.getElementById("statusContainer");
   const modal = document.getElementById("registerModal");
   const submitBtn = document.querySelector(".submit");
   const userTable = document.querySelector(".user-table tbody");
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const addLineBtn = document.getElementById("addLineBtn");
   const agentdropdown = document.getElementById("agentDropDown");
+  console.log("Agent dropdown element:", agentDropDown);
   const cardsdropdown = document.getElementById("cardsDropDown");
 
   let editingRow = null;
@@ -30,7 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("../../getagents.php")
     .then((response) => response.json())
     .then((agentnames) => {
-      updateAgentsDropdown(agentdropdown, agentnames, "agentId", "agentName");
+      console.log("Agent names fetched:", agentnames); // Debugging log
+      // Filter only active agents (if needed)
+      const activeAgents = agentnames.filter((agent) => agent.status === "1");
+
+      const agentDropdown = document.getElementById("agentDropDown");
+      updateAgentsDropdown(agentDropdown, activeAgents, "id", "name");
     })
     .catch((error) => {
       console.error("Error fetching Agent names:", error);
@@ -57,8 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const agent = agentnames.find((agent) => agent.agentId == thisagentId);
 
         if (agent) {
-          document.getElementById("commissionRate").value =
-            agent.commissionRate;
+          document.getElementById("commissionRate").value = agent.commission;
         } else {
           document.getElementById("commissionRate").value = "";
         }
@@ -74,20 +80,26 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("../../getcards.php")
     .then((response) => response.json())
     .then((cards) => {
-      updateCardsDropdown(cardsdropdown, cards, "cardId", "cardType");
+      updateCardsDropdown(
+        cardsdropdown,
+        cards,
+        "cardId",
+        "bankName",
+        "cardType"
+      );
     })
     .catch((error) => {
       console.error("Error fetching Cards information:", error);
     });
 
-  function updateCardsDropdown(dropdown, items, value, text) {
+  function updateCardsDropdown(dropdown, items, value, bankName, cardType) {
     dropdown.innerHTML = `
       <option value="">Select Card</option>
     `;
     items.forEach((item) => {
       const option = document.createElement("option");
       option.value = item[value];
-      option.textContent = item[text];
+      option.textContent = item[bankName] + "(" + item[cardType] + ")";
       dropdown.appendChild(option);
     });
   }
@@ -119,8 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
   quantity.addEventListener("change", function () {
     const quantityval = this.value;
     const amount = document.getElementById("cardAmount").value;
-    console.log(amount);
-    console.log(quantityval);
 
     if (quantityval && amount) {
       document.getElementById("totalInput").value = quantityval * amount;
@@ -133,19 +143,27 @@ document.addEventListener("DOMContentLoaded", () => {
   openModalBtn.addEventListener("click", () => {
     modal.classList.add("active");
     clearForm();
+
     commissionLinesSection.classList.add("hidden");
     commissionLinesTable.innerHTML = "";
     editingRow = null;
+
+    statusContainer.classList.add("hidden2");
   });
 
   closeModalBtn.addEventListener("click", () => {
     modal.classList.remove("active");
+    commissionLinesTable.innerHTML = "";
     clearForm();
+    tabledata = []; // clear memory
   });
 
   window.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.remove("active");
+      commissionLinesTable.innerHTML = "";
+      clearForm();
+      tabledata = []; // clear memory
     }
   });
 
@@ -208,10 +226,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearForm() {
-    document.getElementById("commissionId").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("agent").value = "";
+    //document.getElementById("commissionId").value = "";
+    //document.getElementById("transactionDate").value = "";
+    document.getElementById("agentDropDown").value = "";
+    document.getElementById("commissionRate").value = "";
+    document.getElementById("totalSales").value = "";
+    document.getElementById("totalCommission").value = "";
+    //document.getElementById("remarks").value = "";
+    subtotal = 0;
+    totalComm = 0;
   }
+
+  let tabledata = [];
+  subtotal = 0;
+  totalComm = 0;
 
   addLineBtn.addEventListener("click", () => {
     const cardId = document.getElementById("cardsDropDown").value.trim();
@@ -222,27 +250,69 @@ document.addEventListener("DOMContentLoaded", () => {
     const amount = parseFloat(
       document.getElementById("cardAmount").value.trim()
     );
+    const rate = parseInt(
+      document.getElementById("commissionRate").value.trim()
+    );
+    const agentID = document.getElementById("agentDropDown").value.trim();
 
-    if (!cardId || !clientName || isNaN(quantity) || isNaN(amount)) {
+    if (!cardId || !clientName || isNaN(quantity) || isNaN(amount) || !rate) {
       alert("Please fill in all fields correctly.");
       return;
     }
-
     const total = (quantity * amount).toFixed(2);
+    subtotal += quantity * amount;
+    totalComm = subtotal * (rate / 100);
+    tabledata.push({
+      cardId,
+      agentID,
+      clientName,
+      quantity,
+      amount,
+      total,
+      totalComm,
+    }); //store data to a temporary array.(clientside)
+    console.log(subtotal + "Hey");
     const row = `
-      <tr id="row${cardId}">
+      <tr>
         <td>${cardId}</td>
-        <td>${clientName}</td>
-        <td>${quantity}</td>
-        <td>${amount}</td>
-        <td>${total}</td>
+        <td contenteditable="true">${clientName}</td>
+        <td contenteditable="true">${quantity}</td>
+        <td contenteditable="true">${amount}</td>
+        <td contenteditable="true">${total}</td>
       </tr>`;
 
     commissionLinesTable.insertAdjacentHTML("beforeend", row);
 
-    document.getElementById("cardDropDown").value = "";
+    document.getElementById("cardsDropDown").value = "";
     document.getElementById("clientNameInput").value = "";
     document.getElementById("quantityInput").value = "";
-    document.getElementById("amountInput").value = "";
+    document.getElementById("cardAmount").value = "";
+    document.getElementById("totalInput").value = "";
+
+    document.getElementById("totalSales").value = subtotal;
+    document.getElementById("totalCommission").value = totalComm;
+  });
+
+  submitBtn.addEventListener("click", () => {
+    if (tabledata.length == 0) {
+      alert("No data to submit.");
+      return;
+    }
+
+    fetch("../../createcommission.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tabledata),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        tabledata = []; // clear memory
+        commissionLinesTable.innerHTML = ""; // clear table display
+        clearForm();
+      })
+      .catch((err) => console.error("Error submitting data:", err));
   });
 });

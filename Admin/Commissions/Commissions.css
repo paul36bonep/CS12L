@@ -551,7 +551,7 @@ main .span {
 .modal-content {
   position: absolute; /*originally relative*/
   top: 2%;
-  max-width: 900px;
+  max-width: 1000px;
   width: 100%;
   max-height: 670px;
   height: 100%;
@@ -586,7 +586,7 @@ main .span {
 }
 
 .modal-content form .form {
-  position: absolute;
+  /*position: absolute; */
   background-color: #fff;
 }
 
@@ -762,7 +762,7 @@ tr td:nth-child(5):contains("Approved") {
   cursor: pointer;
   position: fixed;
   top: 330px;
-  left: 1060px;
+  left: 1200px;
 }
 
 #statusContainer {
@@ -840,7 +840,7 @@ tr td:nth-child(5):contains("Approved") {
   flex-wrap: nowrap;
   gap: 0.4rem;
   align-items: center;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .add-entry-fields input {
@@ -866,6 +866,10 @@ tr td:nth-child(5):contains("Approved") {
 /* Utility */
 .hidden {
   display: hidden;
+}
+
+.hidden2 {
+  display: none;
 }
 /*end of commission lines modal*/
 
