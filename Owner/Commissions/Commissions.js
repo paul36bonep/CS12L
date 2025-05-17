@@ -16,6 +16,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardsdropdown = document.getElementById("cardsDropDown");
 
   let editingRow = null;
+  let editingCommissionId = null;
+
+  function loadCommissions() {
+    fetch("../../getcommissions.php")
+      .then((res) => res.json())
+      .then((commissions) => {
+        const userTable = document.querySelector(".user-table tbody");
+        userTable.innerHTML = ""; // Clear old rows
+        commissions.forEach((c) => {
+          userTable.insertAdjacentHTML(
+            "beforeend",
+            `
+          <tr>
+            <td>${c.CommissionID}</td>
+            <td>${c.AgentName || ""}</td>
+            <td>${c.TotalCommission}</td>
+            <td>${c.ApprovalStatus}</td>
+            <td>
+              <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
+              <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
+            </td>
+          </tr>
+        `
+          );
+          const tr = userTable.lastElementChild;
+          attachRowActions(tr);
+        });
+        filterCommissionsTable();
+      });
+  }
 
   //the date today(dunno how this works just copied this.)
   const today = new Date();
@@ -227,15 +257,34 @@ document.addEventListener("DOMContentLoaded", () => {
     editBtn.addEventListener("click", () => {
       editingRow = row;
       const cells = row.cells;
-      document.getElementById("commissionId").value = cells[0].textContent;
-      document.getElementById("agent").value = cells[2].textContent;
-      document.getElementById("remarks").value = "";
+      editingCommissionId = cells[0].textContent;
+      document.getElementById("transactionNumber").value = cells[0].textContent;
+      document.getElementById("agentDropDown").value = cells[1].textContent;
+      document.getElementById("totalCommission").value = cells[2].textContent;
+      document.getElementById("status").value = cells[3].textContent;
       modal.classList.add("active");
     });
 
     deleteBtn.addEventListener("click", () => {
       if (confirm("Are you sure you want to delete this entry?")) {
-        row.remove();
+        const commissionId = row.cells[0].textContent;
+        fetch("../../deletecommission.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ CommissionID: commissionId }),
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              row.remove();
+            } else {
+              alert(
+                "Failed to delete commission: " +
+                  (data.error || "Unknown error")
+              );
+            }
+          });
       }
     });
   }
@@ -333,7 +382,28 @@ document.addEventListener("DOMContentLoaded", () => {
         tabledata = []; // clear memory
         commissionLinesTable.innerHTML = ""; // clear table display
         clearForm();
+        loadCommissions();
       })
       .catch((err) => console.error("Error submitting data:", err));
   });
+  loadCommissions();
+  document
+    .getElementById("searchbar")
+    .addEventListener("input", filterCommissionsTable);
+  function filterCommissionsTable() {
+    const search = document
+      .getElementById("searchbar")
+      .value.trim()
+      .toLowerCase();
+    const rows = document.querySelectorAll(".user-table tbody tr");
+    rows.forEach((row) => {
+      const commissionId = row.cells[0].textContent.toLowerCase();
+      const agentName = row.cells[1].textContent.toLowerCase();
+      if (commissionId.includes(search) || agentName.includes(search)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
 });
