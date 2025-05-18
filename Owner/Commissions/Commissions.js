@@ -34,7 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${c.TotalCommission}</td>
             <td>${c.ApprovalStatus}</td>
             <td>
-              <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
+              <button class="action-btn edit-btn"${
+                c.ApprovalStatus === "Approved" ||
+                c.ApprovalStatus === "Canceled"
+                  ? ' style="display:none;"'
+                  : ""
+              }><span class="material-icons-sharp">edit</span></button>
               <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
             </td>
           </tr>
@@ -180,6 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
     </tr>`;
     editingRow = null;
 
+    document.getElementById("agentDropDown").removeAttribute("disabled");
+    document.getElementById("totalCommission").removeAttribute("disabled");
+    document.getElementById("transactionNumber").removeAttribute("disabled");
+    document.getElementById("status").removeAttribute("disabled");
+
     fetch("../../getlatestcommissionid.php")
       .then((response) => response.json())
       .then((data) => {
@@ -263,6 +273,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("totalCommission").value = cells[2].textContent;
       document.getElementById("status").value = cells[3].textContent;
       modal.classList.add("active");
+
+      const status = cells[3].textContent;
+
+      if (status === "Pending" || status === "Rejected") {
+        document.getElementById("agentDropDown").setAttribute("disabled", true);
+        document
+          .getElementById("totalCommission")
+          .setAttribute("disabled", true);
+        document
+          .getElementById("transactionNumber")
+          .setAttribute("disabled", true);
+        document.getElementById("status").removeAttribute("disabled");
+      } else {
+        // If Approved or Canceled, disable all fields
+        document.getElementById("agentDropDown").setAttribute("disabled", true);
+        document
+          .getElementById("totalCommission")
+          .setAttribute("disabled", true);
+        document
+          .getElementById("transactionNumber")
+          .setAttribute("disabled", true);
+        document.getElementById("status").setAttribute("disabled", true);
+      }
     });
 
     deleteBtn.addEventListener("click", () => {
@@ -290,13 +323,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearForm() {
-    //document.getElementById("commissionId").value = "";
-    //document.getElementById("transactionDate").value = "";
+    document.getElementById("agentDropDown").removeAttribute("disabled");
+    document.getElementById("totalCommission").removeAttribute("disabled");
+    document.getElementById("transactionNumber").removeAttribute("disabled");
+    document.getElementById("status").removeAttribute("disabled");
     document.getElementById("agentDropDown").value = "";
     document.getElementById("commissionRate").value = "";
     document.getElementById("totalSales").value = "";
     document.getElementById("totalCommission").value = "";
-    //document.getElementById("remarks").value = "";
     subtotal = 0;
     totalComm = 0;
   }
@@ -362,27 +396,69 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("totalCommission").value = totalComm;
   });
 
-  submitBtn.addEventListener("click", () => {
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (editingCommissionId) {
+      const newStatus = document.getElementById("status").value;
+      fetch("../../updatecommission.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          CommissionID: editingCommissionId,
+          status: newStatus,
+        }),
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert(data.message);
+          commissionLinesTable.innerHTML = "";
+          clearForm();
+          loadCommissions();
+          editingCommissionId = null;
+        })
+        .catch((err) => console.error("Error submitting data:", err));
+      return;
+    }
+
     if (tabledata.length == 0) {
       alert("No data to submit.");
       return;
     }
 
-    fetch("../../createcommission.php", {
-      method: "POST",
+    let url = "../../createcommission.php";
+    let method = "POST";
+    let payload = tabledata;
+
+    // If editing, use update endpoint and include the commission ID
+    if (editingCommissionId) {
+      url = "../../updatecommission.php";
+      method = "POST";
+      payload = {
+        CommissionID: editingCommissionId,
+        lines: tabledata,
+      };
+    }
+
+    fetch(url, {
+      method: method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tabledata),
+      body: JSON.stringify(payload),
       credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
         alert(data.message);
-        tabledata = []; // clear memory
-        commissionLinesTable.innerHTML = ""; // clear table display
+        tabledata = [];
+        commissionLinesTable.innerHTML = "";
         clearForm();
         loadCommissions();
+        editingCommissionId = null; // Reset after submit
       })
       .catch((err) => console.error("Error submitting data:", err));
   });

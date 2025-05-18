@@ -755,14 +755,14 @@ tr td:nth-child(5):contains("Approved") {
   width: 100px;
 }
 
-.add-entry-fields .add-btn {
+#addLineBtn {
   background-color: #4caf50;
   color: white;
   padding: 5px 10px;
   cursor: pointer;
   position: fixed;
   top: 330px;
-  left: 1200px;
+  left: 1120px;
 }
 
 #statusContainer {
@@ -838,7 +838,7 @@ tr td:nth-child(5):contains("Approved") {
 .add-entry-fields {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.4rem;
+  gap: 0.6rem;
   align-items: center;
   margin-left: 1rem;
 }
@@ -866,10 +866,6 @@ tr td:nth-child(5):contains("Approved") {
 /* Utility */
 .hidden {
   display: hidden;
-}
-
-.hidden2 {
-  display: none;
 }
 /*end of commission lines modal*/
 
@@ -906,10 +902,6 @@ div.buttons {
 }
 
 /* Optional: consistent table layout */
-.commission-lines-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
 .commission-lines-table th,
 .commission-lines-table td {
@@ -919,6 +911,7 @@ div.buttons {
 /*end scrollable table for commission lines*/
 
 .table-wrapper {
+  height: 200px;
   max-height: 200px; /* or any height limit you want */
   overflow-y: auto;
   display: block;

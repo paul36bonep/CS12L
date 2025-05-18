@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const openModalBtn = document.getElementById("openModalBtn");
   const closeModalBtn = document.getElementById("closeModalBtn");
-  const statusContainer = document.getElementById("statusContainer");
   const modal = document.getElementById("registerModal");
   const submitBtn = document.querySelector(".submit");
   const userTable = document.querySelector(".user-table tbody");
   const commissionLinesSection = document.getElementById(
-    "commissionLinesSection"
+    "embeddedCommissionLines"
   );
-  const commissionLinesTable = document.querySelector(
-    ".commission-lines-table tbody"
+  const commissionLinesTable = document.getElementById(
+    "commissionLinesTableBody"
   );
   const addLineBtn = document.getElementById("addLineBtn");
   const agentdropdown = document.getElementById("agentDropDown");
@@ -17,6 +16,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardsdropdown = document.getElementById("cardsDropDown");
 
   let editingRow = null;
+  let editingCommissionId = null;
+
+  function loadCommissions() {
+    fetch("../../getcommissions.php")
+      .then((res) => res.json())
+      .then((commissions) => {
+        const userTable = document.querySelector(".user-table tbody");
+        userTable.innerHTML = ""; // Clear old rows
+        commissions.forEach((c) => {
+          userTable.insertAdjacentHTML(
+            "beforeend",
+            `
+          <tr>
+            <td>${c.CommissionID}</td>
+            <td>${c.AgentName || ""}</td>
+            <td>${c.TotalCommission}</td>
+            <td>${c.ApprovalStatus}</td>
+            <td>
+              <button class="action-btn edit-btn"${
+                c.ApprovalStatus === "Approved" ||
+                c.ApprovalStatus === "Canceled"
+                  ? ' style="display:none;"'
+                  : ""
+              }><span class="material-icons-sharp">edit</span></button>
+              <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
+            </td>
+          </tr>
+        `
+          );
+          const tr = userTable.lastElementChild;
+          attachRowActions(tr);
+        });
+        filterCommissionsTable();
+      });
+  }
 
   //the date today(dunno how this works just copied this.)
   const today = new Date();
@@ -61,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("../../getagents.php")
       .then((response) => response.json())
       .then((agentnames) => {
-        const agent = agentnames.find((agent) => agent.agentId == thisagentId);
+        const agent = agentnames.find((agent) => agent.id == thisagentId);
 
         if (agent) {
           document.getElementById("commissionRate").value = agent.commission;
@@ -143,17 +177,43 @@ document.addEventListener("DOMContentLoaded", () => {
   openModalBtn.addEventListener("click", () => {
     modal.classList.add("active");
     clearForm();
-
     commissionLinesSection.classList.add("hidden");
-    commissionLinesTable.innerHTML = "";
+    commissionLinesTable.innerHTML = ` <tr class="no-data">
+      <td colspan="5" style="text-align: center; color: #aaa">
+        No commission lines yet
+      </td>
+    </tr>`;
     editingRow = null;
 
-    statusContainer.classList.add("hidden2");
+    document.getElementById("agentDropDown").removeAttribute("disabled");
+    document.getElementById("totalCommission").removeAttribute("disabled");
+    document.getElementById("transactionNumber").removeAttribute("disabled");
+
+    // Set status to Pending and disable it
+    const statusDropdown = document.getElementById("status");
+    statusDropdown.innerHTML = `<option value="Pending">Pending</option>`;
+    statusDropdown.value = "Pending";
+    statusDropdown.setAttribute("disabled", true);
+
+    fetch("../../getlatestcommissionid.php")
+      .then((response) => response.json())
+      .then((data) => {
+        // Next transaction number is latest + 1
+        document.getElementById("transactionNumber").value =
+          data.latestCommissionId + 1;
+      })
+      .catch(() => {
+        document.getElementById("transactionNumber").value = "";
+      });
   });
 
   closeModalBtn.addEventListener("click", () => {
     modal.classList.remove("active");
-    commissionLinesTable.innerHTML = "";
+    commissionLinesTable.innerHTML = ` <tr class="no-data">
+      <td colspan="5" style="text-align: center; color: #aaa">
+        No commission lines yet
+      </td>
+    </tr>`;
     clearForm();
     tabledata = []; // clear memory
   });
@@ -209,30 +269,76 @@ document.addEventListener("DOMContentLoaded", () => {
     const editBtn = row.querySelector(".edit-btn");
     const deleteBtn = row.querySelector(".delete-btn");
 
-    editBtn.addEventListener("click", () => {
-      editingRow = row;
-      const cells = row.cells;
-      document.getElementById("commissionId").value = cells[0].textContent;
-      document.getElementById("agent").value = cells[2].textContent;
-      document.getElementById("remarks").value = "";
-      modal.classList.add("active");
-    });
+    if (editBtn) {
+      editBtn.addEventListener("click", () => {
+        editingRow = row;
+        const cells = row.cells;
+        editingCommissionId = cells[0].textContent;
+        document.getElementById("transactionNumber").value =
+          cells[0].textContent;
+        document.getElementById("agentDropDown").value = cells[1].textContent;
+        document.getElementById("totalCommission").value = cells[2].textContent;
+        // If status is "Rejected", set to "Pending" for editing
+        let statusValue = cells[3].textContent;
+        if (statusValue === "Rejected") {
+          statusValue = "Pending";
+        }
+        document.getElementById(
+          "status"
+        ).innerHTML = `<option value="Pending">Pending</option>`;
+        document.getElementById("status").value = statusValue;
 
-    deleteBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to delete this entry?")) {
-        row.remove();
-      }
-    });
+        modal.classList.add("active");
+
+        // Enable all fields except status
+        document.getElementById("agentDropDown").removeAttribute("disabled");
+        document.getElementById("totalCommission").removeAttribute("disabled");
+        document
+          .getElementById("transactionNumber")
+          .removeAttribute("disabled");
+        document.getElementById("status").setAttribute("disabled", true);
+      });
+    }
+
+    if (deleteBtn) {
+      deleteBtn.addEventListener("click", () => {
+        if (confirm("Are you sure you want to delete this entry?")) {
+          const commissionId = row.cells[0].textContent;
+          fetch("../../deletecommission.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ CommissionID: commissionId }),
+            credentials: "include",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                row.remove();
+              } else {
+                alert(
+                  "Failed to delete commission: " +
+                    (data.error || "Unknown error")
+                );
+              }
+            });
+        }
+      });
+    }
   }
 
   function clearForm() {
-    //document.getElementById("commissionId").value = "";
-    //document.getElementById("transactionDate").value = "";
+    document.getElementById("agentDropDown").removeAttribute("disabled");
+    document.getElementById("totalCommission").removeAttribute("disabled");
+    document.getElementById("transactionNumber").removeAttribute("disabled");
+    const statusDropdown = document.getElementById("status");
+    statusDropdown.innerHTML = `<option value="Pending">Pending</option>`;
+    statusDropdown.value = "Pending";
+    statusDropdown.setAttribute("disabled", true);
+
     document.getElementById("agentDropDown").value = "";
     document.getElementById("commissionRate").value = "";
     document.getElementById("totalSales").value = "";
     document.getElementById("totalCommission").value = "";
-    //document.getElementById("remarks").value = "";
     subtotal = 0;
     totalComm = 0;
   }
@@ -262,6 +368,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const total = (quantity * amount).toFixed(2);
     subtotal += quantity * amount;
     totalComm = subtotal * (rate / 100);
+
+    document.getElementById("subtotal").value = subtotal;
     tabledata.push({
       cardId,
       agentID,
@@ -281,6 +389,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <td contenteditable="true">${total}</td>
       </tr>`;
 
+    const noDataRow = commissionLinesTable.querySelector(".no-data");
+    if (noDataRow) noDataRow.remove();
+
     commissionLinesTable.insertAdjacentHTML("beforeend", row);
 
     document.getElementById("cardsDropDown").value = "";
@@ -293,26 +404,97 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("totalCommission").value = totalComm;
   });
 
-  submitBtn.addEventListener("click", () => {
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // If editing, send all editable fields except status
+    if (editingCommissionId) {
+      const agentID = document.getElementById("agentDropDown").value;
+      const totalCommission = document.getElementById("totalCommission").value;
+      // Always set status to "Pending" when editing (per your requirement)
+      const status = "Pending";
+
+      fetch("../../updatecommission.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          CommissionID: editingCommissionId,
+          agentID,
+          totalCommission,
+          status,
+        }),
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert(data.message);
+          commissionLinesTable.innerHTML = "";
+          clearForm();
+          loadCommissions();
+          editingCommissionId = null;
+        })
+        .catch((err) => console.error("Error submitting data:", err));
+      return;
+    }
+
     if (tabledata.length == 0) {
       alert("No data to submit.");
       return;
     }
 
-    fetch("../../createcommission.php", {
-      method: "POST",
+    let url = "../../createcommission.php";
+    let method = "POST";
+    let payload = tabledata;
+
+    // If editing, use update endpoint and include the commission ID
+    if (editingCommissionId) {
+      url = "../../updatecommission.php";
+      method = "POST";
+      payload = {
+        CommissionID: editingCommissionId,
+        lines: tabledata,
+      };
+    }
+
+    fetch(url, {
+      method: method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tabledata),
+      body: JSON.stringify(payload),
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
         alert(data.message);
-        tabledata = []; // clear memory
-        commissionLinesTable.innerHTML = ""; // clear table display
+        tabledata = [];
+        commissionLinesTable.innerHTML = "";
         clearForm();
+        loadCommissions();
+        editingCommissionId = null; // Reset after submit
       })
       .catch((err) => console.error("Error submitting data:", err));
   });
+  loadCommissions();
+  document
+    .getElementById("searchbar")
+    .addEventListener("input", filterCommissionsTable);
+  function filterCommissionsTable() {
+    const search = document
+      .getElementById("searchbar")
+      .value.trim()
+      .toLowerCase();
+    const rows = document.querySelectorAll(".user-table tbody tr");
+    rows.forEach((row) => {
+      const commissionId = row.cells[0].textContent.toLowerCase();
+      const agentName = row.cells[1].textContent.toLowerCase();
+      if (commissionId.includes(search) || agentName.includes(search)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
 });
