@@ -497,12 +497,15 @@ main .user-table thead tr {
 }
 
 .action-btn {
-  padding: 5px 10px;
-  margin: 0 5px;
+  padding: 2px 6px;
+  margin: 0 2px;
   border: none;
-  border-radius: 5px;
+  border-radius: 0px;
   cursor: pointer;
   background-color: white;
+  font-size: 14px; /* smaller icon/text size */
+  min-width: 28px; /* optional: minimum width */
+  min-height: 28px; /* optional: minimum height */
 }
 
 .add-btn {
@@ -671,4 +674,42 @@ form .buttons {
 form .buttons button,
 .backBtn {
   margin-right: 14px;
+}
+
+.status-active {
+  background-color: #d4f8e8; /* light green */
+  color: #218838;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.status-inactive {
+  background-color: #fff9db; /* light yellow */
+  color: #b8860b;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.btn-label {
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.edit-label {
+  color: #2196f3;
+}
+
+.delete-label {
+  color: #e53935;
+}
+
+.user-table th:last-child,
+.user-table td:last-child {
+  width: 170px;
+  min-width: 70px;
+  max-width: 900px;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
 }
