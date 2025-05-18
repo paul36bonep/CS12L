@@ -126,17 +126,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = document.createElement("tr");
     const statusText =
       agent.status == "1" || agent.status === "Active" ? "Active" : "Inactive";
-
+    const statusClass =
+      statusText === "Active" ? "status-active" : "status-inactive";
     row.innerHTML = `
       <td>${agent.id}</td>
       <td>${agent.name}</td>
       <td>${agent.age}</td>
       <td>${agent.commission}%</td>
       <td>${agent.area}</td>
-      <td>${statusText}</td>
+      <td class="${statusClass}">${statusText}</td>
       <td>
-        <button class="action-btn edit-btn"><span class="material-icons-sharp">edit</span></button>
-        <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
+        <button class="action-btn edit-btn">
+      <span class="material-icons-sharp">edit</span>
+      <span class="btn-label edit-label">Edit</span>
+    </button>
+        <button class="action-btn delete-btn">
+      <span class="material-icons-sharp">delete</span>
+      <span class="btn-label delete-label">Delete</span>
+    </button>
       </td>
     `;
 
