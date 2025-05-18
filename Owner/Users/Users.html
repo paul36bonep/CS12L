@@ -227,46 +227,52 @@
       <div class="modal-content">
         <header>Edit User</header>
         <form id="editUserForm">
-          <input type="hidden" name="userid" id="edit-userid" />
-
-          <div class="input-field">
-            <label>Username</label>
-            <input type="text" name="username" id="edit-username" required />
-          </div>
-
-          <div class="input-field">
-            <label>Name</label>
-            <input type="text" name="name" id="edit-name" required />
-          </div>
-
-          <div class="input-field">
-            <label for="edit-position">Position:</label>
-            <select id="edit-position" name="position" required>
-              <option value="Admin">Admin</option>
-              <option value="Owner">Owner</option>
-              <option value="Unit Manager">Unit Manager</option>
-            </select>
-          </div>
-
-          <div class="input-field">
-            <label for="edit-status">Status:</label>
-            <select id="edit-status" name="status" required>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-
-          <div class="buttons">
-            <button
-              type="button"
-              class="backBtn"
-              onclick="document.getElementById('editModal').classList.remove('active')"
-            >
-              <span class="btnText">Cancel</span>
-            </button>
-            <button type="submit" class="submit">
-              <span class="submitBtn">Save Changes</span>
-            </button>
+          <div class="form first">
+            <div class="personal info">
+              <input type="hidden" name="userid" id="edit-userid" />
+              <div class="fields">
+                <div class="input-field">
+                  <label>Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="edit-username"
+                    required
+                  />
+                </div>
+                <div class="input-field">
+                  <label>Name</label>
+                  <input type="text" name="name" id="edit-name" required />
+                </div>
+                <div class="input-field">
+                  <label for="edit-position">Position:</label>
+                  <select id="edit-position" name="position" required>
+                    <option value="Admin">Admin</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Unit Manager">Unit Manager</option>
+                  </select>
+                </div>
+                <div class="input-field">
+                  <label for="edit-status">Status:</label>
+                  <select id="edit-status" name="status" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+              <div class="buttons">
+                <button
+                  type="button"
+                  class="backBtn"
+                  onclick="document.getElementById('editModal').classList.remove('active')"
+                >
+                  <span class="btnText">Cancel</span>
+                </button>
+                <button type="submit" class="submit">
+                  <span class="submitBtn">Save Changes</span>
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

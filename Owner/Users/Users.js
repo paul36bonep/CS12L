@@ -145,12 +145,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         data.forEach((user) => {
           const tr = document.createElement("tr");
+
+          let statusClass = "";
+          if (user.status === "Active") statusClass = "status-active";
+          else if (user.status === "Inactive") statusClass = "status-inactive";
+
           tr.innerHTML = `
             <td>${user.id}</td>
             <td>${user.position}</td>
             <td>${user.username}</td>
             <td>${user.name}</td>
-            <td>${user.status}</td>
+            <td class="${statusClass}">${user.status}</td>
             <td><button class="edit-btn" data-id="${user.id}">Edit</button></td>
           `;
           tbody.appendChild(tr);

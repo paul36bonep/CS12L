@@ -585,7 +585,7 @@ main .span {
   position: relative;
   margin-top: 16px;
   min-height: 250px;
-  background-color: #f2f2f2;
+  background-color: #fff;
 }
 
 .modal-content form .form {
@@ -721,4 +721,18 @@ form .buttons button,
 
 button .edit-btn {
   cursor: pointer;
+}
+
+.status-active {
+  background-color: #d4f8e8; /* light green */
+  color: #218838;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.status-inactive {
+  background-color: #fff9db; /* light yellow */
+  color: #b8860b;
+  font-weight: bold;
+  border-radius: 5px;
 }
