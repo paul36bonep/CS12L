@@ -10,7 +10,8 @@ if (!isset($data["cardId"])) {
 
 $cardId = $data["cardId"];
 
-$stmt = $connection->prepare("DELETE FROM card WHERE CardID = ?");
+// Soft delete: set is_hidden = 1
+$stmt = $connection->prepare("UPDATE card SET is_hidden = 1 WHERE CardID = ?");
 $stmt->bind_param("i", $cardId);
 
 if ($stmt->execute()) {

@@ -6,7 +6,8 @@ include "dbconnection.php";
 $query = "SELECT card.CardID, cardtype.CardType, bank.BankName, card.Amount, card.Status
           FROM card
           JOIN cardtype ON card.TypeID = cardtype.TypeID
-          JOIN bank ON card.BankID = bank.BankID";
+          JOIN bank ON card.BankID = bank.BankID
+          WHERE card.is_hidden = 0";
 
 $result = $connection->query($query);
 
