@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Agent dropdown element:", agentDropDown);
   const cardsdropdown = document.getElementById("cardsDropDown");
 
+  const approvalStatusFilter = document.getElementById("approvalStatusFilter");
+  approvalStatusFilter.addEventListener("change", filterCommissionsTable);
+
   let editingRow = null;
   let editingCommissionId = null;
 
@@ -25,6 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const userTable = document.querySelector(".user-table tbody");
         userTable.innerHTML = ""; // Clear old rows
         commissions.forEach((c) => {
+          const statusClass =
+            {
+              Pending: "status-pending",
+              Approved: "status-approved",
+              Rejected: "status-rejected",
+              Canceled: "status-canceled",
+            }[c.ApprovalStatus] || "";
+
           userTable.insertAdjacentHTML(
             "beforeend",
             `
@@ -32,15 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${c.CommissionID}</td>
             <td>${c.AgentName || ""}</td>
             <td>${c.TotalCommission}</td>
-            <td>${c.ApprovalStatus}</td>
+            <td class="${statusClass}">${c.ApprovalStatus}</td>
             <td>
               <button class="action-btn edit-btn"${
                 c.ApprovalStatus === "Approved" ||
                 c.ApprovalStatus === "Canceled"
                   ? ' style="display:none;"'
                   : ""
-              }><span class="material-icons-sharp">edit</span></button>
-              <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
+              }>
+          <span class="material-icons-sharp">edit</span>
+          <span class="btn-label edit-label">Edit</span>
+        </button>
+        <button class="action-btn delete-btn">
+          <span class="material-icons-sharp">delete</span>
+          <span class="btn-label delete-label">Delete</span>
+        </button>
             </td>
           </tr>
         `
@@ -472,15 +489,22 @@ document.addEventListener("DOMContentLoaded", () => {
       .getElementById("searchbar")
       .value.trim()
       .toLowerCase();
+    const selectedStatus = document.getElementById(
+      "approvalStatusFilter"
+    ).value;
+
     const rows = document.querySelectorAll(".user-table tbody tr");
     rows.forEach((row) => {
       const commissionId = row.cells[0].textContent.toLowerCase();
       const agentName = row.cells[1].textContent.toLowerCase();
-      if (commissionId.includes(search) || agentName.includes(search)) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
+      const approvalStatus = row.cells[3].textContent;
+
+      const matchesSearch =
+        commissionId.includes(search) || agentName.includes(search);
+      const matchesStatus =
+        selectedStatus === "All" || approvalStatus === selectedStatus;
+
+      row.style.display = matchesSearch && matchesStatus ? "" : "none";
     });
   }
 });

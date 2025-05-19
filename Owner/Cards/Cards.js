@@ -134,12 +134,41 @@ document.addEventListener("DOMContentLoaded", () => {
     cardTypeDropdown.value = "";
   }
 
-  renderCardTable();
+  /*renderCardTable();
 
   document.getElementById("searchbar").addEventListener("input", (e) => {
     const searchText = e.target.value;
     renderCardTable(searchText);
-  });
+  });*/
+
+  const cardTypeFilter = document.getElementById("cardTypeFilter");
+  const statusFilter = document.getElementById("statusFilter");
+  const searchBar = document.getElementById("searchbar");
+
+  // Populate card type filter dynamically
+  fetch("../../getcardtypes.php")
+    .then((res) => res.json())
+    .then((types) => {
+      // Clear existing options except "All"
+      cardTypeFilter.innerHTML = '<option value="All">All Card Types</option>';
+      types.forEach((type) => {
+        const opt = document.createElement("option");
+        opt.value = type.cardTypeName;
+        opt.textContent = type.cardTypeName;
+        cardTypeFilter.appendChild(opt);
+      });
+    });
+
+  // Add event listeners for filters
+  cardTypeFilter.addEventListener("change", () =>
+    renderCardTable(searchBar.value)
+  );
+  statusFilter.addEventListener("change", () =>
+    renderCardTable(searchBar.value)
+  );
+  searchBar.addEventListener("input", (e) => renderCardTable(e.target.value));
+
+  renderCardTable();
 });
 
 function handleBankDropdownChange(select) {
@@ -217,31 +246,50 @@ function renderCardTable(filterText = "") {
   const tbody = document.querySelector(".user-table tbody");
   tbody.innerHTML = "";
 
+  const selectedCardType = document.getElementById("cardTypeFilter").value;
+  const selectedStatus = document.getElementById("statusFilter").value;
+
   fetch("../../getcards.php")
     .then((res) => res.json())
     .then((cards) => {
+      const search = filterText.toLowerCase();
+
       const filteredCards = cards.filter((card) => {
-        const search = filterText.toLowerCase();
-        return (
+        const matchesSearch =
           String(card.cardId).toLowerCase().includes(search) ||
           (card.bankName || "").toLowerCase().includes(search) ||
-          (card.cardType || "").toLowerCase().includes(search)
-        );
+          (card.cardType || "").toLowerCase().includes(search);
+
+        const matchesType =
+          selectedCardType === "All" || card.cardType === selectedCardType;
+
+        const matchesStatus =
+          selectedStatus === "All" || card.status === selectedStatus;
+
+        return matchesSearch && matchesType && matchesStatus;
       });
 
       filteredCards.forEach((card) => {
         const row = document.createElement("tr");
+        const statusClass =
+          card.status === "Active" ? "status-active" : "status-inactive";
         row.innerHTML = `
-          <td>${card.cardId}</td>
-          <td>${card.bankName}</td>
-          <td>${card.cardType}</td>
-          <td>${card.cardAmount}</td>
-          <td>${card.status}</td>
-          <td>
-            <button class="action-btn" onclick="editCard('${card.cardId}')"><i class="uil uil-edit"></i></button>
-            <button class="action-btn" onclick="deleteCard('${card.cardId}')"><i class="uil uil-trash"></i></button>
-          </td>
-        `;
+    <td>${card.cardId}</td>
+    <td>${card.bankName}</td>
+    <td>${card.cardType}</td>
+    <td>${card.cardAmount}</td>
+    <td class="${statusClass}">${card.status}</td>
+    <td>
+      <button class="action-btn edit-btn" onclick="editCard('${card.cardId}')">
+        <span class="material-icons-sharp">edit</span>
+        <span class="btn-label edit-label">Edit</span>
+      </button>
+      <button class="action-btn delete-btn" onclick="deleteCard('${card.cardId}')">
+        <span class="material-icons-sharp">delete</span>
+        <span class="btn-label delete-label">Delete</span>
+      </button>
+    </td>
+  `;
         tbody.appendChild(row);
       });
     })

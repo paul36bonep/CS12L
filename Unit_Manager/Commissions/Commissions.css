@@ -929,3 +929,57 @@ div.buttons {
   background-color: #28adfa;
   z-index: 2;
 }
+
+.table-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Approval Status Color Codes */
+.status-pending {
+  background: #fff3cd; /* light yellow/amber */
+  color: #b7950b;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status-approved {
+  background: #d4e6fa; /* light blue */
+  color: #2176bd;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status-rejected,
+.status-canceled {
+  background: #fad4d4; /* light red */
+  color: #c0392b;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-label {
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.edit-label {
+  color: #2196f3;
+}
+
+.delete-label {
+  color: #e53935;
+}
+
+.user-table th:last-child,
+.user-table td:last-child {
+  width: 190px;
+  min-width: 70px;
+  max-width: 900px;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}

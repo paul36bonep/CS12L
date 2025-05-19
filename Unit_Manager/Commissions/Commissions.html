@@ -66,16 +66,23 @@
               placeholder="Search..."
               class="search-bar"
             />
+            <div class="filter-group">
+              <select id="approvalStatusFilter" class="search-bar">
+                <option value="All">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Canceled">Canceled</option>
+              </select>
+            </div>
           </div>
           <table class="user-table">
             <thead>
               <tr>
                 <th>Commission ID</th>
-
                 <th>Agent name</th>
                 <th>Total Commission</th>
                 <th>Approval Status</th>
-                <!-- <th>Action</th>-->
               </tr>
             </thead>
             <tbody>
@@ -98,7 +105,7 @@
           </div>
           <div class="profile">
             <div class="info">
-              <p>Hey, <b> manager</b></p>
+              <p>Hey, <b>manager</b></p>
               <small class="text-muted">Unit Manager</small>
             </div>
             <div class="profile-photo">
@@ -180,8 +187,11 @@
 
                   <div class="input-field" id="statusContainer">
                     <label for="status">Approval Status:</label>
-                    <select name="status" id="status" required disabled>
+                    <select name="status" id="status" required>
                       <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                      <option value="Canceled">Canceled</option>
                     </select>
                   </div>
                 </div>

@@ -114,12 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedStatus = statusFilter.value;
 
     document.querySelectorAll(".user-table tbody tr").forEach((row) => {
+      const userId = row.cells[0]?.textContent.toLowerCase();
       const role = row.cells[1]?.textContent;
       const username = row.cells[2]?.textContent.toLowerCase();
       const name = row.cells[3]?.textContent.toLowerCase();
       const status = row.cells[4]?.textContent;
 
-      const matchesSearch = username.includes(query) || name.includes(query);
+      const matchesSearch =
+        userId.includes(query) ||
+        username.includes(query) ||
+        name.includes(query);
       const matchesRole = selectedRole === "All" || role === selectedRole;
       const matchesStatus =
         selectedStatus === "All" || status === selectedStatus;

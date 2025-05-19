@@ -76,7 +76,7 @@
             <button class="tab" data-tab="3">3. Sales Details per Card</button>
             <button class="tab" data-tab="4">4. Sales per Area</button>
 
-            <button class="print-btn" onclick="window.print()">
+            <button class="print-btn" onclick="printCurrentTab()">
               <span class="material-symbols-sharp"> print </span>
               Print
             </button>
@@ -85,7 +85,7 @@
             <div class="tab-panel active" id="tab-1">
               <h2>List of All Commissions</h2>
               <div class="table-container">
-                <table class="report-table2">
+                <table id="tab-1-table" class="report-table2">
                   <thead>
                     <tr>
                       <th>Transaction Date</th>
@@ -95,12 +95,7 @@
                       <th>Commission Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
@@ -109,12 +104,10 @@
               <h2>Sales Details per Agent</h2>
               <label for="agent-select">Agent</label>
               <select id="agent-select">
-                <option selected>Agent1</option>
-                <option>Agent2</option>
-                <option>Agent3</option>
+                <option value="all">All Agents</option>
               </select>
               <div class="table-container">
-                <table class="report-table2">
+                <table id="tab-2-table" class="report-table2">
                   <thead>
                     <tr>
                       <th>Transaction Date</th>
@@ -125,11 +118,7 @@
                       <th>Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
@@ -138,12 +127,10 @@
               <h2>Sales Details per Card</h2>
               <label for="card-select">Card</label>
               <select id="card-select">
-                <option selected>Gold</option>
-                <option>Silver</option>
-                <option>Platinum</option>
+                <option value="all_cards">All Cards</option>
               </select>
               <div class="table-container">
-                <table class="report-table2">
+                <table id="tab-3-table" class="report-table2">
                   <thead>
                     <tr>
                       <th>Transaction Date</th>
@@ -154,11 +141,7 @@
                       <th>Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
@@ -167,12 +150,10 @@
               <h2>Sales per Area</h2>
               <label for="area-select">Agent Area</label>
               <select id="area-select">
-                <option selected>Davao-North</option>
-                <option>Davao-South</option>
-                <option>Davao-Central</option>
+                <option value="all_areas">All Areas</option>
               </select>
               <div class="table-container">
-                <table class="report-table2">
+                <table id="tab-4-table" class="report-table2">
                   <thead>
                     <tr>
                       <th>Transaction Date</th>
@@ -184,11 +165,7 @@
                       <th>Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>

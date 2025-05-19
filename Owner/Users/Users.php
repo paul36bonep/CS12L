@@ -16,6 +16,7 @@ SELECT
     END as status
 FROM users
 JOIN positions ON users.PositionID = positions.PositionID
+ORDER BY users.UserID
 ";
 
 $result = $connection->query($query);

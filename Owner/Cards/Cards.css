@@ -586,7 +586,7 @@ main .span {
 }
 
 .modal-content form .form {
-  position: absolute;
+  /*position: absolute;*/
   background-color: #fff;
 }
 
@@ -759,4 +759,53 @@ form .buttons button,
 
 .action-icon:hover {
   color: #e74c3c; /* red on hover for delete, or style as needed */
+}
+
+.status-active {
+  background-color: #d4f8e8; /* light green */
+  color: #218838;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.status-inactive {
+  background-color: #fff9db; /* light yellow */
+  color: #b8860b;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.btn-label {
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.edit-label {
+  color: #2196f3;
+}
+
+.delete-label {
+  color: #e53935;
+}
+
+.user-table th:last-child,
+.user-table td:last-child {
+  width: 190px;
+  min-width: 70px;
+  max-width: 900px;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Cards.css */
+.filter-group {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.table-header .search-bar {
+  margin-right: 1.2rem; /* Adjust this value as needed */
 }

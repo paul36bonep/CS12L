@@ -78,6 +78,17 @@
           <button class="action-btn add-btn" id="openModalBtn">Add New Card</button>
           
           <input type="text" id="searchbar" placeholder="Search..." class="search-bar">
+          <div class="filter-group">
+            <select id="cardTypeFilter" class="search-bar">
+              <option value="All">All Card Types</option>
+              <!-- Card types will be populated dynamically -->
+            </select>
+            <select id="statusFilter" class="search-bar">
+              <option value="All">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
         </div>
         <table class="user-table">
           <thead>

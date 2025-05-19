@@ -220,10 +220,13 @@ main {
 main .dashboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.6rem;
+  gap: 1.4rem;
 }
 
 main .dashboard > div {
+  min-width: 220px; /* Add this for minimum card width */
+  max-width: 320px; /* Add this for maximum card width */
+  width: 100%;
   background-color: var(--color-white);
   padding: var(--card-padding);
   border-radius: var(--card-border-radius);
@@ -313,6 +316,7 @@ main .users .user-list {
   cursor: pointer;
   transition: all 0.3s ease;
   height: 55vh;
+  width: 138vh;
 }
 
 main .users .user-list:hover {
@@ -334,12 +338,22 @@ main .users .user-list .user img {
 }
 
 main .recent-commissions {
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+  width: 22rem;
+  margin-top: 0;
+  float: none;
+  left: auto;
+  transform: none;
+  /*
   margin-top: -40rem;
   float: right;
   width: 20%;
   position: fixed;
   left: 88%;
   transform: translateX(-50%);
+  */
 }
 
 main .recent-commissions h2 {
@@ -696,9 +710,42 @@ main .user-table table {
 
 /*Area Chart Section*/
 .chart canvas {
-  width: 100% !important;
+  width: 960px !important;
   height: 300px !important;
   max-width: 100%;
   display: block;
   position: relative;
+}
+
+.card {
+  position: relative;
+}
+
+.card-icon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 2.2rem;
+  color: #03a1fc;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Align only the Agent Name column (first th/td) to the left */
+main .recent-commissions table th:first-child,
+main .recent-commissions table td:first-child {
+  text-align: left;
+  padding-left: 1.2rem; /* Optional: add some left padding for neatness */
+}
+
+/* Add this to your Main_Page.css */
+.status-approved {
+  background: #03a1fc;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.6rem;
+  display: inline-block;
+  font-size: 0.85em;
+  margin-top: 0.3rem;
+  letter-spacing: 0.5px;
 }

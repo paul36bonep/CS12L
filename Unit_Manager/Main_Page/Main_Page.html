@@ -33,20 +33,7 @@
             <span class="material-icons-sharp"> dashboard </span>
             <h3>Dashboard</h3>
           </a>
-          <!--<a href="../Users/Users.html">
-            <span class="material-icons-sharp"> person_outline </span>
-            <h3>Users</h3>
-          </a>-->
 
-         <!-- <a href="../Agents/Agents.html">
-            <span class="material-icons-sharp"> people </span>
-            <h3>Agents</h3>
-          </a>-->
-
-          <!--<a href="../Cards/Cards.html">
-            <span class="material-icons-sharp"> credit_card </span>
-            <h3>Cards</h3>
-          </a>-->
 
           <a href="../Commissions/Commissions.html">
             <span class="material-icons-sharp"> paid </span>
@@ -72,52 +59,25 @@
       <main>
         <h1>Dashboard</h1>
         <div class="dashboard">
-          <div class="sales">
-            <div class="status">
-              <div class="info">
-                <h3>Total Commissions</h3>
-                <h1>₱250,000</h1>
-              </div>
-              <div class="progress">
-                <svg>
-                  <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage">
-                  <p>+81%</p>
-                </div>
-              </div>
+          <div class="sales card">
+            <span class="material-icons-sharp card-icon">paid</span>
+            <div class="info">
+              <h3>Total Commissions</h3>
+              <h1></h1>
+            </div>
+        </div>
+          <div class="visits card">
+            <span class="material-icons-sharp card-icon">leaderboard</span>
+            <div class="info">
+              <h3>Sales Count</h3>
+              <h1></h1>
             </div>
           </div>
-          <div class="visits">
-            <div class="status">
-              <div class="info">
-                <h3>Sales Count</h3>
-                <h1>4</h1>
-              </div>
-              <div class="progress">
-                <svg>
-                  <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage">
-                  <p>+95%</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="searches">
-            <div class="status">
-              <div class="info">
-                <h3>Top Agent</h3>
-                <h1>DanGoku</h1>
-              </div>
-              <div class="progress">
-                <svg>
-                  <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                <div class="percentage">
-                  <p>+90%</p>
-                </div>
-              </div>
+          <div class="searches card">
+            <span class="material-icons-sharp card-icon">emoji_events</span>
+            <div class="info">
+              <h3>Top Agent</h3>
+              <h1></h1>
             </div>
           </div>
         </div>
@@ -137,24 +97,17 @@
         <div class="recent-commissions">
           <h2>Recent Sales</h2>
           <table>
+            <thead>
+              <tr>
+                <th>Agent Name</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
             <tbody>
-              <thead>
-                <tr>
-                  <th>Dan Oro</th>
-                  <td>₱50,000</td>
-                </tr>
-                <tr>
-                  <th>Schann Alves</th>
-                  <td>₱60,000</td>
-                </tr>
-                <tr>
-                  <th>Paul Tristan</th>
-                  <td>₱30,000</td>
-                </tr>
-              </thead>
+              <!-- JS will populate rows here -->
             </tbody>
           </table>
-          <a href="#">Show All</a>
+          <a href="../Commissions/Commissions.html">Show All</a>
         </div>
         <!--end of recenet-commissions-->
       </main>
@@ -185,7 +138,6 @@
       </div>
     </div>
 
-    <script src="Commissions/commissions1.js"></script>
     <script src="Main_Page.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"

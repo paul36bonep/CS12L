@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Agent dropdown element:", agentDropDown);
   const cardsdropdown = document.getElementById("cardsDropDown");
 
+  const approvalStatusFilter = document.getElementById("approvalStatusFilter");
+  approvalStatusFilter.addEventListener("change", filterCommissionsTable);
+
   let editingRow = null;
   let editingCommissionId = null;
 
@@ -25,6 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const userTable = document.querySelector(".user-table tbody");
         userTable.innerHTML = ""; // Clear old rows
         commissions.forEach((c) => {
+          const statusClass =
+            {
+              Pending: "status-pending",
+              Approved: "status-approved",
+              Rejected: "status-rejected",
+              Canceled: "status-canceled",
+            }[c.ApprovalStatus] || "";
+
           userTable.insertAdjacentHTML(
             "beforeend",
             `
@@ -32,23 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${c.CommissionID}</td>
             <td>${c.AgentName || ""}</td>
             <td>${c.TotalCommission}</td>
-            <td>${c.ApprovalStatus}</td>
-            <!--
-            <td>
-              <button class="action-btn edit-btn"${
-                c.ApprovalStatus === "Approved" ||
-                c.ApprovalStatus === "Canceled"
-                  ? ' style="display:none;"'
-                  : ""
-              }><span class="material-icons-sharp">edit</span></button>
-              <button class="action-btn delete-btn"><span class="material-icons-sharp">delete</span></button>
-            </td>
-            -->
+            <td class="${statusClass}">${c.ApprovalStatus}</td>
+           
           </tr>
         `
           );
-          const tr = userTable.lastElementChild;
-          attachRowActions(tr);
+          //const tr = userTable.lastElementChild;
+          //attachRowActions(tr);
         });
         filterCommissionsTable();
       });
@@ -116,9 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("../../getcards.php")
     .then((response) => response.json())
     .then((cards) => {
+      const activeCards = cards.filter((card) => card.status === "Active");
       updateCardsDropdown(
         cardsdropdown,
-        cards,
+        activeCards,
         "cardId",
         "bankName",
         "cardType"
@@ -190,12 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("agentDropDown").removeAttribute("disabled");
     document.getElementById("totalCommission").removeAttribute("disabled");
     document.getElementById("transactionNumber").removeAttribute("disabled");
-
-    // Set status to Pending and disable it
-    const statusDropdown = document.getElementById("status");
-    statusDropdown.innerHTML = `<option value="Pending">Pending</option>`;
-    statusDropdown.value = "Pending";
-    statusDropdown.setAttribute("disabled", true);
+    document.getElementById("status").removeAttribute("disabled");
 
     fetch("../../getlatestcommissionid.php")
       .then((response) => response.json())
@@ -271,72 +268,69 @@ document.addEventListener("DOMContentLoaded", () => {
     const editBtn = row.querySelector(".edit-btn");
     const deleteBtn = row.querySelector(".delete-btn");
 
-    if (editBtn) {
-      editBtn.addEventListener("click", () => {
-        editingRow = row;
-        const cells = row.cells;
-        editingCommissionId = cells[0].textContent;
-        document.getElementById("transactionNumber").value =
-          cells[0].textContent;
-        document.getElementById("agentDropDown").value = cells[1].textContent;
-        document.getElementById("totalCommission").value = cells[2].textContent;
-        // If status is "Rejected", set to "Pending" for editing
-        let statusValue = cells[3].textContent;
-        if (statusValue === "Rejected") {
-          statusValue = "Pending";
-        }
-        document.getElementById(
-          "status"
-        ).innerHTML = `<option value="Pending">Pending</option>`;
-        document.getElementById("status").value = statusValue;
+    editBtn.addEventListener("click", () => {
+      editingRow = row;
+      const cells = row.cells;
+      editingCommissionId = cells[0].textContent;
+      document.getElementById("transactionNumber").value = cells[0].textContent;
+      document.getElementById("agentDropDown").value = cells[1].textContent;
+      document.getElementById("totalCommission").value = cells[2].textContent;
+      document.getElementById("status").value = cells[3].textContent;
+      modal.classList.add("active");
 
-        modal.classList.add("active");
+      const status = cells[3].textContent;
 
-        // Enable all fields except status
-        document.getElementById("agentDropDown").removeAttribute("disabled");
-        document.getElementById("totalCommission").removeAttribute("disabled");
+      if (status === "Pending" || status === "Rejected") {
+        document.getElementById("agentDropDown").setAttribute("disabled", true);
+        document
+          .getElementById("totalCommission")
+          .setAttribute("disabled", true);
         document
           .getElementById("transactionNumber")
-          .removeAttribute("disabled");
+          .setAttribute("disabled", true);
+        document.getElementById("status").removeAttribute("disabled");
+      } else {
+        // If Approved or Canceled, disable all fields
+        document.getElementById("agentDropDown").setAttribute("disabled", true);
+        document
+          .getElementById("totalCommission")
+          .setAttribute("disabled", true);
+        document
+          .getElementById("transactionNumber")
+          .setAttribute("disabled", true);
         document.getElementById("status").setAttribute("disabled", true);
-      });
-    }
+      }
+    });
 
-    if (deleteBtn) {
-      deleteBtn.addEventListener("click", () => {
-        if (confirm("Are you sure you want to delete this entry?")) {
-          const commissionId = row.cells[0].textContent;
-          fetch("../../deletecommission.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ CommissionID: commissionId }),
-            credentials: "include",
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.success) {
-                row.remove();
-              } else {
-                alert(
-                  "Failed to delete commission: " +
-                    (data.error || "Unknown error")
-                );
-              }
-            });
-        }
-      });
-    }
+    deleteBtn.addEventListener("click", () => {
+      if (confirm("Are you sure you want to delete this entry?")) {
+        const commissionId = row.cells[0].textContent;
+        fetch("../../deletecommission.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ CommissionID: commissionId }),
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              row.remove();
+            } else {
+              alert(
+                "Failed to delete commission: " +
+                  (data.error || "Unknown error")
+              );
+            }
+          });
+      }
+    });
   }
 
   function clearForm() {
     document.getElementById("agentDropDown").removeAttribute("disabled");
     document.getElementById("totalCommission").removeAttribute("disabled");
     document.getElementById("transactionNumber").removeAttribute("disabled");
-    const statusDropdown = document.getElementById("status");
-    statusDropdown.innerHTML = `<option value="Pending">Pending</option>`;
-    statusDropdown.value = "Pending";
-    statusDropdown.setAttribute("disabled", true);
-
+    document.getElementById("status").removeAttribute("disabled");
     document.getElementById("agentDropDown").value = "";
     document.getElementById("commissionRate").value = "";
     document.getElementById("totalSales").value = "";
@@ -409,13 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // If editing, send all editable fields except status
     if (editingCommissionId) {
-      const agentID = document.getElementById("agentDropDown").value;
-      const totalCommission = document.getElementById("totalCommission").value;
-      // Always set status to "Pending" when editing (per your requirement)
-      const status = "Pending";
-
+      const newStatus = document.getElementById("status").value;
       fetch("../../updatecommission.php", {
         method: "POST",
         headers: {
@@ -423,9 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: JSON.stringify({
           CommissionID: editingCommissionId,
-          agentID,
-          totalCommission,
-          status,
+          status: newStatus,
         }),
         credentials: "include",
       })
@@ -488,15 +475,22 @@ document.addEventListener("DOMContentLoaded", () => {
       .getElementById("searchbar")
       .value.trim()
       .toLowerCase();
+    const selectedStatus = document.getElementById(
+      "approvalStatusFilter"
+    ).value;
+
     const rows = document.querySelectorAll(".user-table tbody tr");
     rows.forEach((row) => {
       const commissionId = row.cells[0].textContent.toLowerCase();
       const agentName = row.cells[1].textContent.toLowerCase();
-      if (commissionId.includes(search) || agentName.includes(search)) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
+      const approvalStatus = row.cells[3].textContent;
+
+      const matchesSearch =
+        commissionId.includes(search) || agentName.includes(search);
+      const matchesStatus =
+        selectedStatus === "All" || approvalStatus === selectedStatus;
+
+      row.style.display = matchesSearch && matchesStatus ? "" : "none";
     });
   }
 });
