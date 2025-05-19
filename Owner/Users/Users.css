@@ -503,12 +503,15 @@ main .user-table thead tr {
 }
 
 .action-btn {
-  padding: 5px 10px;
-  margin: 0 5px;
+  padding: 2px 6px;
+  margin: 0 2px;
   border: none;
-  border-radius: 5px;
+  border-radius: 0px;
   cursor: pointer;
   background-color: white;
+  font-size: 14px; /* smaller icon/text size */
+  min-width: 28px; /* optional: minimum width */
+  min-height: 28px; /* optional: minimum height */
 }
 
 .add-btn {
@@ -735,4 +738,12 @@ button .edit-btn {
   color: #b8860b;
   font-weight: bold;
   border-radius: 5px;
+}
+
+.edit-label {
+  color: #2196f3;
+}
+
+.edit-btn {
+  background-color: white;
 }

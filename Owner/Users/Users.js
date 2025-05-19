@@ -156,7 +156,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${user.username}</td>
             <td>${user.name}</td>
             <td class="${statusClass}">${user.status}</td>
-            <td><button class="edit-btn" data-id="${user.id}">Edit</button></td>
+            <td>
+            <button class="edit-btn" data-id="${user.id}">
+            <span class="material-icons-sharp">edit</span>
+            <span class="edit-label">Edit</span>
+            </button>        
+            </td>
           `;
           tbody.appendChild(tr);
         });
