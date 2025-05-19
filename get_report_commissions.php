@@ -14,6 +14,7 @@ SELECT
 FROM commissions c
 JOIN agents a ON c.AgentID = a.AgentID
 LEFT JOIN commissions_lines cl ON c.CommissionID = cl.CommissionID
+WHERE c.ApprovalStatus = 'Approved'
 GROUP BY c.CommissionID
 ORDER BY c.CreatedAt DESC
 ";
