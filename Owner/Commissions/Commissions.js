@@ -114,9 +114,10 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("../../getcards.php")
     .then((response) => response.json())
     .then((cards) => {
+      const activeCards = cards.filter((card) => card.status === "Active");
       updateCardsDropdown(
         cardsdropdown,
-        cards,
+        activeCards,
         "cardId",
         "bankName",
         "cardType"
