@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 03:12 AM
+-- Host: localhost:4306:4306
+-- Generation Time: May 19, 2025 at 06:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,12 @@ CREATE TABLE `agents` (
 
 INSERT INTO `agents` (`AgentID`, `AgentName`, `Age`, `CommissionPercent`, `Area`, `Status`) VALUES
 (1, 'newAgent', 27, 20, 'Davao-South', 1),
-(2, 'Agent2', 29, 10, 'Davao-North', 1);
+(2, 'Agent2', 29, 10, 'Davao-North', 1),
+(3, 'kev', 24, 20, 'Davao-North', 1),
+(32, 'agent4', 27, 30, 'Davao-South', 1),
+(33, 'miniagent', 27, 20, 'Davao-South', 1),
+(34, 'agent9', 24, 10, 'Davao-Central', 1),
+(35, 'Ploop', 28, 20, 'Davao-North', 1);
 
 -- --------------------------------------------------------
 
@@ -60,6 +65,8 @@ CREATE TABLE `bank` (
 --
 
 INSERT INTO `bank` (`BankID`, `BankName`) VALUES
+(6, 'bank123'),
+(5, 'bank2'),
 (2, 'banknewbank'),
 (3, 'bcnp'),
 (4, 'chinabank'),
@@ -76,18 +83,22 @@ CREATE TABLE `card` (
   `TypeID` int(6) NOT NULL,
   `BankID` int(6) NOT NULL,
   `Amount` float NOT NULL,
-  `Status` tinyint(1) NOT NULL
+  `Status` tinyint(1) NOT NULL,
+  `is_hidden` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `card`
 --
 
-INSERT INTO `card` (`CardID`, `TypeID`, `BankID`, `Amount`, `Status`) VALUES
-(1, 1, 1, 5000, 1),
-(4, 2, 2, 50000, 1),
-(5, 7, 3, 10000, 1),
-(6, 8, 4, 465132000, 1);
+INSERT INTO `card` (`CardID`, `TypeID`, `BankID`, `Amount`, `Status`, `is_hidden`) VALUES
+(1, 1, 1, 5000, 1, 0),
+(4, 2, 2, 50000, 1, 0),
+(5, 7, 3, 10000, 1, 0),
+(6, 8, 4, 20000, 1, 0),
+(7, 4, 1, 20000, 1, 0),
+(23, 5, 3, 25000, 1, 1),
+(24, 2, 3, 25000, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -125,8 +136,23 @@ CREATE TABLE `commissions` (
   `UserID` int(6) NOT NULL,
   `AgentID` int(6) NOT NULL,
   `TotalCommission` float NOT NULL,
-  `ApprovalStatus` varchar(10) NOT NULL
+  `ApprovalStatus` varchar(10) NOT NULL,
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `commissions`
+--
+
+INSERT INTO `commissions` (`CommissionID`, `UserID`, `AgentID`, `TotalCommission`, `ApprovalStatus`, `CreatedAt`) VALUES
+(1, 2, 2, 4000, 'Pending', '2025-05-19 02:12:27'),
+(2, 2, 1, 2000, 'Approved', '2025-05-19 02:12:27'),
+(3, 2, 1, 20000, 'Approved', '2025-05-19 02:12:27'),
+(4, 2, 2, 4000, 'Approved', '2025-05-19 02:12:27'),
+(14, 2, 33, 8000, 'Canceled', '2025-05-19 02:12:27'),
+(15, 2, 3, 6000, 'Approved', '2025-05-19 02:12:27'),
+(24, 2, 32, 7500, 'Approved', '2025-05-19 22:56:59'),
+(27, 3, 1, 2000, 'Approved', '2025-05-20 00:11:07');
 
 -- --------------------------------------------------------
 
@@ -143,6 +169,21 @@ CREATE TABLE `commissions_lines` (
   `Amount` float NOT NULL,
   `TotalAmount` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `commissions_lines`
+--
+
+INSERT INTO `commissions_lines` (`Coms_Lines`, `CommissionID`, `CardID`, `ClientName`, `Quantity`, `Amount`, `TotalAmount`) VALUES
+(1, 1, 1, 'client1', 2, 5000, 10000),
+(2, 2, 1, 'client2', 2, 5000, 10000),
+(3, 3, 4, 'client3', 2, 50000, 100000),
+(4, 4, 6, '2', 2, 20000, 40000),
+(14, 14, 7, 'client14', 2, 20000, 40000),
+(15, 15, 5, 'client15', 3, 10000, 30000),
+(24, 24, 1, 'client16', 5, 5000, 25000),
+(25, 24, 5, 'client17', 3, 10000, 30000),
+(28, 27, 1, 'client25', 2, 5000, 10000);
 
 -- --------------------------------------------------------
 
@@ -190,7 +231,10 @@ INSERT INTO `users` (`UserID`, `PositionID`, `UserName`, `Password`, `Name`, `St
 (6, 3, 'manager', '$2y$10$oyoauC0m/MPntM6XoAV0quY8.3Z0w5K5qWsd62Bra5kPl/5eXsxfa', 'newManager', 1),
 (7, 2, 'admin2', '$2y$10$67lxTEFqNxRcOkDLpUy2UusYZpIz3nH3wXxue4y/KAmvIGb0llz8u', 'admin2', 1),
 (8, 2, 'admin3', '$2y$10$WI8I2m1systph74bwx164.n94cecKqW/Vu4MIkycWe.M94VNQd1jG', 'newerAdmin', 1),
-(9, 2, 'admin4', '$2y$10$2LlxlWaTiP4FZAJrfDvPmuBRo2lY.vQoPiqs5gor/M/ZvZbgw0M2q', 'chingolinwoo', 1);
+(9, 2, 'admin4', '$2y$10$2LlxlWaTiP4FZAJrfDvPmuBRo2lY.vQoPiqs5gor/M/ZvZbgw0M2q', 'chingolinwoo', 0),
+(10, 3, 'DanGoku', '$2y$10$alkmgFhTVBl2nMDKH3mmt.a3DzXtwXtYSpTGd/NFrdS/wcUoVLGLi', 'DanOro', 0),
+(27, 2, 'GeloM', '$2y$10$uOydi863q6Q6YWlh28Pn6ufw5P9dq12nYHHnMaAyLscuur1PY.YLK', 'GeloM', 0),
+(31, 2, 'berl', '$2y$10$2ifnqGKlow1sJPyPkcIq2Of7fRsaNr.HLnQePVfP0mhejTLBAkkVu', 'berl', 0);
 
 --
 -- Indexes for dumped tables
@@ -261,37 +305,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `agents`
 --
 ALTER TABLE `agents`
-  MODIFY `AgentID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `AgentID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `BankID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `BankID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-  MODIFY `CardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `CardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `cardtype`
 --
 ALTER TABLE `cardtype`
-  MODIFY `TypeID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `TypeID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `commissions`
 --
 ALTER TABLE `commissions`
-  MODIFY `CommissionID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `CommissionID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `commissions_lines`
 --
 ALTER TABLE `commissions_lines`
-  MODIFY `Coms_Lines` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `Coms_Lines` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `positions`
@@ -303,7 +347,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
